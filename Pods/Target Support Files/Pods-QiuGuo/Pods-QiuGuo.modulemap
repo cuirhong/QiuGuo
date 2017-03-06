@@ -1,0 +1,6 @@
+framework module Pods_QiuGuo {
+  umbrella header "Pods-QiuGuo-umbrella.h"
+
+  export *
+  module * { export * }
+}

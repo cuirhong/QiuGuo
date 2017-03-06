@@ -1,0 +1,23 @@
+[
+  {
+  "vcName": "HomeViewController",
+  "title": "首页",
+  "imageName": "tabbar_home"
+  },
+  {
+  "vcName": "MatchViewController",
+  "title": "球赛",
+  "imageName": "tabbar_match"
+  },
+ 
+  {
+  "vcName": "GuessViewController",
+  "title": "竞猜",
+  "imageName": "tabbar_quiz"
+  },
+  {
+  "vcName": "MeViewController",
+  "title": "我的",
+  "imageName": "tabbar_personal"
+  }
+]
