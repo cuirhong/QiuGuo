@@ -10,14 +10,20 @@ import UIKit
 
 class HomeViewController: BaseViewController {
     
-    private var spercialArr:[SpecialModel]?
+    private var spercialViewModel:SpecialViewModel = SpecialViewModel()
+
+    //MARK:- contentView
+    private  var pageContentView:PageContentView?
+    
+    //MARK:- menu标题栏
+    fileprivate var pageMenuView:PageMenuView?
     
     private var spercialNameArr:[String]{
         get{
             var titles:[String] = []
-            for model in spercialArr! {
-                titles.append(model.Name!)
-                printData(message: model.Name!)
+            for model in spercialViewModel.spericalModels {
+                titles.append(model.Name)
+                printData(message: model.Name)
             }
             return titles
         }
@@ -29,24 +35,15 @@ class HomeViewController: BaseViewController {
    
     }
     
+
+    
     override func loadData(){
         super.loadData()
-        SpecialViewModel.loadSpecialData(success: {[weak self] (result) in
-            let code = result["code"]
-            if code == 1{
-                let dataArr = result["data"]
-                if let arr = dataArr.arrayObject{
-                    self?.spercialArr = []
-                    for dict in arr  {
-                        let model = SpecialModel.init(dict: (dict as? Dictionary)!)
-                        self?.spercialArr?.append(model)
-                    }
-                    self?.refreshUI()
-                }
-            }else{
-                printData(message: result["msg"].stringValue)
-            }
+         HUDTool.show()
 
+        spercialViewModel.loadSpecialData(success: {[weak self](result) in
+   
+            self?.refreshUI()
         }) { (error) in
             printData(message: "获取数据失败")
         }
@@ -54,6 +51,7 @@ class HomeViewController: BaseViewController {
     // MARK: -刷新界面
     override func refreshUI() {
         super.refreshUI()
+ 
         DispatchQueue.main.async {[weak self] in
             self?.setupUI()
         }
@@ -62,37 +60,55 @@ class HomeViewController: BaseViewController {
     // MARK: -  设置界面
     func setupUI(){
         
-        let pageMenu = PageMenuView.init(titles:spercialNameArr)
-        pageMenu.delegate = self
-        view.addSubview(pageMenu)
-        pageMenu.snp.remakeConstraints { (make) in
-            make.left.right.top.equalTo(pageMenu.superview!)
-            make.height.equalTo(120*LayoutHeightScale)
+       pageMenuView = PageMenuView.init(titles:spercialNameArr)
+        pageMenuView?.delegate = self
+        view.addSubview(pageMenuView!)
+        let pageMenuHeight = 120*LayoutHeightScale
+        pageMenuView?.snp.remakeConstraints { (make) in
+            make.left.right.top.equalTo((pageMenuView?.superview!)!)
+            make.height.equalTo(pageMenuHeight)
         }
         
-    
-        let controller = InformationViewController()
-        controller.SpecialID = 16
-        view.addSubview(controller.view)
-        self.addChildViewController(controller)
-        controller.view.snp.remakeConstraints { (make) in
-            make.top.equalTo(pageMenu.snp.bottom)
-            make.left.right.bottom.equalTo(controller.view.superview!)
+        
+        
+        if (spercialViewModel.spericalModels.count) > 0 {
+            var childVcs:[InformationViewController] = []
+            for model in spercialViewModel.spericalModels {
+                let controller = InformationViewController()
+                controller.SpecialID = model.SpecialID
+                childVcs.append(controller)
+            }
             
+            let contentFrame = CGRect(x: 0, y: kStatusBarH + kNavigationBarH + pageMenuHeight, width: ScreenWidth, height: ScreenHeight - kStatusBarH - kNavigationBarH-pageMenuHeight-kTabBarH)
+            
+              pageContentView = PageContentView.init(frame: contentFrame, childVcs: childVcs, parentVc: self)
         }
+  
         
-    
+        view.addSubview(pageContentView!)
+        pageContentView?.delegate = self
+
+        pageContentView?.snp.remakeConstraints({ (make) in
+            make.top.equalTo((pageMenuView?.snp.bottom)!)
+            make.left.right.bottom.equalTo((pageContentView?.superview)!)
+        })
     }
 
 }
 
 // MARK: - 协议方法
-extension HomeViewController:PageMenuViewDelegate{
+extension HomeViewController:PageMenuViewDelegate,PageContentViewDelegate{
 
+    //MARK:- 标题点击代理方法
     func pageMenuView(_ titleView: PageMenuView, selectedIndex index: Int) {
          printData(message: String(stringInterpolationSegment: index))
     }
 
+    //MARK:- contentView滑动代理方法
+    func pageContentView(_ contentView: PageContentView, progress: CGFloat, sourceIndex: Int, targetIndex: Int) {
+        pageMenuView?.setupMenuButton(index: targetIndex)
+         
+    }
 
 }
 

@@ -49,6 +49,13 @@ extension UILabel
     
     
     
+    //MARK:- 创建下划线
+    class func unline()->UILabel{
+        let label = UILabel()
+        label.backgroundColor = UIColor.init(hexString: "#cccccc")
+        return label
+    }
+    
     
     
     

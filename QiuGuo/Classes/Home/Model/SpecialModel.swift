@@ -17,16 +17,13 @@ class SpecialModel: BaseModel {
      */
     
     //ID
-    var SpecialID:Int?
+    var SpecialID:Int = 0
     //名称
-    var Name:String?
+    var Name:String = ""
     //权重
-    var Weight:Int?
+    var Weight:Int = 0
     
-    
-    
-    
-    
+
     
     
 }

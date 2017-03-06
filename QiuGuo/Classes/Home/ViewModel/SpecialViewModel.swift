@@ -12,11 +12,24 @@ import UIKit
 
 
 class SpecialViewModel: BaseViewModel {
+    
+    lazy var spericalModels:[SpecialModel] = []
+
 
     // MARK: - 获取首页专题列表
-    class func loadSpecialData(success: @escaping SucceedBlock,failure:@escaping FailureBlock){
+     func loadSpecialData(success: @escaping SucceedBlock,failure:@escaping FailureBlock){
         let url = AppRootUrl + "/article/Article/getSpecials"
-        NetworkTool.request(type: .POST, urlString: url, paramters: nil, finishedCallback: { (result) in
+        NetworkTool.request(type: .POST, urlString: url, paramters: nil, finishedCallback: {[weak self] (result) in
+            let dataArr = result["data"]
+
+            if let arr = dataArr.arrayObject{
+                self?.spericalModels = []
+                for dict in arr  {
+                    let model = SpecialModel.init(dict: (dict as? Dictionary)!)
+ 
+                    self?.spericalModels.append(model)
+                }
+            }
             success(result)
         }) { (error) in
             failure(error)

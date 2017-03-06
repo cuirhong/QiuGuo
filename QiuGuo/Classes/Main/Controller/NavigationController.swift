@@ -23,10 +23,11 @@ class NavigationController: UINavigationController {
         navigationBar.shadowImage = UIImage.init()
         
         navigationBar.barTintColor = THEMECOLOR
-        
+ 
+        navigationBar.titleTextAttributes = [NSFontAttributeName:UIFont.font(psFontSize: 46),NSForegroundColorAttributeName:UIColor.init(hexString: "#ffffff")!]
 
         
-        navigationBar.titleTextAttributes = [NSFontAttributeName:UIFont.font(psFontSize: 46),NSForegroundColorAttributeName:UIColor.init(hexString: "#ffffff")!]
+              
     
     }
     

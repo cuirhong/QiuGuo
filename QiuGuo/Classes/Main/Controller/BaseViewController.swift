@@ -12,6 +12,8 @@ class BaseViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        setupNavi()
         //加载数据
         DispatchQueue.global().async {
             self.loadData()
@@ -20,7 +22,14 @@ class BaseViewController: UIViewController {
         view.backgroundColor = UIColor.white
     }
     
+    func setupNavi(){
+        let logoImage = UIImageView(image: UIImage.getImage("logo.png"))
+        self.navigationItem.titleView = logoImage
+    
+    }
+    
     func loadData(){
+       
     
     
     }
@@ -32,6 +41,7 @@ class BaseViewController: UIViewController {
     }
     
     func refreshUI(){
+        HUDTool.dismiss()
     
     }
 

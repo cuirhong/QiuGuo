@@ -10,24 +10,34 @@ import UIKit
 import Kingfisher
 
 
-private let shuffingFigureCell = "shuffingFigureCell"
+private let shuffingFigureViewCell = "shuffingFigureCell"
 
 @objc
 protocol ShuffingFigureViewDelegate {
     @objc optional func shuffingFigureView(_ shuffingFigureView:UIView?,selectedIndex index:Int)
 }
 class ShufflingFigureView: BaseView {
+    //frame值
+    fileprivate var newFrame:CGRect?=CGRect.zero
+    //代理
     weak var delegate:ShuffingFigureViewDelegate?
     //网络图片地址数组
-    fileprivate var imageUrlArr:[String]? = []
+     var imageUrlArr:[String]? = []
      //本地图片地址数组
     fileprivate var imageNameArr:[String]? = []
     //标题数组
-    fileprivate var titleArr:[String]? = []
+     var titleArr:[String]? = []
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        newFrame = frame
+        setupUI()
+    }
     
     
-    init(imageUrls:[String]?=[],imageName:[String]?=[],titles:[String]?=[]){
+    init(imageUrls:[String]?=[],imageName:[String]?=[],titles:[String]?=[],newFrame:CGRect){
     super.init(frame: CGRect.zero)
+        self.newFrame = newFrame
         if (imageUrls != nil) {
           imageUrlArr = imageUrls
         }
@@ -61,6 +71,7 @@ class ShufflingFigureView: BaseView {
         pageControll.snp.remakeConstraints { (make) in
             make.right.equalTo(40*LayoutWidthScale)
             make.top.equalTo(bottomMaskView).offset(30*LayoutHeightScale)
+           
         }
         
         addSubview(titleLabel)
@@ -72,7 +83,7 @@ class ShufflingFigureView: BaseView {
         
       
         pageControll.numberOfPages = (titleArr?.count)!
-         pageControll.currentPage = 0
+         pageControll.currentPage = 1
         
     
     }
@@ -87,12 +98,19 @@ class ShufflingFigureView: BaseView {
     
     
     
+    //MARK:- 刷新界面
+    func refreshUI(){
+    
+        collectionView.reloadData()
+    
+    }
+    
     
     // MARK:- 懒加载
     fileprivate lazy var collectionView : UICollectionView = {[weak self] in
         let layout =  UICollectionViewFlowLayout()
         //布局属性 大小 滚动方向  间距
-        layout.itemSize = CGSize(width: ScreenWidth, height: 530*LayoutHeightScale)
+
         layout.minimumLineSpacing = 0
         layout.minimumInteritemSpacing = 0
         layout.scrollDirection = .horizontal
@@ -154,7 +172,7 @@ extension ShufflingFigureView:UICollectionViewDataSource,UICollectionViewDelegat
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: shuffingFigureCell, for: indexPath)
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: shuffingFigureViewCell, for: indexPath)
         let imageTag = 100
         var imageView:UIImageView? = cell.contentView.viewWithTag(imageTag) as! UIImageView?
         if imageView == nil{
@@ -198,7 +216,17 @@ extension ShufflingFigureView:UICollectionViewDataSource,UICollectionViewDelegat
 
 }
 
+// MARK: - 遵守UICollectionViewDelegateFlowLayout协议
+extension ShufflingFigureView:UICollectionViewDelegateFlowLayout{
 
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+         return (newFrame?.size)!
+    }
+
+
+
+
+}
 
 
 

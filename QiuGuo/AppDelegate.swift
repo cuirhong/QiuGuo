@@ -64,6 +64,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
 func printLog<T> (message:T,fileName:String=#file,funcName:String=#function,lineNum:Int = #line) {
+     print(message)
     #if DEBUG
         _ = (fileName as NSString).lastPathComponent
         print("(文件名：)\((fileName as NSString).lastPathComponent), (方法名): \(funcName),(行): \(lineNum)")

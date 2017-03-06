@@ -9,8 +9,33 @@
 import UIKit
 
 class ArticleListModel: BaseModel {
-
-
+    
+    //MARK:- 
+    var Name:String? = ""
+    
+    //MARK:-
+    var ID:Int? = 0
+    
+    //MARK:-
+    var Title:String? = ""
+    
+    //MARK:-
+    var Covers:[String]? = []
+    
+    //MARK:-
+    var Description:String? = ""
+    
+    //MARK:-
+    var IsHot:Int? = 0
+    
+    //MARK:-
+    var Comments:Int? = 0
+    
+    //MARK:-
+    var Tag:String? = ""
+    
+    //MARK:-
+    var TagColor:String? = ""
 
 
 

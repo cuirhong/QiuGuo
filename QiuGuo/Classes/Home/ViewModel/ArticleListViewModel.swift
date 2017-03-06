@@ -12,12 +12,12 @@ class ArticleListViewModel: BaseViewModel {
 
     lazy var articleListArr:[ArticleListModel] = []
 
-    // MARK: - 加载barner数据
-    func loadArticleListData(SpecialID:Int,successCallBack: SucceedBlock?,failureCallBack: FailureBlock?){
-        let url = AppRootUrl + "/article/Article/getBarnerList"
-        NetworkTool.request(type: .POST, urlString: url, paramters: ["SpecialID":SpecialID,"amount":"15"], finishedCallback: {[weak self] (result) in
+    // MARK: - 加载咨询列表数据
+    func loadArticleListData(SpecialID:Int,page:Int,rows:Int=15,successCallBack: SucceedBlock?,failureCallBack: FailureBlock?){
+        let url = AppRootUrl + "/article/Article/getArticleList"
+        NetworkTool.request(type: .POST, urlString: url, paramters: ["SpecialID":SpecialID,"page":page], finishedCallback: {[weak self] (result) in
             
-            let dataArr = result["data"]
+            let dataArr = result["data"]["data"]
             if let arr = dataArr.arrayObject{
                 self?.articleListArr = []
                 for dict in arr  {

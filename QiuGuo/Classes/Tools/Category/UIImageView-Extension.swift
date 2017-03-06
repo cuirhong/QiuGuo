@@ -7,7 +7,7 @@
 //
 
 import UIKit
-
+import Kingfisher
 extension UIImageView{
 
 
@@ -23,6 +23,19 @@ extension UIImageView{
         return self
    
     }
+    
+    
+    
+    
+    func kf_setImage(imageUrlStr:String){
+         let resource = ImageResource(downloadURL:NSURL.init(string:imageUrlStr) as! URL, cacheKey: imageUrlStr)
+    
+        self.kf.setImage(with: resource)
+
+    }
+    
+    
+    
 
 }
 

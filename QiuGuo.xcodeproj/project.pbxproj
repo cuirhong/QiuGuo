@@ -21,6 +21,7 @@
 		18FF2EAA1E6B825E0037DBF5 /* UIBarButtonItem-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FF2EA91E6B825E0037DBF5 /* UIBarButtonItem-Extension.swift */; };
 		18FF2EAD1E6B9F610037DBF5 /* CacheTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FF2EAC1E6B9F610037DBF5 /* CacheTool.swift */; };
 		30A207B703971DDEF63B9DC1 /* Pods_QiuGuoTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B1879CC8CD658E300C61F4E6 /* Pods_QiuGuoTests.framework */; };
+		3720ECD91E6D4DD60088CF9C /* BarnerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3720ECD81E6D4DD60088CF9C /* BarnerCell.swift */; };
 		373363481E69147700ED96E1 /* UserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 373363471E69147700ED96E1 /* UserInfo.swift */; };
 		3733634C1E696DA600ED96E1 /* MeHeadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3733634B1E696DA600ED96E1 /* MeHeadView.swift */; };
 		3733634E1E696F4300ED96E1 /* UIImageView-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3733634D1E696F4300ED96E1 /* UIImageView-Extension.swift */; };
@@ -65,6 +66,9 @@
 		37779ADB1E651A3C00A360F7 /* UITextView-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37779ADA1E651A3C00A360F7 /* UITextView-Extension.swift */; };
 		37779ADD1E6527D300A360F7 /* UIDevice-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37779ADC1E6527D300A360F7 /* UIDevice-Extension.swift */; };
 		37C612C31E67CB0F004E9CED /* RegisterSecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37C612C21E67CB0F004E9CED /* RegisterSecondViewController.swift */; };
+		37E09DDE1E6D0335001718D5 /* HUDTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E09DDD1E6D0335001718D5 /* HUDTool.swift */; };
+		37E09DE01E6D3DDC001718D5 /* InformationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E09DDF1E6D3DDC001718D5 /* InformationCell.swift */; };
+		37E09DE21E6D3DFB001718D5 /* BaseCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E09DE11E6D3DFB001718D5 /* BaseCollectionViewCell.swift */; };
 		868128F96EF8CF983CDA3D84 /* Pods_QiuGuo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F50C7E491BBFA444AE91D66 /* Pods_QiuGuo.framework */; };
 		F91EDD51DAA1900369EEDF78 /* Pods_QiuGuoUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4E7E201109A65D13C0B4E675 /* Pods_QiuGuoUITests.framework */; };
 /* End PBXBuildFile section */
@@ -102,6 +106,7 @@
 		18FF2EA91E6B825E0037DBF5 /* UIBarButtonItem-Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIBarButtonItem-Extension.swift"; sourceTree = "<group>"; };
 		18FF2EAC1E6B9F610037DBF5 /* CacheTool.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CacheTool.swift; sourceTree = "<group>"; };
 		208EC7CF8725AA0D2AD9CFC6 /* Pods-QiuGuo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QiuGuo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-QiuGuo/Pods-QiuGuo.debug.xcconfig"; sourceTree = "<group>"; };
+		3720ECD81E6D4DD60088CF9C /* BarnerCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BarnerCell.swift; sourceTree = "<group>"; };
 		373363471E69147700ED96E1 /* UserInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserInfo.swift; sourceTree = "<group>"; };
 		3733634B1E696DA600ED96E1 /* MeHeadView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeHeadView.swift; sourceTree = "<group>"; };
 		3733634D1E696F4300ED96E1 /* UIImageView-Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImageView-Extension.swift"; sourceTree = "<group>"; };
@@ -152,6 +157,9 @@
 		37779ADA1E651A3C00A360F7 /* UITextView-Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITextView-Extension.swift"; sourceTree = "<group>"; };
 		37779ADC1E6527D300A360F7 /* UIDevice-Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIDevice-Extension.swift"; sourceTree = "<group>"; };
 		37C612C21E67CB0F004E9CED /* RegisterSecondViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterSecondViewController.swift; sourceTree = "<group>"; };
+		37E09DDD1E6D0335001718D5 /* HUDTool.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HUDTool.swift; sourceTree = "<group>"; };
+		37E09DDF1E6D3DDC001718D5 /* InformationCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InformationCell.swift; sourceTree = "<group>"; };
+		37E09DE11E6D3DFB001718D5 /* BaseCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseCollectionViewCell.swift; sourceTree = "<group>"; };
 		3B5B23E14226085F1FE7B055 /* Pods-QiuGuo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QiuGuo.release.xcconfig"; path = "Pods/Target Support Files/Pods-QiuGuo/Pods-QiuGuo.release.xcconfig"; sourceTree = "<group>"; };
 		4E7E201109A65D13C0B4E675 /* Pods_QiuGuoUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_QiuGuoUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		57C7CA14E2C4161A3AB6195C /* Pods-QiuGuoUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QiuGuoUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-QiuGuoUITests/Pods-QiuGuoUITests.release.xcconfig"; sourceTree = "<group>"; };
@@ -299,6 +307,8 @@
 			isa = PBXGroup;
 			children = (
 				18F1AEC41E6C89D300CAF31C /* ShufflingFigureView.swift */,
+				37E09DDF1E6D3DDC001718D5 /* InformationCell.swift */,
+				3720ECD81E6D4DD60088CF9C /* BarnerCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -351,6 +361,7 @@
 				373363591E69952A00ED96E1 /* BaseTableViewCell.swift */,
 				18F1AEBC1E6C445400CAF31C /* PageMenuView.swift */,
 				18F1AECC1E6CADA400CAF31C /* PageContentView.swift */,
+				37E09DE11E6D3DFB001718D5 /* BaseCollectionViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -454,6 +465,7 @@
 				3757F1A91E63FBE400632C75 /* Common.swift */,
 				37491D231E682D1E00E10D2E /* NotificationName.swift */,
 				18FF2EAC1E6B9F610037DBF5 /* CacheTool.swift */,
+				37E09DDD1E6D0335001718D5 /* HUDTool.swift */,
 			);
 			path = Tools;
 			sourceTree = "<group>";
@@ -904,6 +916,7 @@
 				374D52971E65581A0060EE78 /* LoginProfile.swift in Sources */,
 				3733635A1E69952A00ED96E1 /* BaseTableViewCell.swift in Sources */,
 				37779ADD1E6527D300A360F7 /* UIDevice-Extension.swift in Sources */,
+				37E09DDE1E6D0335001718D5 /* HUDTool.swift in Sources */,
 				18F1AEC51E6C89D300CAF31C /* ShufflingFigureView.swift in Sources */,
 				373363501E69710800ED96E1 /* UIImage-Extenstion.swift in Sources */,
 				37491D241E682D1E00E10D2E /* NotificationName.swift in Sources */,
@@ -921,12 +934,15 @@
 				37491D1B1E67FFEA00E10D2E /* UIAlertController-Extension.swift in Sources */,
 				18F1AECD1E6CADA400CAF31C /* PageContentView.swift in Sources */,
 				3733634E1E696F4300ED96E1 /* UIImageView-Extension.swift in Sources */,
+				37E09DE21E6D3DFB001718D5 /* BaseCollectionViewCell.swift in Sources */,
 				373363581E69950A00ED96E1 /* PersonalInfoCell.swift in Sources */,
 				18F1AED11E6CB2FC00CAF31C /* BarnerModel.swift in Sources */,
 				3757F1421E63E30600632C75 /* AppDelegate.swift in Sources */,
 				3757F1AD1E63FCBC00632C75 /* UIColor-Extension.swift in Sources */,
 				18FF2EAD1E6B9F610037DBF5 /* CacheTool.swift in Sources */,
+				37E09DE01E6D3DDC001718D5 /* InformationCell.swift in Sources */,
 				18FF2EAA1E6B825E0037DBF5 /* UIBarButtonItem-Extension.swift in Sources */,
+				3720ECD91E6D4DD60088CF9C /* BarnerCell.swift in Sources */,
 				3757F1AA1E63FBE400632C75 /* Common.swift in Sources */,
 				3757F1A81E63FA6800632C75 /* TabBarController.swift in Sources */,
 			);

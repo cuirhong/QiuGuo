@@ -72,7 +72,7 @@ class TabBarController : UITabBarController{
         //告诉编译器实际的类型
         let trueClass = vcClass as! UIViewController.Type
         let childController = trueClass.init()
-        childController.title = title
+        childController.tabBarItem.title = title
         childController.view.backgroundColor = UIColor.white
         
         childController.tabBarItem.image = UIImage(named: imageName)?.withRenderingMode(.alwaysOriginal)

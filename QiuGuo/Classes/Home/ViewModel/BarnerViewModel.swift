@@ -13,6 +13,7 @@ class BarnerViewModel: BaseViewModel {
     
     // MARK: - 加载barner数据
     func loadBarnerData(SpecialID:Int,successCallBack: SucceedBlock?,failureCallBack: FailureBlock?){
+        printLog(message: SpecialID)
         let url = AppRootUrl + "/article/Article/getBarnerList"
         NetworkTool.request(type: .POST, urlString: url, paramters: ["SpecialID":SpecialID,"amount":"15"], finishedCallback: {[weak self] (result) in
           
@@ -25,14 +26,8 @@ class BarnerViewModel: BaseViewModel {
                 }
                
             }
-            guard self?.barnerArr.count == 0 else {
-               successCallBack!(result)
-                return
-            }
-            
-            failureCallBack!("获取数据出错")
-            
-            
+          successCallBack!(result)
+
         }) { (error) in
             failureCallBack!(error)
         }

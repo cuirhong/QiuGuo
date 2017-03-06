@@ -62,6 +62,18 @@ let ScreenWidth = UIScreen.main.bounds.width
  *  屏幕的高
  */
 let ScreenHeight = UIScreen.main.bounds.height
+/**
+ *  状态栏的高
+ */
+let kStatusBarH: CGFloat = 20
+/**
+ *  导航栏的高
+ */
+let kNavigationBarH: CGFloat = 44
+/**
+ *  tabbar的高
+ */
+let kTabBarH: CGFloat = 49
 
 
 
