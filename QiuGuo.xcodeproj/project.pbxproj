@@ -21,6 +21,11 @@
 		18FF2EAA1E6B825E0037DBF5 /* UIBarButtonItem-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FF2EA91E6B825E0037DBF5 /* UIBarButtonItem-Extension.swift */; };
 		18FF2EAD1E6B9F610037DBF5 /* CacheTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FF2EAC1E6B9F610037DBF5 /* CacheTool.swift */; };
 		30A207B703971DDEF63B9DC1 /* Pods_QiuGuoTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B1879CC8CD658E300C61F4E6 /* Pods_QiuGuoTests.framework */; };
+		3703DDD31E6E59EC003471FD /* MatchLeagueModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3703DDD21E6E59EC003471FD /* MatchLeagueModel.swift */; };
+		3703DDD51E6E5A91003471FD /* MatchLeagueViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3703DDD41E6E5A91003471FD /* MatchLeagueViewModel.swift */; };
+		3703DDD71E6E647B003471FD /* MatchListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3703DDD61E6E647B003471FD /* MatchListModel.swift */; };
+		3703DDD91E6E6D1B003471FD /* MatchListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3703DDD81E6E6D1B003471FD /* MatchListViewController.swift */; };
+		3703DDDB1E6E6F40003471FD /* MatchListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3703DDDA1E6E6F40003471FD /* MatchListViewModel.swift */; };
 		3720ECD91E6D4DD60088CF9C /* BarnerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3720ECD81E6D4DD60088CF9C /* BarnerCell.swift */; };
 		373363481E69147700ED96E1 /* UserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 373363471E69147700ED96E1 /* UserInfo.swift */; };
 		3733634C1E696DA600ED96E1 /* MeHeadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3733634B1E696DA600ED96E1 /* MeHeadView.swift */; };
@@ -65,6 +70,8 @@
 		3757F1D41E6437C600632C75 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3757F1D31E6437C600632C75 /* LoginViewController.swift */; };
 		37779ADB1E651A3C00A360F7 /* UITextView-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37779ADA1E651A3C00A360F7 /* UITextView-Extension.swift */; };
 		37779ADD1E6527D300A360F7 /* UIDevice-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37779ADC1E6527D300A360F7 /* UIDevice-Extension.swift */; };
+		37BC55FF1E6E984F00227759 /* MatchHeadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37BC55FE1E6E984F00227759 /* MatchHeadView.swift */; };
+		37BC56011E6E9A4D00227759 /* MatchListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37BC56001E6E9A4D00227759 /* MatchListCell.swift */; };
 		37C612C31E67CB0F004E9CED /* RegisterSecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37C612C21E67CB0F004E9CED /* RegisterSecondViewController.swift */; };
 		37E09DDE1E6D0335001718D5 /* HUDTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E09DDD1E6D0335001718D5 /* HUDTool.swift */; };
 		37E09DE01E6D3DDC001718D5 /* InformationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E09DDF1E6D3DDC001718D5 /* InformationCell.swift */; };
@@ -106,6 +113,11 @@
 		18FF2EA91E6B825E0037DBF5 /* UIBarButtonItem-Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIBarButtonItem-Extension.swift"; sourceTree = "<group>"; };
 		18FF2EAC1E6B9F610037DBF5 /* CacheTool.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CacheTool.swift; sourceTree = "<group>"; };
 		208EC7CF8725AA0D2AD9CFC6 /* Pods-QiuGuo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QiuGuo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-QiuGuo/Pods-QiuGuo.debug.xcconfig"; sourceTree = "<group>"; };
+		3703DDD21E6E59EC003471FD /* MatchLeagueModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MatchLeagueModel.swift; sourceTree = "<group>"; };
+		3703DDD41E6E5A91003471FD /* MatchLeagueViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MatchLeagueViewModel.swift; sourceTree = "<group>"; };
+		3703DDD61E6E647B003471FD /* MatchListModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MatchListModel.swift; sourceTree = "<group>"; };
+		3703DDD81E6E6D1B003471FD /* MatchListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MatchListViewController.swift; sourceTree = "<group>"; };
+		3703DDDA1E6E6F40003471FD /* MatchListViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MatchListViewModel.swift; sourceTree = "<group>"; };
 		3720ECD81E6D4DD60088CF9C /* BarnerCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BarnerCell.swift; sourceTree = "<group>"; };
 		373363471E69147700ED96E1 /* UserInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserInfo.swift; sourceTree = "<group>"; };
 		3733634B1E696DA600ED96E1 /* MeHeadView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeHeadView.swift; sourceTree = "<group>"; };
@@ -156,6 +168,8 @@
 		3757F1D31E6437C600632C75 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		37779ADA1E651A3C00A360F7 /* UITextView-Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITextView-Extension.swift"; sourceTree = "<group>"; };
 		37779ADC1E6527D300A360F7 /* UIDevice-Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIDevice-Extension.swift"; sourceTree = "<group>"; };
+		37BC55FE1E6E984F00227759 /* MatchHeadView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MatchHeadView.swift; sourceTree = "<group>"; };
+		37BC56001E6E9A4D00227759 /* MatchListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MatchListCell.swift; sourceTree = "<group>"; };
 		37C612C21E67CB0F004E9CED /* RegisterSecondViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterSecondViewController.swift; sourceTree = "<group>"; };
 		37E09DDD1E6D0335001718D5 /* HUDTool.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HUDTool.swift; sourceTree = "<group>"; };
 		37E09DDF1E6D3DDC001718D5 /* InformationCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InformationCell.swift; sourceTree = "<group>"; };
@@ -389,6 +403,7 @@
 			isa = PBXGroup;
 			children = (
 				3757F1B91E64048700632C75 /* MatchViewController.swift */,
+				3703DDD81E6E6D1B003471FD /* MatchListViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -396,6 +411,8 @@
 		3757F1911E63F96F00632C75 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				3703DDD21E6E59EC003471FD /* MatchLeagueModel.swift */,
+				3703DDD61E6E647B003471FD /* MatchListModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -403,6 +420,8 @@
 		3757F1921E63F96F00632C75 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				37BC55FE1E6E984F00227759 /* MatchHeadView.swift */,
+				37BC56001E6E9A4D00227759 /* MatchListCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -410,6 +429,8 @@
 		3757F1931E63F96F00632C75 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				3703DDD41E6E5A91003471FD /* MatchLeagueViewModel.swift */,
+				3703DDDA1E6E6F40003471FD /* MatchListViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -893,7 +914,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3703DDD91E6E6D1B003471FD /* MatchListViewController.swift in Sources */,
 				3757F1D41E6437C600632C75 /* LoginViewController.swift in Sources */,
+				3703DDD51E6E5A91003471FD /* MatchLeagueViewModel.swift in Sources */,
 				18F1AED51E6CBBA600CAF31C /* ArticleListViewModel.swift in Sources */,
 				37C612C31E67CB0F004E9CED /* RegisterSecondViewController.swift in Sources */,
 				18F1AECF1E6CB10200CAF31C /* BarnerViewModel.swift in Sources */,
@@ -904,6 +927,7 @@
 				18F1AED31E6CBB8400CAF31C /* ArticleListModel.swift in Sources */,
 				3757F1C41E64231A00632C75 /* BaseModel.swift in Sources */,
 				373363481E69147700ED96E1 /* UserInfo.swift in Sources */,
+				3703DDD71E6E647B003471FD /* MatchListModel.swift in Sources */,
 				374D52911E6554710060EE78 /* LoginHeadView.swift in Sources */,
 				373363561E6976DB00ED96E1 /* UIFont-Extentsion.swift in Sources */,
 				37491D1F1E6811D300E10D2E /* LoginViewModel.swift in Sources */,
@@ -918,15 +942,19 @@
 				37779ADD1E6527D300A360F7 /* UIDevice-Extension.swift in Sources */,
 				37E09DDE1E6D0335001718D5 /* HUDTool.swift in Sources */,
 				18F1AEC51E6C89D300CAF31C /* ShufflingFigureView.swift in Sources */,
+				37BC55FF1E6E984F00227759 /* MatchHeadView.swift in Sources */,
 				373363501E69710800ED96E1 /* UIImage-Extenstion.swift in Sources */,
 				37491D241E682D1E00E10D2E /* NotificationName.swift in Sources */,
 				37491D1D1E68112C00E10D2E /* NetworkTool.swift in Sources */,
+				3703DDDB1E6E6F40003471FD /* MatchListViewModel.swift in Sources */,
 				18F1AEC71E6C936D00CAF31C /* InformationViewController.swift in Sources */,
 				18F1AECB1E6C97CC00CAF31C /* SpecialViewModel.swift in Sources */,
 				18FF2EA61E6B67370037DBF5 /* SettingViewController.swift in Sources */,
 				3757F1BE1E640E2F00632C75 /* NavigationController.swift in Sources */,
+				3703DDD31E6E59EC003471FD /* MatchLeagueModel.swift in Sources */,
 				3757F1C81E6424AD00632C75 /* BaseViewModel.swift in Sources */,
 				3733634C1E696DA600ED96E1 /* MeHeadView.swift in Sources */,
+				37BC56011E6E9A4D00227759 /* MatchListCell.swift in Sources */,
 				18F1AEC91E6C970900CAF31C /* SpecialModel.swift in Sources */,
 				3757F1C21E6422C200632C75 /* BaseViewController.swift in Sources */,
 				18F1AEBD1E6C445400CAF31C /* PageMenuView.swift in Sources */,

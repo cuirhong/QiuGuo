@@ -18,10 +18,12 @@ enum MethodType {
 class NetworkTool {
     class func request(type: MethodType, urlString: String, paramters: [String: Any]? = nil, finishedCallback: @escaping (_ result: JSON) -> (),failureCallback:FailureBlock? = nil) {
         printData(message: urlString)
+        HUDTool.show(showType: .Load)
         // 获取类型
         let method = type == .GET ? HTTPMethod.get : HTTPMethod.post
         // 发送网络请求
         Alamofire.request(urlString, method: method, parameters: paramters).responseJSON { (response) in
+             HUDTool.dismiss()
             if response.result.isSuccess{
                 if let json = response.result.value{
                     let swiftJson = JSON(json)
@@ -32,6 +34,7 @@ class NetworkTool {
                     printData(message: response.result.error)                    
                 }
             }else{
+                 HUDTool.dismiss()
                 failureCallback!(response.result.error)
             }
         }

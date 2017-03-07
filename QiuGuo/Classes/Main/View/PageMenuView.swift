@@ -21,19 +21,25 @@ private let selMargin:CGFloat = 66*LayoutWidthScale
 
 // MARK: - 代理
 protocol PageMenuViewDelegate: class {
-    func pageMenuView(_ titleView : PageMenuView, selectedIndex index : Int)
+    func pageMenuView(_ titleView : PageMenuView,sourceIndex:Int,targetIndex:Int)
 }
 
 
 class PageMenuView: BaseView {
 
+    //MARK:- 按钮标题数组
     var menuTitles:[String] = []
-    
+    //MARK:- 是否需要底部的蒙版
     var isMask:Bool = true
-    
+    //MARK:- 代理
     weak var delegate:PageMenuViewDelegate?
+    //MARK:- 源index
+    var sourceIndex:Int = 0
+    //MARK:- 目标index
+    var targetIndex:Int = 0
     
     
+    //MARK:- 初始化方法
     init(titles:[String],isNeedUnline:Bool=false,isNeedMask:Bool=true){
     super.init(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
       menuTitles = titles
@@ -49,10 +55,6 @@ class PageMenuView: BaseView {
 
         
         setupMenuButton()
-        
-     
-        
-        
     }
     
     //MARK:-设置约束
@@ -118,6 +120,8 @@ class PageMenuView: BaseView {
         totalWidth += margin
         scrollView.contentSize = CGSize(width: totalWidth, height: 0)
         setupTitleCenter(button: selectorBtn!)
+        
+       
     }
     
     
@@ -125,7 +129,7 @@ class PageMenuView: BaseView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    
+    //MARK:- 标题滚动试图
     fileprivate lazy var scrollView:UIScrollView = {[weak self] in
         let scrollView = UIScrollView()
         scrollView.showsHorizontalScrollIndicator = false
@@ -145,11 +149,12 @@ class PageMenuView: BaseView {
         return btn
     }
     
-    //MARK:- 创建蒙板
+    //MARK:- 创建左边模糊图片
     private lazy var leftMaskImageView:UIImageView = {
         let imageView = UIImageView.init(image: UIImage.getImage("mask_l"))
         return imageView
     }()
+    //MARK:- 右边模糊图片
     private lazy var rightMaskImageView:UIImageView = {
         let imageView = UIImageView.init(image: UIImage.getImage("mask_r"))
         return imageView
@@ -176,8 +181,12 @@ extension PageMenuView{
     
     //MARK:- 点击标题按钮
     @objc fileprivate func clickTitleMenu(sender:UIButton){
-        delegate?.pageMenuView(self, selectedIndex: sender.tag)
-        setupMenuButton(index: sender.tag)        
+        //记录点击按钮
+        sourceIndex = targetIndex
+        targetIndex = sender.tag
+       
+        setupMenuButton(index: sender.tag)
+        delegate?.pageMenuView(self, sourceIndex: sourceIndex, targetIndex: targetIndex)
     }
     
     // MARK: - 让标题按钮自动居中（如果按钮的中心点 > 屏幕的中心点则将按钮中心点偏移）
@@ -205,6 +214,9 @@ extension PageMenuView{
 
 
 }
+
+
+
 
 
 

@@ -20,26 +20,7 @@ class InformationViewController: BaseViewController {
     //MARK:- 请求文章列表数据viewModel
     fileprivate lazy var articleViewModel:ArticleListViewModel = ArticleListViewModel()
  
-    //MARK:-  创建collectionView
-    fileprivate lazy var collectionView:UICollectionView = {[weak self] in
-    
-        let layout = UICollectionViewFlowLayout()
-        layout.minimumLineSpacing = 0
-        layout.minimumInteritemSpacing = 0
-        layout.scrollDirection = .vertical
-        
-        let collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: layout)
-
-        collectionView.bounces = false
-        collectionView.dataSource = self
-        collectionView.delegate = self
-        collectionView.backgroundColor = UIColor.white
-        collectionView.register(InformationCell.self, forCellWithReuseIdentifier: normalInformationCell)
-        collectionView.register(BarnerCell.self, forCellWithReuseIdentifier: shuffingFigureCell)
-        
-        return collectionView
-    
-    }()
+ 
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -50,7 +31,7 @@ class InformationViewController: BaseViewController {
     // MARK: - 请求数据
     override func loadData() {
         super.loadData()
-         HUDTool.show()
+        
         barnerViewModel.loadBarnerData(SpecialID: SpecialID!, successCallBack: {[weak self] (result) in
            
             
@@ -74,6 +55,8 @@ class InformationViewController: BaseViewController {
     override func refreshUI() {
         super.refreshUI()
         
+        collectionView.register(InformationCell.self, forCellWithReuseIdentifier: normalInformationCell)
+        collectionView.register(BarnerCell.self, forCellWithReuseIdentifier: shuffingFigureCell)        
         view.addSubview(collectionView)
         collectionView.snp.remakeConstraints { (make) in
             make.top.right.bottom.left.equalTo(collectionView.superview!)

@@ -10,7 +10,7 @@ import UIKit
 
 extension UILabel
 {
-    convenience init(text: String?,font: UIFont?, textColor: UIColor?,textAlignment:NSTextAlignment?) {
+    convenience init(text: String?,font: UIFont?, textColor: UIColor?,textAlignment:NSTextAlignment?=nil ) {
         self.init()
         
         self.text = text
@@ -50,9 +50,9 @@ extension UILabel
     
     
     //MARK:- 创建下划线
-    class func unline()->UILabel{
+    class func unline(hexString:String?="#cccccc")->UILabel{
         let label = UILabel()
-        label.backgroundColor = UIColor.init(hexString: "#cccccc")
+        label.backgroundColor = UIColor.init(hexString: hexString!)
         return label
     }
     

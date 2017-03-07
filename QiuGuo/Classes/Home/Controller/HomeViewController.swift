@@ -13,7 +13,7 @@ class HomeViewController: BaseViewController {
     private var spercialViewModel:SpecialViewModel = SpecialViewModel()
 
     //MARK:- contentView
-    private  var pageContentView:PageContentView?
+    fileprivate  var pageContentView:PageContentView?
     
     //MARK:- menu标题栏
     fileprivate var pageMenuView:PageMenuView?
@@ -32,6 +32,8 @@ class HomeViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        setupNavi()
    
     }
     
@@ -39,7 +41,6 @@ class HomeViewController: BaseViewController {
     
     override func loadData(){
         super.loadData()
-         HUDTool.show()
 
         spercialViewModel.loadSpecialData(success: {[weak self](result) in
    
@@ -100,17 +101,25 @@ class HomeViewController: BaseViewController {
 extension HomeViewController:PageMenuViewDelegate,PageContentViewDelegate{
 
     //MARK:- 标题点击代理方法
-    func pageMenuView(_ titleView: PageMenuView, selectedIndex index: Int) {
-         printData(message: String(stringInterpolationSegment: index))
+    func pageMenuView(_ titleView: PageMenuView, sourceIndex: Int, targetIndex: Int) {
+       pageContentView?.settingCurrenIndex(targetIndex: targetIndex)
     }
+    
 
     //MARK:- contentView滑动代理方法
     func pageContentView(_ contentView: PageContentView, progress: CGFloat, sourceIndex: Int, targetIndex: Int) {
         pageMenuView?.setupMenuButton(index: targetIndex)
          
     }
+    
+    
 
 }
+
+
+
+
+
 
 
 

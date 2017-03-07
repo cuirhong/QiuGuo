@@ -27,10 +27,13 @@ extension UIImageView{
     
     
     
-    func kf_setImage(imageUrlStr:String){
-         let resource = ImageResource(downloadURL:NSURL.init(string:imageUrlStr) as! URL, cacheKey: imageUrlStr)
-    
-        self.kf.setImage(with: resource)
+    func kf_setImage(imageUrlStr:String?){
+        guard imageUrlStr != nil else {
+             return
+        }
+         let resource = ImageResource(downloadURL:NSURL.init(string:imageUrlStr!) as! URL, cacheKey: imageUrlStr)
+
+        self.kf.setImage(with: resource, placeholder: UIImage(named:"placholder.png"), options: nil, progressBlock: nil, completionHandler: nil)
 
     }
     

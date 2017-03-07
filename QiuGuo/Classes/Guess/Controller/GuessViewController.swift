@@ -12,6 +12,7 @@ class GuessViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupNavi()
     }
     
 }

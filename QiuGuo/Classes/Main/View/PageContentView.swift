@@ -191,6 +191,16 @@ extension PageContentView:UICollectionViewDelegateFlowLayout{
 }
 
 
+// MARK: - 设置当前Index
+extension PageContentView{
+
+    //MARK:- 设置当前index
+    func settingCurrenIndex(courceIndex:Int=0,targetIndex:Int){
+     isClickScrollDelegate = true
+        let offSetx = CGFloat(targetIndex) * newFrame.size.width
+        collectionView.setContentOffset(CGPoint(x:offSetx,y:0), animated: true)
+    }
+}
 
 
 

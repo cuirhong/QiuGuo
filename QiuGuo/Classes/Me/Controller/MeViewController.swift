@@ -46,6 +46,8 @@ class MeViewController: BaseViewController {
     //MARK:- 初始化数据
     override func initData() {
         super.initData()
+   
+        
         
         let meMessageArr = ["message","我的消息","10"]
         let meIntegralArr = ["integral","我的积分","234"]
@@ -64,6 +66,8 @@ class MeViewController: BaseViewController {
           array.append(settingArr)
    
     }
+    
+ 
     
     //MARK:- 登录
     func login() {
