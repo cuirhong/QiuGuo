@@ -10,20 +10,25 @@ import UIKit
 
 class ArticleListViewModel: BaseViewModel {
 
-    lazy var articleListArr:[ArticleListModel] = []
+     var articleListArr:[ArticleListModel] = []
+    
+    lazy var SpecialID:Int = -1
 
     // MARK: - 加载咨询列表数据
-    func loadArticleListData(SpecialID:Int,page:Int,rows:Int=10,successCallBack: SucceedBlock?,failureCallBack: FailureBlock?){
+    func loadArticleListData(successCallBack: SucceedBlock?,failureCallBack: FailureBlock?){
         let url = AppRootUrl + "/article/Article/getArticleList"
-        NetworkTool.request(type: .POST, urlString: url, paramters: ["SpecialID":SpecialID,"page":page,"rows" :rows], finishedCallback: {[weak self] (result) in
+        NetworkTool.request(type: .POST, urlString: url, paramters: ["SpecialID":self.SpecialID,"page":self.page,"rows":self.rows], finishedCallback: {[weak self] (result) in
             let dataArr = result["data"]["data"]
+            var newModelArr = [ArticleListModel]()
             if let arr = dataArr.arrayObject{
-                self?.articleListArr = []
+                
                 for dict in arr  {
                     let model = ArticleListModel.init(dict: (dict as? Dictionary)!)
-                    self?.articleListArr.append(model)
+                    newModelArr.append(model)
                 }                
             }
+
+            self?.articleListArr = (self?.setupRefresh( preArray: (self?.articleListArr)!, newArray: newModelArr) as? [ArticleListModel])!
             successCallBack!(result)
         }) { (error) in
             failureCallBack!(error)

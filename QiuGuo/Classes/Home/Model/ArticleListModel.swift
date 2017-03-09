@@ -14,7 +14,7 @@ class ArticleListModel: BaseModel {
     var Name:String? = ""
     
     //MARK:-
-    var ID:Int? = 0
+    var ID:Int = 0
     
     //MARK:-
     var Title:String? = ""
@@ -26,10 +26,10 @@ class ArticleListModel: BaseModel {
     var Description:String? = ""
     
     //MARK:-
-    var IsHot:Int? = 0
+    var IsHot:Int = 0
     
     //MARK:-
-    var Comments:Int? = 0
+    var Comments:Int = 0
     
     //MARK:-
     var Tag:String? = ""

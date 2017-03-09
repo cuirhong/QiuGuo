@@ -22,11 +22,31 @@ class ShufflingFigureView: BaseView {
     //代理
     weak var delegate:ShuffingFigureViewDelegate?
     //网络图片地址数组
-     var imageUrlArr:[String]? = []
+    var imageUrlArr:[String]? = []{
+        didSet{
+            if (imageUrlArr?.count)! >= 2{
+             pageControll.numberOfPages = (imageNameArr?.count)!
+            }
+        }
+    }
+
      //本地图片地址数组
-    fileprivate var imageNameArr:[String]? = []
+    fileprivate var imageNameArr:[String]? = []{
+        didSet{
+            if (imageNameArr?.count)! >= 2{
+            pageControll.numberOfPages = (imageNameArr?.count)!
+            }
+        }
+    }
+
     //标题数组
-     var titleArr:[String]? = []
+    var titleArr:[String]? = []{
+        didSet{
+            if (titleArr?.count)! >= 2{
+                pageControll.numberOfPages = (titleArr?.count)!
+            }
+        }
+    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -68,24 +88,22 @@ class ShufflingFigureView: BaseView {
         }
         
         addSubview(pageControll)
+        
         pageControll.snp.remakeConstraints { (make) in
-            make.right.equalTo(40*LayoutWidthScale)
-            make.top.equalTo(bottomMaskView).offset(30*LayoutHeightScale)
-           
+            make.right.equalTo(-40*LayoutWidthScale)
+            make.centerY.equalTo(bottomMaskView)
+
         }
         
         addSubview(titleLabel)
         titleLabel.snp.remakeConstraints { (make) in
             make.left.equalTo(30*LayoutWidthScale)
             make.top.equalTo(bottomMaskView.snp.top).offset(20*LayoutHeightScale)
-            make.right.lessThanOrEqualTo(pageControll.snp.left)
+            make.right.lessThanOrEqualTo(pageControll.snp.left).offset(-5)
         }
         
       
-        pageControll.numberOfPages = (titleArr?.count)!
-         pageControll.currentPage = 1
         
-    
     }
     
     
@@ -158,7 +176,7 @@ class ShufflingFigureView: BaseView {
 
 
 //协议方法
-extension ShufflingFigureView:UICollectionViewDataSource,UICollectionViewDelegate{
+extension ShufflingFigureView:UICollectionViewDataSource{
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         guard imageUrlArr?.count == 0 else {
@@ -198,7 +216,9 @@ extension ShufflingFigureView:UICollectionViewDataSource,UICollectionViewDelegat
         }
         
         guard (titleArr?.count)!<indexPath.item else {
+          
              titleLabel.text = titleArr?[indexPath.item]
+
             return cell
         }
         
@@ -223,6 +243,26 @@ extension ShufflingFigureView:UICollectionViewDelegateFlowLayout{
          return (newFrame?.size)!
     }
 
+
+
+
+}
+
+// MARK: - UICollectionViewDelegate
+extension ShufflingFigureView:UICollectionViewDelegate{
+
+
+    //MARK:- 开始滑动，cell有重用功能，titleLabel是单个
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+         let offX = scrollView.contentOffset.x
+        let index:Int = Int(offX / (newFrame?.size.width)!)
+        if (titleArr?.count)! > index{
+          titleLabel.text = titleArr?[index]
+            pageControll.currentPage = index
+        }
+        
+        
+    }
 
 
 

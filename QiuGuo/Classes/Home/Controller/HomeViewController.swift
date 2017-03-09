@@ -73,9 +73,9 @@ class HomeViewController: BaseViewController {
         
         
         if (spercialViewModel.spericalModels.count) > 0 {
-            var childVcs:[InformationViewController] = []
+            var childVcs:[ArticleListViewController] = []
             for model in spercialViewModel.spericalModels {
-                let controller = InformationViewController()
+                let controller = ArticleListViewController()
                 controller.SpecialID = model.SpecialID
                 childVcs.append(controller)
             }

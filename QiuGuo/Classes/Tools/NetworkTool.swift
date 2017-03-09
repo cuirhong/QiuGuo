@@ -22,7 +22,17 @@ class NetworkTool {
         // 获取类型
         let method = type == .GET ? HTTPMethod.get : HTTPMethod.post
         // 发送网络请求
-        Alamofire.request(urlString, method: method, parameters: paramters).responseJSON { (response) in
+        var parameter:[String:Any] = [String:Any]()
+        if paramters != nil, (paramters?.count)! > 0 {
+            var parametersDict:[String:Any] = paramters!
+            parametersDict["client"] = 2
+            parametersDict["version"] = 100
+            parameter = parametersDict
+        }
+        
+       
+        
+        Alamofire.request(urlString, method: method, parameters: parameter).responseJSON { (response) in
              HUDTool.dismiss()
             if response.result.isSuccess{
                 if let json = response.result.value{

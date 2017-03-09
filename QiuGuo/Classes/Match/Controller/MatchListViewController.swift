@@ -29,26 +29,52 @@ class MatchListViewController: BaseViewController {
     //MARK:- 初始化数据
     override func initData() {
         super.initData()
-        matchListViewModel.LeagueID = leagueID
-        
+        matchListViewModel.LeagueID = leagueID        
     }
 
     
     //MARK:- 网络请求数据
     override func loadData() {
         super.loadData()
-       
         matchListViewModel.loadMatchList(successCallBack: {[weak self] (result) in
             DispatchQueue.main.async {
                  self?.setupUI()
+                self?.endRefreshing()
+
             }
-          
         }) { (error) in
             HUDTool.show(showType:.Failure,text: error.debugDescription)
-         
         }
    
     }
+    
+    //MARK:- 下拉刷新
+    override func downLoadRefresh() {
+        super.downLoadRefresh()
+        matchListViewModel.refreshType = .PullDownRefresh
+        matchListViewModel.page = 1
+        matchListViewModel.type = "end"
+        DispatchQueue.global().async {[weak self] in
+            self?.loadData()
+        }
+    }
+    
+    //MARK:- 上拉加载
+    override func upLoadRefresh() {
+        super.upLoadRefresh()
+        if matchListViewModel.refreshType == .PullDownRefresh || matchListViewModel.isEnd == "1"{
+            matchListViewModel.refreshType = .UpDownRefresh
+            matchListViewModel.page += 1
+            matchListViewModel.type = "head"
+            DispatchQueue.global().async {[weak self] in
+                self?.loadData()
+                
+            }
+        }else{            
+            collectionView.endFooterRefreshingWithNoMoreData()
+        }
+    }
+
     
     
     //MARK:- 设置界面
@@ -110,14 +136,6 @@ extension MatchListViewController:UICollectionViewDataSource{
         }
       
     }
-   
-//    //返回分组脚部视图的尺寸，在这里控制分组脚部视图的高度
-//    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
-//        return CGSizeMake(UIScreen.mainScreen().bounds.size.width, 40)
-//    }
-
-
-
 
 }
 

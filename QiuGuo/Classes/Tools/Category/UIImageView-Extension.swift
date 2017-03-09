@@ -33,7 +33,7 @@ extension UIImageView{
         }
          let resource = ImageResource(downloadURL:NSURL.init(string:imageUrlStr!) as! URL, cacheKey: imageUrlStr)
 
-        self.kf.setImage(with: resource, placeholder: UIImage(named:"placholder.png"), options: nil, progressBlock: nil, completionHandler: nil)
+        self.kf.setImage(with: resource, placeholder: UIImage(named:"placeholder.png"), options: nil, progressBlock: nil, completionHandler: nil)
 
     }
     

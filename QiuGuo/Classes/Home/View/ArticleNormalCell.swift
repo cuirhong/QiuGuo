@@ -8,29 +8,23 @@
 
 import UIKit
 
-class InformationCell: BaseCollectionViewCell {
+class ArticleNormalCell: BaseCollectionViewCell {
     
     //MARK:- 咨询模型
     var articleModel:ArticleListModel?{
     
         didSet{
             if let urlStr = articleModel?.Covers?[0]{
+                imageView.isHidden = false
              imageView.kf_setImage(imageUrlStr: urlStr)
             
             }
             
             textLabel.text = articleModel?.Title
             resourceLabel.text = articleModel?.Name
-            
 
-
-            commentButton.setTitle((articleModel?.Comments?.description)! + " " + "评论", for: .normal)
-           
-            
-   
+            commentButton.setTitle((articleModel?.Comments.description)! + " " + "评论", for: .normal)
         }
-    
-    
     }
     
     override init(frame: CGRect) {
@@ -44,7 +38,7 @@ class InformationCell: BaseCollectionViewCell {
     
  
     private func setupUI(){
-        
+        imageView.isHidden = true
         contentView.addSubview(imageView)
         imageView.snp.remakeConstraints { (make) in
             make.left.equalTo(30*LayoutWidthScale)
@@ -59,7 +53,7 @@ class InformationCell: BaseCollectionViewCell {
         textLabel.snp.remakeConstraints { (make) in
             make.left.equalTo(imageView.snp.right).offset(40*LayoutWidthScale)
             make.top.equalTo(22*LayoutHeightScale)
-            make.right.equalTo(-76*LayoutWidthScale)
+            make.right.equalTo(-30*LayoutWidthScale)
             
         }
         
@@ -85,8 +79,7 @@ class InformationCell: BaseCollectionViewCell {
             
         }
     
-    
-    
+        
     
     }
     
@@ -95,20 +88,20 @@ class InformationCell: BaseCollectionViewCell {
     //MARK:- 图片
     fileprivate lazy var imageView:UIImageView = UIImageView()
     //MARK:- 咨询信息
-    fileprivate lazy var textLabel:UILabel = {
+     lazy var textLabel:UILabel = {
         let label = UILabel(text: "", font: UIFont.font(psFontSize: 46), textColor: DEFAUlTFONTCOLOR, textAlignment: .left)
         label.numberOfLines = 2
         label.sizeToFit()
         return label
     }()
     //MARK:- 来源
-    fileprivate lazy var resourceLabel:UILabel = UILabel(text: "", font: UIFont.font(psFontSize: 32), textColor: UIColor.init(hexString: "#808080"), textAlignment: .left)
+     lazy var resourceLabel:UILabel = UILabel(text: "", font: UIFont.font(psFontSize: 32), textColor: UIColor.init(hexString: "#808080"), textAlignment: .left)
     //MARK:- 评论
-    fileprivate lazy var commentButton:UIButton = UIButton(title: "898 评论", backImageName: "comment_bg.png", font: UIFont.font(psFontSize: 34), titleColor: UIColor.init(hexString: "4d4d4d"))
+     lazy var commentButton:UIButton = UIButton(title: "898 评论", backImageName: "comment_bg.png", font: UIFont.font(psFontSize: 34), titleColor: UIColor.init(hexString: "4d4d4d"))
     //MARK:- 分割线
-    fileprivate lazy var undlineLabel:UILabel = UILabel.unline()
+     lazy var undlineLabel:UILabel = UILabel.unline()
     
-    
+
     
     
 }

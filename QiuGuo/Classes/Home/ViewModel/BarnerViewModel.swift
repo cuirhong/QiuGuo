@@ -9,7 +9,7 @@
 import UIKit
 
 class BarnerViewModel: BaseViewModel {
-    lazy var barnerArr:[BarnerModel] = []
+     var barnerArr:[BarnerModel] = []
     
     // MARK: - 加载barner数据
     func loadBarnerData(SpecialID:Int,successCallBack: SucceedBlock?,failureCallBack: FailureBlock?){

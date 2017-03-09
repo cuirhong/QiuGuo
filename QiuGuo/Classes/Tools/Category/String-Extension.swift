@@ -8,7 +8,6 @@
 
 import UIKit
 
-
 extension String{
   
     static func localPath(_ localFileName:String) -> String {
@@ -50,6 +49,43 @@ extension String{
         let filePath = (path as NSString).appendingPathComponent(self)
         return filePath
     }
+    
+    
+    
+   
+    //MARK:- 字符串得到Date
+    static func getDateFromString(dateStr:String?="",formatter:String?="yy-MM-dd hh:mm:ss")->Date?{
+        let f = DateFormatter()
+        f.dateFormat = formatter
+        let date = f.date(from: dateStr!)
+        return date
+    }
+    
+    //MARK:- 从Int获取星期
+   static func weekStringFromInt(date:Int)->String{
+        switch date {
+        case 2:
+            return  "一"
+        case 3:
+            return "二"
+        case 4:
+            return "三"
+        case 5:
+            return "四"
+        case 6:
+            return "五"
+        case 7:
+            return "六"
+        case 1:
+            return "日"
+            
+        default:
+            return "--"
+        }
+    
+    }
+    
+    
 
 
 }

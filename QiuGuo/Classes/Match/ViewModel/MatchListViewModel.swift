@@ -11,10 +11,7 @@ import UIKit
 
 
 class MatchListViewModel: BaseViewModel {
-    //MARK:- 每页最多显示的信息数
-    var rows:Int? = 10
-    //MARK:- 当前页面
-    var page:Int? = 1
+
     //MARK:- 赛事栏目ID
     var LeagueID:Int = 0
     //MARK:- 类型 head上滑 end 下滑 默认下滑

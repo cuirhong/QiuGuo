@@ -18,12 +18,12 @@ class BarnerModel: BaseModel {
      */
 
    // MARK: - 描述
-    var Title:String?
+    var Title:String? = ""
     // MARK: - 调转url
-    var Url:String?
+    var Url:String? = ""
     // MARK: - 文章ID
-    var ArticleID:Int?
+    var ArticleID:Int = 0
     // MARK: - 图片地址
-    var Cover:String?
+    var Cover:String? = ""
 
 }

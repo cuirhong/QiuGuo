@@ -14,11 +14,11 @@ class LoginProfile: NSObject {
     var loginType:LoginProfileType?
   
     /// 手机号
-    var phoneNumber : String?
+    var phoneNumber : String? = ""
     /// 验证码
-    var codeNum : String?
+    var codeNum : String? = ""
     /// 密码
-    var password : String?
+    var password : String? = ""
     
     /// 判断是否是手机号
    class  func isPhoneNumber(_ num: String) -> Bool {

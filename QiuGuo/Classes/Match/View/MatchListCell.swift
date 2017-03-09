@@ -139,8 +139,8 @@ class MatchListCell: BaseCollectionViewCell {
         matchStatusButton.setTitle("已结束", for: .normal)
         matchStatusButton.setImage(nil, for: .normal)
         
-        scoreLabel.text = matchListModel?.Score?.description
-        beScoreLabel.text = matchListModel?.BeScore?.description
+        scoreLabel.text = matchListModel?.Score.description
+        beScoreLabel.text = matchListModel?.BeScore.description
     }
     //MARK:- 设置即将开始界面
     private func settingWillStartMatchUI(){
@@ -151,10 +151,19 @@ class MatchListCell: BaseCollectionViewCell {
         
         matchStatusButton.setBackgroundImage(UIImage(named:"l_time_bg_blue"), for: .normal)
         matchStatusButton.setImage(UIImage.getImage("icon_clock"), for: .normal)
-        matchStatusButton.setTitle("20:30", for: .normal)
-    
-    
-    
+        
+        var time = " ----"
+        if let dateStr = matchListModel?.StartTime{
+            let date = String.getDateFromString(dateStr: dateStr)
+            let com = date?.getDateComponents()
+            if let hour = com?.hour,let minute = com?.minute{
+                time = String(format: " %02d:%02d", hour,minute)
+                
+            }
+            
+        }
+        
+         matchStatusButton.setTitle(time, for: .normal)
     }
     //MARK:- 设置正在进行的比赛界面
     private func settingBeingMatchUI(){
