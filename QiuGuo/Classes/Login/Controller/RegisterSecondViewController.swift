@@ -319,7 +319,8 @@ class RegisterSecondViewController: BaseViewController {
     }
     
     //MARK:- 返回按钮
-    override func back(){
+     override func back(){
+        
         view.removeFromSuperview()
         self.removeFromParentViewController()
     

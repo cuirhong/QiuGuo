@@ -45,7 +45,12 @@ class SettingViewController: BaseViewController {
     
     // MARK: - 设置是否推送消息
     func settingIsPushMessage(sender:UISwitch){
-        UserDefaults.standard.set(sender.isOn, forKey: KonlyWIFILoadImage)
+        UserDefaults.standard.set(sender.isOn, forKey: KisPushMessage)
+    }
+    
+    func settingOnlyWIFILoadImage(sender:UISwitch){
+     UserDefaults.standard.set(sender.isOn, forKey: KonlyWIFILoadImage)
+    
     }
 
     // MARK: - 退出登录
@@ -58,47 +63,126 @@ class SettingViewController: BaseViewController {
 extension SettingViewController:UITableViewDelegate,UITableViewDataSource{
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 8
+        if UserInfo.loadAccount() != nil{
+        
+        return 5
+        }
+        return 4
+        
     }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        switch section {
+        case 2:
+            return 2
+        case 3:
+            return 3
+        default:
+            return 1
+        }
+
     }
     
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var cell:PersonalInfoCell?
-        if indexPath.section == 2{
-            
-            var isCanPush:Bool? = UserDefaults.standard.value(forKey: KonlyWIFILoadImage) as? Bool
-            if isCanPush == nil{
-               isCanPush = false
-            }
-            cell = PersonalInfoCell.init(reuseIdentifier: "switchCell",isNeedIcon:false, isNeedSwitch: true, switchIsOn: isCanPush!,isNeedArrow:false)
-            cell?.buttonSwitch.addTarget(self, action: #selector(settingIsPushMessage), for:.valueChanged)
-        }else if indexPath.section == 3{
-            cell = PersonalInfoCell.init(reuseIdentifier: "haveCountCell",isNeedIcon: false, isNeedCount: true)
-            cell?.countLabel.text = CacheTool.cacheSize
+        var isNeedUndline:Bool = false
         
-        }else if indexPath.section == 7{
+        if indexPath.section == 2{
+            if indexPath.row == 0{
+             isNeedUndline = true
+            }
+         
+        }
+        
+        if indexPath.section == 3{
+            if indexPath.row == 0 || indexPath.row == 1{
+              isNeedUndline = true
+            
+            }
+        }
+        
+ 
+        if indexPath.section == 1 {
+        
+            var isCanPush:Bool? = UserDefaults.standard.value(forKey: KisPushMessage) as? Bool
+            if isCanPush == nil{
+                isCanPush = false
+            }
+            cell = PersonalInfoCell.init(reuseIdentifier: "switchCell",isNeedIcon:false, isNeedSwitch: true, switchIsOn: isCanPush!,isNeedArrow:false,isNeedUndline:isNeedUndline)
+            cell?.buttonSwitch.addTarget(self, action: #selector(settingIsPushMessage(sender:)), for:.valueChanged)
+            
+        
+        }else if indexPath.section == 2{
+            if indexPath.row == 0{
+                var isLoadImage:Bool? = UserDefaults.standard.value(forKey: KonlyWIFILoadImage) as? Bool
+                if isLoadImage == nil{
+                    isLoadImage = false
+                }
+                cell = PersonalInfoCell.init(reuseIdentifier: "switchCell",isNeedIcon:false, isNeedSwitch: true, switchIsOn: isLoadImage!,isNeedArrow:false,isNeedUndline:isNeedUndline)
+                cell?.buttonSwitch.addTarget(self, action: #selector(settingOnlyWIFILoadImage(sender:)), for:.valueChanged)
+            }else{
+                cell = PersonalInfoCell.init(reuseIdentifier: "haveCountCell",isNeedIcon: false, isNeedCount: true,isNeedUndline:isNeedUndline)
+                cell?.countLabel.text = CacheTool.cacheSize
+
+            }
+            
+         
+        }else if indexPath.section == 4{
             
           let cell = UITableViewCell.init(style: .default, reuseIdentifier: "logoutButtonCell")
-          cell.contentView.addSubview(logoutBtn)
-            logoutBtn.snp.remakeConstraints({ (make) in
-            make.centerX.centerY.equalTo(logoutBtn.superview!)
-            })
+            if logoutBtn.superview != nil{
+                 cell.contentView.addSubview(logoutBtn)
+                logoutBtn.snp.remakeConstraints({ (make) in
+                    make.centerX.centerY.equalTo(logoutBtn.superview!)
+                })
+            }
            return cell
             
         }else{
             let identifier = "personalCell"
-            cell = tableView.dequeueReusableCell(withIdentifier: identifier) as? PersonalInfoCell
-            if cell == nil{
-                cell = PersonalInfoCell.init(reuseIdentifier: identifier, isNeedIcon: false)
+             cell = PersonalInfoCell.init(reuseIdentifier: identifier,isNeedIcon:false,isNeedUndline:isNeedUndline)
+      
+            
+        }
+        
+        
+        var text = ""
+        if indexPath.section == 0{
+        
+          text = array[0]
+        }else if  indexPath.section == 1{
+         text = array[1]
+        
+        }else if indexPath.section == 2{
+            if indexPath.row == 0{
+            
+            text = array[2]
+            }else{
+            text = array[3]
+            
             }
         
         
+        }else if indexPath.section == 3{
+            switch indexPath.row {
+            case 0:
+                text = array[4]
+            case 1:
+                text = array[5]
+            case 2:
+                text = array[6]
+            default:
+                 break
+            }
+        
+        }else {
+            text = array.last!
+        
         }
+
         if (cell?.isKind(of: PersonalInfoCell.classForCoder()))!{
-            cell?.userInfoLineLabel.text = array[indexPath.section]
+            cell?.userInfoLineLabel.text = text
 
         }
                return cell!
@@ -116,13 +200,13 @@ extension SettingViewController:UITableViewDelegate,UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
          tableView.deselectRow(at: indexPath, animated: true)
-        if indexPath.section == 3{//清除缓存
-            if CacheTool.clearCache(){
-            SVProgressHUD.showSuccess(withStatus: "清除成功")
-                tableView.reloadSections([indexPath.section], with: .none)
-            }
-            
+        if indexPath.section == 2 ,indexPath.row == 1{//清除缓存
+           _ = CacheTool.clearCache()
+             HUDTool.show(showType: .Success, text: "清除成功", viewController: self)
+            tableView.reloadSections([indexPath.section], with: .none)
     
+        }else{
+           HUDTool.show(showType: .Info, text: "抱歉,暂未开通此功能", viewController: self)
         }
     }
 

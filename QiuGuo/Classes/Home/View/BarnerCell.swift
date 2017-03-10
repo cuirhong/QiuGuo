@@ -49,7 +49,7 @@ class BarnerCell: BaseCollectionViewCell {
 
 
     //MARK:- 轮播图,barner
-    fileprivate lazy var shuffingFigureView:ShufflingFigureView = ShufflingFigureView.init(frame: CGRect(x: 0, y: 0, width: ScreenWidth, height: 528*LayoutHeightScale))
+     lazy var shuffingFigureView:ShufflingFigureView = ShufflingFigureView.init(frame: CGRect(x: 0, y: 0, width: ScreenWidth, height: 528*LayoutHeightScale))
 }
 
 

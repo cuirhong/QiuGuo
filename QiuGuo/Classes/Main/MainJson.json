@@ -9,12 +9,7 @@
   "title": "球赛",
   "imageName": "tabbar_match"
   },
- 
-  {
-  "vcName": "GuessViewController",
-  "title": "竞猜",
-  "imageName": "tabbar_quiz"
-  },
+
   {
   "vcName": "MeViewController",
   "title": "我的",

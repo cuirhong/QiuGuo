@@ -10,11 +10,11 @@ import UIKit
 
 extension UIBarButtonItem {
     
-    convenience init(imageName : String, highlightedImage : String = "" , size : CGSize = CGSize.zero, target:UIViewController, action:Selector) {
+    convenience init(imageName : String, highlightedImage : String? = "" , size : CGSize = CGSize.zero, target:UIViewController? = nil, action:Selector?=nil) {
         let btn = UIButton()
         btn.setImage(UIImage(named : imageName), for: .normal)
         if highlightedImage != ""{
-            btn.setImage(UIImage(named : highlightedImage), for: .highlighted)
+            btn.setImage(UIImage(named : highlightedImage!), for: .highlighted)
         }
         if size != CGSize.zero{
             btn.frame = CGRect (origin: CGPoint.zero, size: size)
@@ -22,7 +22,10 @@ extension UIBarButtonItem {
         {
             btn.sizeToFit()
         }
-        btn.addTarget(target, action: action, for: .touchUpInside)
+        if target != nil,action != nil{
+          btn.addTarget(target, action: action!, for: .touchUpInside)
+        }
+      
         self.init(customView: btn)
     }
 }

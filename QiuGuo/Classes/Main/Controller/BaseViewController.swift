@@ -98,6 +98,7 @@ class BaseViewController: UIViewController {
         
         //添加上啦加载
         let footer = RefreshFooterView.init(frame: CGRect(x: 0, y: 0, width: ScreenWidth, height: 70))
+        
         _ = collectionView.setUpFooterRefresh(footer, action: { 
              self?.upLoadRefresh()
         })
@@ -129,6 +130,11 @@ class BaseViewController: UIViewController {
     //MARK:- 返回事件
     func back(){
         self.navigationController?.popViewController(animated: true)
+    }
+    
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        HUDTool.dismiss()
     }
     
 }

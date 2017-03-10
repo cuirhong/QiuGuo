@@ -17,23 +17,21 @@ class RefreshFooterView: UIView {
     fileprivate let loadingLabel:UILabel = UILabel(text: "加载中...", font: UIFont.font(psFontSize: 34), textColor: UIColor.init(hexString: "4d4d4d"))
     
     //MARK:- 提示没有可加载更多的数据了
-    fileprivate let noMoreDataLabel:UILabel = UILabel(text: "再往上拉,就出界了~", font: UIFont.font(psFontSize: 36), textColor: DEFAUlTFONTCOLOR)
+    fileprivate let noMoreDataLabel:UILabel = UILabel(text: "再往上拉,就出界了~", font: UIFont.font(psFontSize: 36), textColor: UIColor.init(hexString: "#999999"))
     
     //MARK:- 初始化
     override init(frame: CGRect) {
         super.init(frame: frame)
+
         
-        imageView.frame = CGRect(x: 0, y: 0, width: 27, height: 25)
-        imageView.center = CGPoint(x: self.bounds.width/2.0, y: self.bounds.height/2.0)
         addSubview(imageView)
-//         let iv = UIImageView(image: UIImage(named:"up_move_loading_01"))
-//        let frame = iv.frame
-//        imageView.snp.remakeConstraints { (make) in
-//            make.right.equalTo(imageView.superview!.snp.centerX)
-//             make.centerY.equalTo(imageView.superview!)
-//            make.size.equalTo(frame.size)
-//            
-//        }
+        imageView.snp.remakeConstraints { (make) in
+            make.right.equalTo(imageView.superview!.snp.centerX).offset(-5)
+             make.centerY.equalTo(imageView.superview!)
+  
+        }
+        
+        
         
         addSubview(loadingLabel)
         loadingLabel.snp.remakeConstraints { (make) in
@@ -46,6 +44,7 @@ class RefreshFooterView: UIView {
         noMoreDataLabel.snp.remakeConstraints { (make) in
             make.centerX.centerY.equalTo(noMoreDataLabel.superview!)
         }
+
         
     }
     
@@ -93,6 +92,7 @@ extension RefreshFooterView:RefreshableFooter{
         imageView.stopAnimating()
         imageView.isHidden = true
         noMoreDataLabel.isHidden = true
+        loadingLabel.isHidden = true
         
     }
 
@@ -100,7 +100,8 @@ extension RefreshFooterView:RefreshableFooter{
      已经开始执行刷新逻辑，在一次刷新中，只会调用一次
      */
     func didBeginRefreshing(){
-        
+        imageView.isHidden = false
+        loadingLabel.isHidden = false
         var imageNames = [String]()
         for index in 1...12 {
             imageNames.append("up_move_loading_\(String(format: "%02d", index))")
@@ -110,7 +111,7 @@ extension RefreshFooterView:RefreshableFooter{
         }
         
         imageView.animationImages = images
-        imageView.animationDuration = Double(images.count) * 0.28
+        imageView.animationDuration = Double(images.count) * 0.1
         imageView.startAnimating()
     }
 

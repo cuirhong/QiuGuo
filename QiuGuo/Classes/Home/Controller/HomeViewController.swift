@@ -76,7 +76,7 @@ class HomeViewController: BaseViewController {
             var childVcs:[ArticleListViewController] = []
             for model in spercialViewModel.spericalModels {
                 let controller = ArticleListViewController()
-                controller.SpecialID = model.SpecialID
+                controller.articleViewModel.SpecialID = model.SpecialID
                 childVcs.append(controller)
             }
             

@@ -40,7 +40,7 @@ class PersonalInfoCell: BaseTableViewCell {
     public lazy var buttonSwitch:UISwitch=UISwitch()
     
     
-    init(style:UITableViewCellStyle = .default,reuseIdentifier:String?,isNeedIcon:Bool=true,isNeedCount:Bool=false,isNeedSwitch:Bool=false,switchIsOn:Bool=false,isNeedArrow:Bool=true){
+    init(style:UITableViewCellStyle = .default,reuseIdentifier:String?,isNeedIcon:Bool=true,isNeedCount:Bool=false,isNeedSwitch:Bool=false,switchIsOn:Bool=false,isNeedArrow:Bool=true,isNeedUndline:Bool=true){
     
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
@@ -91,11 +91,16 @@ class PersonalInfoCell: BaseTableViewCell {
             
         }
         
-        undlineLabel.snp.remakeConstraints { (make) in
-            make.right.bottom.equalTo(undlineLabel.superview!)
-          make.height.equalTo(1)
-           make.left.equalTo(userInfoLineLabel)
+        if isNeedUndline{
+            undlineLabel.snp.remakeConstraints { (make) in
+                make.right.bottom.equalTo(undlineLabel.superview!)
+                make.height.equalTo(1)
+                make.left.equalTo(userInfoLineLabel)
+            }
+        
         }
+        
+       
         
         
         if isNeedSwitch{

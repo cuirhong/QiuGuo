@@ -21,7 +21,20 @@ class ArticleNormalCell: BaseCollectionViewCell {
             }
             
             textLabel.text = articleModel?.Title
-            resourceLabel.text = articleModel?.Name
+            
+            if articleModel?.IsProfundity == 1{
+                resourceLabel.text = "深度"
+                resourceLabel.textColor = UIColor.init(hexString: "#808080")
+            }else{
+                if articleModel?.Tag != ""{
+                    resourceLabel.text = articleModel?.Tag
+                    if let color = articleModel?.TagColor{
+                        resourceLabel.textColor = UIColor.init(hexString: color)
+                    }
+                    
+                }
+                
+            }
 
             commentButton.setTitle((articleModel?.Comments.description)! + " " + "评论", for: .normal)
         }
@@ -99,7 +112,7 @@ class ArticleNormalCell: BaseCollectionViewCell {
     //MARK:- 评论
      lazy var commentButton:UIButton = UIButton(title: "898 评论", backImageName: "comment_bg.png", font: UIFont.font(psFontSize: 34), titleColor: UIColor.init(hexString: "4d4d4d"))
     //MARK:- 分割线
-     lazy var undlineLabel:UILabel = UILabel.unline()
+    fileprivate lazy var undlineLabel:UILabel = UILabel.unline()
     
 
     

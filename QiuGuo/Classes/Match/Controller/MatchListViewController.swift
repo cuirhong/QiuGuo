@@ -10,14 +10,14 @@ import UIKit
 
 
 private let matchListCell = "matchListCollectionCell"
-private let matchListHeaderView = "matchListCollectionHeaderView"
+private let matchListSectionView = "matchListCollectionSectionView"
 
 class MatchListViewController: BaseViewController {
     //MARK:- 赛事栏目ID
     var leagueID:Int = 0
     
     //MARK:- 比赛列表viewModel
-    fileprivate lazy var matchListViewModel = MatchListViewModel()
+    fileprivate  var matchListViewModel = MatchListViewModel()
 
     //MARK:- 加载
     override func viewDidLoad() {
@@ -82,7 +82,7 @@ class MatchListViewController: BaseViewController {
 
         if collectionView.superview == nil {
             collectionView.register(MatchListCell.self, forCellWithReuseIdentifier: matchListCell)
-            collectionView.register(MatchHeadView.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: matchListHeaderView)
+            collectionView.register(MatchListSectionView.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: matchListSectionView)
             view.addSubview(collectionView)
             collectionView.snp.remakeConstraints { (make) in
                 make.top.left.right.bottom.equalTo(collectionView.superview!)
@@ -126,18 +126,46 @@ extension MatchListViewController:UICollectionViewDataSource{
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         switch kind{
         case UICollectionElementKindSectionHeader:
-            let header:MatchHeadView=collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: matchListHeaderView, for: indexPath) as! MatchHeadView
+            let header:MatchListSectionView=collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: matchListSectionView, for: indexPath) as! MatchListSectionView
             let model = matchListViewModel.matchListArr[indexPath.section][indexPath.item]
             header.matchListModel = model
             
             return header
         default:
-            return MatchHeadView()
+            return MatchListSectionView()
         }
       
     }
 
 }
+
+// MARK: - 遵守UICollectionViewDelegate
+extension MatchListViewController:UICollectionViewDelegate{
+    //MARK:- 点击cell
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) { 
+        DispatchQueue.main.async {
+            let detailController = MatchDetailViewController()
+            detailController.matchModel = self.matchListViewModel.matchListArr[indexPath.section][indexPath.item]
+           self.navigationController?.pushViewController(detailController, animated: false)
+        }
+        
+    }
+
+
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
 
 // MARK: - 遵守UICollectionViewFlowLayout代理
 extension MatchListViewController:UICollectionViewDelegateFlowLayout{

@@ -88,6 +88,9 @@ let KuserLoginPath = "userLoginInfo.plist".docStr()
 /**
  *  设置消息推送
  */
+let KisPushMessage = "isPushMessage"
+
+
 let KonlyWIFILoadImage = "onlyWIFILoadImage"
 
 

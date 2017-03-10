@@ -45,6 +45,13 @@ class TabBarController : UITabBarController{
      */
     func addchildViewControllers(){
 
+        /*
+         {
+         "vcName": "GuessViewController",
+         "title": "竞猜",
+         "imageName": "tabbar_quiz"
+         },
+         */
     
         let jsonPath = Bundle.main.path(forResource: "MainJson.json", ofType: nil)
         let jsonData = try! Data(contentsOf: URL(fileURLWithPath: jsonPath!))

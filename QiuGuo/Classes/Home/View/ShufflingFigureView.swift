@@ -210,8 +210,7 @@ extension ShufflingFigureView:UICollectionViewDataSource{
         }else if (imageUrlArr?.count)! > indexPath.item{
 
             let url:String = imageUrlArr![indexPath.item]
-            let resource = ImageResource(downloadURL:NSURL.init(string:url) as! URL, cacheKey: url)
-            imageView?.kf.setImage(with: resource)
+            imageView?.kf_setImage(imageUrlStr: url)
          
         }
         
@@ -259,9 +258,7 @@ extension ShufflingFigureView:UICollectionViewDelegate{
         if (titleArr?.count)! > index{
           titleLabel.text = titleArr?[index]
             pageControll.currentPage = index
-        }
-        
-        
+        }    
     }
 
 

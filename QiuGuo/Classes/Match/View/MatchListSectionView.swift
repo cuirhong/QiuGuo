@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MatchHeadView: UICollectionReusableView {
+class MatchListSectionView: UICollectionReusableView {
     
     //MARK:- 比赛列表模型
     var matchListModel:MatchListModel?{

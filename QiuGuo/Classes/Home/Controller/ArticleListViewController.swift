@@ -13,55 +13,64 @@ import UIKit
 let horizontalArticleCell = "horizontalArticleCell"
 
 
+
 class ArticleListViewController: BaseViewController {
-     var SpecialID:Int? = 0
+
     //MARK:- 请求barner数据viewModel
     fileprivate lazy var barnerViewModel:BarnerViewModel = BarnerViewModel()
     //MARK:- 请求文章列表数据viewModel
-    fileprivate lazy var articleViewModel:ArticleListViewModel = ArticleListViewModel()
+     lazy var articleViewModel:ArticleListViewModel = ArticleListViewModel()
  
  
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        initData()
+
         setupView()
        
    
     }
     
-    override func initData() {
-        super.initData()
-        if let id = SpecialID{
-         articleViewModel.SpecialID = id
-        }
-        
-    }
+
     
     // MARK: - 请求数据
     override func loadData() {
         super.loadData()
-        
-        barnerViewModel.loadBarnerData(SpecialID: SpecialID!, successCallBack: {[weak self] (result) in
-           
-            
-            //请求咨询列表数据
-            self?.articleViewModel.loadArticleListData(successCallBack: { (result) in
-                DispatchQueue.main.async {
-                    self?.refreshUI()
-                    self?.endRefreshing()
-                }
-                
-            }, failureCallBack: { (error) in
-                 printData(message: "请求专题列表数据出错")
-            })
-        
-
+        if articleViewModel.articleListType == .MatchDetail{
+        loadMatchArticleList()
+        }else{
+        loadBarnerAndArticleList()
+        }
+    }
+    
+    //MARK:- 加载首页文章列表数据
+    func loadBarnerAndArticleList(){
+    
+        barnerViewModel.loadBarnerData(SpecialID: articleViewModel.SpecialID, successCallBack: {[weak self] (result) in
+            self?.loadMatchArticleList()
         }) { (error) in
             printData(message: "请求Barner数据出错")
         }
     }
     
+    
+    //MARK:- 加载赛事资讯列表
+    func loadMatchArticleList(){
+    
+        //请求咨询列表数据
+        self.articleViewModel.loadArticleListData(successCallBack: {[weak self] (result) in
+            DispatchQueue.main.async {
+                self?.refreshUI()
+                self?.endRefreshing()
+            }
+        }, failureCallBack: { (error) in
+            printData(message: "请求专题列表数据出错")
+        })
+    }
+    
+    
+    
+ 
     //MARK:- 下拉刷新
     override func downLoadRefresh() {
         super.downLoadRefresh()
@@ -76,19 +85,13 @@ class ArticleListViewController: BaseViewController {
     override func upLoadRefresh() {
         super.upLoadRefresh()
         if articleViewModel.refreshType == .PullDownRefresh || articleViewModel.isEnd == "1"{
-        
             articleViewModel.refreshType = .UpDownRefresh
             articleViewModel.page += 1
-            
             DispatchQueue.global().async {[weak self] in
                 self?.loadData()
             }
-
-        
         }else{
-        
-          collectionView.endFooterRefreshingWithNoMoreData()    
-        
+          collectionView.endFooterRefreshingWithNoMoreData()            
         }
 
         
@@ -110,15 +113,25 @@ class ArticleListViewController: BaseViewController {
                 make.top.right.bottom.left.equalTo(collectionView.superview!)
             }
         }else{
-        
          collectionView.reloadData()
-        
-        
         }
-        
-        
-        
     }
+    
+    
+    //MARK:- 跳转至详情页面
+    func jumpToArticleDetail(articleID:Int){
+    
+        let controller = ArticleDetailViewController()
+        controller.articleID = articleID
+        navigationController?.pushViewController(controller, animated: true)
+
+    }
+    
+    
+    
+    
+    
+    
 }
 
 
@@ -135,26 +148,21 @@ extension ArticleListViewController:UICollectionViewDataSource{
     
     //MARK:- cell
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
-        
         var index = indexPath.item
         if  barnerViewModel.barnerArr.count > 0 {
             index = indexPath.item - 1
             if indexPath.item == 0{
                 let cell:BarnerCell = collectionView.dequeueReusableCell(withReuseIdentifier:shuffingFigureCell, for: indexPath) as! BarnerCell
+                cell.shuffingFigureView.delegate = self
                 cell.barnerArr = barnerViewModel.barnerArr
-                
                 return cell
-            
             }
-            
         }
-        
 
-        
             let articleModel = articleViewModel.articleListArr[index]
             if (articleModel.Covers?.count)! > 1 {
                 let cell:ArticleHorizontalCell = collectionView.dequeueReusableCell(withReuseIdentifier:horizontalArticleCell, for: indexPath) as!  ArticleHorizontalCell
+                cell.delegate = self
                 cell.articleListModel = articleModel
                 return cell
             }else{
@@ -164,14 +172,48 @@ extension ArticleListViewController:UICollectionViewDataSource{
             }
       
     }
+    
+    
+    
+    
+    
+    
+    
 }
 
 
 
-// MARK: - 遵守UICollectionViewDelegate代理
-extension ArticleListViewController:UICollectionViewDelegate{
+// MARK: - 遵守UICollectionViewDelegate,ArticleHorizontalCellDelegate代理
+extension ArticleListViewController:UICollectionViewDelegate,ArticleHorizontalCellDelegate,ShuffingFigureViewDelegate{
+    
+    //MARK:- 水平cell被点击
+    internal func articleHorizontalCell(_ articleHorizontalCell: ArticleHorizontalCell?, indexPath: IndexPath?, articleModel: ArticleListModel) {
+        jumpToArticleDetail(articleID: articleModel.ID)
+    }
 
 
+    //MARK:- 点击cell
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        var index = indexPath.item
+        if  barnerViewModel.barnerArr.count > 0 {
+            index = indexPath.item - 1           
+        }
+        let articleModel = articleViewModel.articleListArr[index]
+        jumpToArticleDetail(articleID: articleModel.ID)
+        
+    }
+    
+    
+    //MARK:- barner被点击
+    func shuffingFigureView(_ shuffingFigureView: UIView?, selectedIndex index: Int) {
+        if barnerViewModel.barnerArr.count > index{
+           let barnerModel = barnerViewModel.barnerArr[index]
+            jumpToArticleDetail(articleID: barnerModel.ArticleID)
+        }
+    }
+    
+
+    
 
 
 

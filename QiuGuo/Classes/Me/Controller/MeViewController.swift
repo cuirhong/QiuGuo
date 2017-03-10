@@ -47,22 +47,22 @@ class MeViewController: BaseViewController {
     override func initData() {
         super.initData()
    
-        
-        
-        let meMessageArr = ["message","我的消息","10"]
-        let meIntegralArr = ["integral","我的积分","234"]
-         let meTicketArr = ["ticket","我的球票","4434"]
-         let meGuesslArr = ["trophy","我的竞猜","378"]
-         let giftArr = ["gift","兑换礼品","54"]
+//        
+//        
+//        let meMessageArr = ["message","我的消息","10"]
+//        let meIntegralArr = ["integral","我的积分","234"]
+//         let meTicketArr = ["ticket","我的球票","4434"]
+//         let meGuesslArr = ["trophy","我的竞猜","378"]
+//         let giftArr = ["gift","兑换礼品","54"]
          let settingArr = ["setting","设置",""]
         
-        
-        
-        array.append(meMessageArr)
-          array.append(meIntegralArr)
-          array.append(meTicketArr)
-          array.append(meGuesslArr)
-          array.append(giftArr)
+//        
+//        
+//        array.append(meMessageArr)
+//          array.append(meIntegralArr)
+//          array.append(meTicketArr)
+//          array.append(meGuesslArr)
+//          array.append(giftArr)
           array.append(settingArr)
    
     }
@@ -133,7 +133,8 @@ class MeViewController: BaseViewController {
 extension MeViewController:UITableViewDelegate,UITableViewDataSource{
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 3
+//        return 3
+        return 1
     }
     
     
@@ -160,9 +161,9 @@ extension MeViewController:UITableViewDelegate,UITableViewDataSource{
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if section == 1{
-            return 4
-        }
+//        if section == 1{
+//            return 4
+//        }
         return 1
     }
 

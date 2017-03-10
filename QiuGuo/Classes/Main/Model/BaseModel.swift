@@ -10,8 +10,8 @@ import UIKit
 class BaseModel: NSObject {
     
     
-        init(dict : [String : Any]) {
-            super.init()
+       convenience init(dict : [String : Any]) {
+            self.init()
             setValuesForKeys(dict)
         }
     
