@@ -40,8 +40,10 @@ extension String{
         return filePath
     }
     func docStr()->String{
-        let path = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.documentationDirectory, FileManager.SearchPathDomainMask.userDomainMask, true).last!
-        let filePath = (path as NSString).appendingPathComponent(self)
+        let documentPaths = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.documentDirectory,
+                                                                FileManager.SearchPathDomainMask.userDomainMask, true)
+       
+        let filePath = (documentPaths[0] as NSString).appendingPathComponent(self)
         return filePath
     }
     func tmpStr()->String{
@@ -54,7 +56,7 @@ extension String{
     
    
     //MARK:- 字符串得到Date
-    static func getDateFromString(dateStr:String?="",formatter:String?="yyyy-MM-dd hh:mm:ss")->Date?{
+    static func getDateFromString(dateStr:String?="",formatter:String?="yyyy-MM-dd HH:mm:ss")->Date?{
         let f = DateFormatter()
         f.dateFormat = formatter
         let date = f.date(from: dateStr!)

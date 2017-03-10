@@ -399,11 +399,12 @@ class LoginHeadView: UIView {
                     return
                 }
             }else {
+                 profile.codeNum = codeInput.textFiled.text
                 if profile.codeNum?.characters.count == 0 {
                     hint("验证码不能为空", isError: true)
                     return
                 }
-                profile.codeNum = codeInput.textFiled.text
+
             }
             delegate?.loginView!(self, loginProfile:profile)
            

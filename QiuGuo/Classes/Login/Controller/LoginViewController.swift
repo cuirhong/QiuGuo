@@ -44,7 +44,7 @@ protocol LoginViewDelegate : NSObjectProtocol {
 
 
 
-class LoginViewController:  BaseViewController,LoginViewDelegate{
+class LoginViewController:  BaseViewController{
     //MARK:- 声明属性
     var bottomScrollView:UIScrollView?
     var loginHeadView:LoginHeadView?
@@ -90,6 +90,16 @@ class LoginViewController:  BaseViewController,LoginViewDelegate{
         
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        loginHeadView?.link?.invalidate()
+    }
+    
+    
+    deinit {
+        loginHeadView?.link?.invalidate()
+    }
+    
 
     
    
@@ -98,7 +108,7 @@ class LoginViewController:  BaseViewController,LoginViewDelegate{
 
 
 // MARK: - 实现协议方法
-extension LoginViewController{
+extension LoginViewController:LoginViewDelegate{
 
     //点击取消按钮回调事件
     func loginView(_ loginHeadView: LoginHeadView, clickCancelBtn: UIButton) {
@@ -215,17 +225,11 @@ extension LoginViewController{
             
             }
         }
-        }
-        
+        }        
     }
     
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        loginHeadView?.link?.invalidate()
-    }
-    
-  
+ 
     
 }
 

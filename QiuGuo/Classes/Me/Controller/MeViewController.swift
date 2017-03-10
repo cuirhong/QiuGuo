@@ -19,28 +19,28 @@ class MeViewController: BaseViewController {
         tableView.separatorStyle = .none
         tableView.isScrollEnabled = false
 
-        let headView = MeHeadView(frame: CGRect(x: 0, y: 0, width: ScreenWidth, height: 400*LayoutHeightScale))
-        if UserInfo.loadAccount() == nil {
-              headView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(clickUserHeadView)))
-        }
-        tableView.rowHeight = 174*LayoutHeightScale        
-        tableView.tableHeaderView = headView
+      
         return tableView
 
     }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        initData()
         
-        
-        
-        setupUI()
-        if UserInfo.loadAccount() == nil{
-            NotificationCenter.default.addObserver(self, selector: #selector(login), name: NSNotification.Name(rawValue: LoginNotificationName), object: nil)
-            
-        }
+    }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationItem.title = nil
+        for view in view.subviews {
+            view.removeFromSuperview()
+        }
+        
+        initData()
+
+        setupUI()
+         NotificationCenter.default.addObserver(self, selector: #selector(login), name: NSNotification.Name(rawValue: LoginNotificationName), object: nil)
+        
     }
     
     //MARK:- 初始化数据
@@ -79,21 +79,18 @@ class MeViewController: BaseViewController {
     
     func setupUI(){
  
+        let headView = MeHeadView(frame: CGRect(x: 0, y: 0, width: ScreenWidth, height: 400*LayoutHeightScale))
+        if UserInfo.loadAccount() == nil {
+            headView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(clickUserHeadView)))
+        }
+        tabelView.rowHeight = 174*LayoutHeightScale
+        tabelView.tableHeaderView = headView
         
          view.addSubview(tabelView)
         tabelView.snp.remakeConstraints { (make) in
             make.top.right.bottom.left.equalTo(tabelView.superview!)
         }
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
     
     
     
@@ -109,10 +106,7 @@ class MeViewController: BaseViewController {
     }
     
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        self.navigationItem.title = nil
-    }
+
     
     
     //MARK:- 西沟方法

@@ -93,6 +93,8 @@
 		3757F1D41E6437C600632C75 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3757F1D31E6437C600632C75 /* LoginViewController.swift */; };
 		37779ADB1E651A3C00A360F7 /* UITextView-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37779ADA1E651A3C00A360F7 /* UITextView-Extension.swift */; };
 		37779ADD1E6527D300A360F7 /* UIDevice-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37779ADC1E6527D300A360F7 /* UIDevice-Extension.swift */; };
+		3790AA011E72839B007ABC75 /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3790A9FC1E72839B007ABC75 /* libWeChatSDK.a */; };
+		3790AA021E72839B007ABC75 /* README.txt in Resources */ = {isa = PBXBuildFile; fileRef = 3790A9FD1E72839B007ABC75 /* README.txt */; };
 		37BC55FF1E6E984F00227759 /* MatchListSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37BC55FE1E6E984F00227759 /* MatchListSectionView.swift */; };
 		37BC56011E6E9A4D00227759 /* MatchListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37BC56001E6E9A4D00227759 /* MatchListCell.swift */; };
 		37C612C31E67CB0F004E9CED /* RegisterSecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37C612C21E67CB0F004E9CED /* RegisterSecondViewController.swift */; };
@@ -216,6 +218,11 @@
 		3757F1D31E6437C600632C75 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		37779ADA1E651A3C00A360F7 /* UITextView-Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITextView-Extension.swift"; sourceTree = "<group>"; };
 		37779ADC1E6527D300A360F7 /* UIDevice-Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIDevice-Extension.swift"; sourceTree = "<group>"; };
+		3790A9FC1E72839B007ABC75 /* libWeChatSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libWeChatSDK.a; sourceTree = "<group>"; };
+		3790A9FD1E72839B007ABC75 /* README.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.txt; sourceTree = "<group>"; };
+		3790A9FE1E72839B007ABC75 /* WechatAuthSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WechatAuthSDK.h; sourceTree = "<group>"; };
+		3790A9FF1E72839B007ABC75 /* WXApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApi.h; sourceTree = "<group>"; };
+		3790AA001E72839B007ABC75 /* WXApiObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApiObject.h; sourceTree = "<group>"; };
 		37BC55FE1E6E984F00227759 /* MatchListSectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MatchListSectionView.swift; sourceTree = "<group>"; };
 		37BC56001E6E9A4D00227759 /* MatchListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MatchListCell.swift; sourceTree = "<group>"; };
 		37C612C21E67CB0F004E9CED /* RegisterSecondViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterSecondViewController.swift; sourceTree = "<group>"; };
@@ -236,6 +243,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3790AA011E72839B007ABC75 /* libWeChatSDK.a in Frameworks */,
 				868128F96EF8CF983CDA3D84 /* Pods_QiuGuo.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -262,6 +270,7 @@
 		370A9DE81E6FAA99003F8D47 /* Third */ = {
 			isa = PBXGroup;
 			children = (
+				3790A9FB1E72839B007ABC75 /* WeChatSDk */,
 				370A9DE91E6FAB3B003F8D47 /* PullToRefreshKit */,
 			);
 			path = Third;
@@ -708,6 +717,18 @@
 			path = ViewModel;
 			sourceTree = "<group>";
 		};
+		3790A9FB1E72839B007ABC75 /* WeChatSDk */ = {
+			isa = PBXGroup;
+			children = (
+				3790A9FC1E72839B007ABC75 /* libWeChatSDK.a */,
+				3790A9FD1E72839B007ABC75 /* README.txt */,
+				3790A9FE1E72839B007ABC75 /* WechatAuthSDK.h */,
+				3790A9FF1E72839B007ABC75 /* WXApi.h */,
+				3790AA001E72839B007ABC75 /* WXApiObject.h */,
+			);
+			path = WeChatSDk;
+			sourceTree = "<group>";
+		};
 		4AF0994CBFCF5BA0BE93AD59 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -861,6 +882,7 @@
 				3757F17E1E63F8E800632C75 /* Info.plist in Resources */,
 				370A9DFE1E6FAB3B003F8D47 /* arrow_left@3x.png in Resources */,
 				370A9E021E6FAB3B003F8D47 /* success@3x.png in Resources */,
+				3790AA021E72839B007ABC75 /* README.txt in Resources */,
 				3757F1AF1E64021500632C75 /* MainJson.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1259,6 +1281,10 @@
 				INFOPLIST_FILE = "QiuGuo/Supporting Files/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/QiuGuo/Classes/Tools/Third/WeChatSDk",
+				);
 				OTHER_SWIFT_FLAGS = "\"-D\" \"DEBUG\"";
 				PRODUCT_BUNDLE_IDENTIFIER = com.qiu.QiuGuo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1277,6 +1303,10 @@
 				INFOPLIST_FILE = "QiuGuo/Supporting Files/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/QiuGuo/Classes/Tools/Third/WeChatSDk",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.qiu.QiuGuo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "QiuGuo/Classes/Main/QiuGuo-Bridging-Header.h";

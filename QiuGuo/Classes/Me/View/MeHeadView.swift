@@ -14,6 +14,8 @@ class MeHeadView:BaseView{
     
     
 
+    //MARK:- 头像底部view
+    fileprivate lazy var headBottomView:UIView = UIView()
     //MARK:- 头像
      fileprivate lazy var headImageView:UIImageView = UIImageView(image: UIImage.getImage("avatar_male.png"))
     //MARK:- 头像背景图片
@@ -21,11 +23,11 @@ class MeHeadView:BaseView{
     //MARK:- 性别
     fileprivate lazy var sexImageView:UIImageView = UIImageView(image: UIImage.getImage("male.png"))
     //MARK:- 昵称
-    fileprivate lazy var nickLabel:UILabel = UILabel(text: "登录/注册", font: UIFont.systemFont(ofSize: DEFAULTFONTSIZE), textColor: UIColor.init(hexString: "#ffffff"), textAlignment: .left)
+    fileprivate lazy var nickLabel:UILabel = UILabel(text: "登录/注册", font: UIFont.font(psFontSize: 45), textColor: UIColor.init(hexString: "#ffffff"), textAlignment: .left)
     //MARK:- 个人签名
-    fileprivate lazy var personalSginLabel:UILabel = UILabel(text: "这个家伙很懒,什么都懒得留", font: UIFont.font(psFontSize: 14), textColor: UIColor.init(hexString: "#ffffff"), textAlignment: .left)
+    fileprivate lazy var personalSginLabel:UILabel = UILabel(text: "这个家伙很懒,什么都懒得留", font: UIFont.font(psFontSize: 36), textColor: UIColor.init(hexString: "#ffffff"), textAlignment: .left)
     //MARK:- 右边可以点击进入指示符号
-    fileprivate lazy var arrowImageView:UIImageView = UIImageView()
+    fileprivate lazy var arrowImageView:UIImageView = UIImageView(image: UIImage.getImage("arrow_r"))
     
     
     //MARK:- 初始化
@@ -46,41 +48,50 @@ class MeHeadView:BaseView{
 
         //如果登录过
         if UserInfo.userLogin() {
+            addSubview(arrowImageView)
+            arrowImageView.snp.remakeConstraints({ (make) in
+                make.centerY.equalTo(headBottomView)
+                 make.width.height.equalTo(88*LayoutWidthScale)
+                make.right.equalTo(-44*LayoutWidthScale)
+            })
             addSubview(nickLabel)
             nickLabel.snp.remakeConstraints({ (make) in
                 make.top.equalTo(137*LayoutHeightScale)
-                make.left.equalTo(36*LayoutWidthScale)
-                make.right.equalTo(arrowImageView.snp.left)
+                make.left.equalTo(headBottomView.snp.right).offset(36*LayoutWidthScale)
             })
-            
-            nickLabel.text = UserInfo.loadAccount()?.Nickname
-            
-            
+
+
+            if  UserInfo.loadAccount()?.Nickname.characters.count != 0{
+             nickLabel.text = UserInfo.loadAccount()?.Nickname
+            }else{
+             nickLabel.text = "____"
+            }
+           
+
             addSubview(personalSginLabel)
             personalSginLabel.snp.remakeConstraints({ (make) in
                 make.top.equalTo(nickLabel.snp.bottom).offset(24*LayoutHeightScale)
-                make.left.right.equalTo(nickLabel)
+                make.left.equalTo(nickLabel)
             })
-            if let signature = UserInfo.loadAccount()?.Signature{
+            if  UserInfo.loadAccount()?.Signature.characters.count != 0{
             
-             personalSginLabel.text = signature
+             personalSginLabel.text = UserInfo.loadAccount()?.Signature
+            }else{
+                personalSginLabel.text = "这个家伙很懒,什么都懒得留"
             }
             
             
-            addSubview(arrowImageView)
-            arrowImageView.snp.remakeConstraints { (make) in
-                make.right.equalTo(44*LayoutWidthScale)
-                make.width.height.equalTo(88*LayoutWidthScale)
-                make.centerY.equalTo(headImageView)
-            }            
+      
+            
             
         }else{
             addSubview(nickLabel)
             nickLabel.snp.remakeConstraints({ (make) in
-                make.centerY.equalTo(headImageView)
-                make.left.equalTo(headImageView.snp.right).offset(36*LayoutWidthScale)
+                make.centerY.equalTo(headBottomView)
+                make.left.equalTo(headBottomView.snp.right).offset(36*LayoutWidthScale)
                 
             })
+            nickLabel.text = "登录/注册"
             
         }
 
@@ -90,7 +101,7 @@ class MeHeadView:BaseView{
     
     //MARK:- 布局头像试图
     func  setupHeadView() {
-        let headBottomView = UIView()
+    
         addSubview(headBottomView)
         var width:CGFloat = 212*LayoutWidthScale
         headBottomView.snp.remakeConstraints { (make) in
@@ -126,22 +137,11 @@ class MeHeadView:BaseView{
         }
   
     }
-    
-    
-    
-    
-    
-    
+
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    
-    
-    
-
-
 
 
 }

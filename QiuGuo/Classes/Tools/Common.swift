@@ -15,7 +15,7 @@ typealias SucceedBlock = (_ result: JSON) -> ()
 typealias FailureBlock = (_ error: Any?) -> ()
 
 //http://api-test.qiu.com
-let AppRootUrl:String = "http://api.qiu.com"
+let AppRootUrl:String = "http://api-test.qiu.com"
 
 /**
  *  项目主题颜色
@@ -83,7 +83,7 @@ let kTabBarH: CGFloat = 49
 /**
  *  用户登录信息持久化路径
  */
-let KuserLoginPath = "userLoginInfo.plist".docStr()
+let KuserLoginPath = "userLoginInfo.archiver".docStr()
 
 /**
  *  设置消息推送

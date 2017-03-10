@@ -153,8 +153,9 @@ class MatchListCell: BaseCollectionViewCell {
         matchStatusButton.setImage(UIImage.getImage("icon_clock"), for: .normal)
         
         var time = " ----"
-        if let dateStr = matchListModel?.StartTime{
+        if let dateStr = matchListModel?.StartTime?.description{
 
+          
             let date = String.getDateFromString(dateStr: dateStr)
             let com = date?.getDateComponents()
            

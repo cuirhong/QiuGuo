@@ -40,7 +40,7 @@ class LoginViewModel: BaseViewModel {
         
             let urlString = AppRootUrl +  "/oauth/Qauth/CaptchaLogin"
             NetworkTool.request(type: .POST, urlString: urlString, paramters: ["PhoneNumber":loginProfile.phoneNumber!,"Captcha":loginProfile.codeNum!], finishedCallback: { (result) in
-                
+                finishedCallback(result)
             }, failureCallback: { (error) in
                 
             })

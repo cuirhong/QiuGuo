@@ -45,8 +45,10 @@ class UserInfo: NSObject,NSCoding {
     func saveUserInfo()->Bool {
         let filePath = KuserLoginPath
         UserInfo.account = self
+        let isSccussful = NSKeyedArchiver.archiveRootObject(self, toFile: filePath)
 
-       return NSKeyedArchiver.archiveRootObject(self, toFile: filePath)
+        printData(message: isSccussful)
+       return isSccussful
         
     }
     

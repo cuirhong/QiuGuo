@@ -56,6 +56,8 @@ class SettingViewController: BaseViewController {
     // MARK: - 退出登录
     func logout() {
         UserInfo.logout()
+        navigationController?.popViewController(animated: false)
+       
     }
 }
 
@@ -131,12 +133,10 @@ extension SettingViewController:UITableViewDelegate,UITableViewDataSource{
         }else if indexPath.section == 4{
             
           let cell = UITableViewCell.init(style: .default, reuseIdentifier: "logoutButtonCell")
-            if logoutBtn.superview != nil{
-                 cell.contentView.addSubview(logoutBtn)
-                logoutBtn.snp.remakeConstraints({ (make) in
-                    make.centerX.centerY.equalTo(logoutBtn.superview!)
-                })
-            }
+            cell.contentView.addSubview(logoutBtn)
+            logoutBtn.snp.remakeConstraints({ (make) in
+                make.centerX.centerY.equalTo(logoutBtn.superview!)
+            })
            return cell
             
         }else{
