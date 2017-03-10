@@ -38,6 +38,9 @@ protocol LoginViewDelegate : NSObjectProtocol {
     //MARK:- 注册成功
     @objc optional func loginView(_ loginIsSuccess:Bool)
     
+    //MARK:- 第三方登录
+    @objc  optional func loginView(_ thirldLoginView:ThirdLoginView,loginType:Int)
+    
     
   
 }
@@ -135,7 +138,6 @@ extension LoginViewController:LoginViewDelegate{
 //        return
         
         LoginViewModel.register(loginProfile) {[weak self] (result) in
-            
             let json = result as? JSON
             let code = json?["code"]
             if code == 101{
@@ -153,11 +155,7 @@ extension LoginViewController:LoginViewDelegate{
                         nextRegister.view.snp.remakeConstraints { (make) in
                             make.left.right.bottom.top.equalTo(nextRegister.view.superview!)
                         }
-
                         SVProgressHUD.showSuccess(withStatus: "登录成功")
-                        
-                        
-                        
                     }else{
                         printData(message: "登录信息归档失败")
                     }
@@ -177,11 +175,7 @@ extension LoginViewController:LoginViewDelegate{
     
     //获取验证码
     func loginView(_ loginHeadView: LoginHeadView, getCodeWithPhoneNumber: String) {
-     
-        
         LoginViewModel.getCode(phoneNumber:Int(getCodeWithPhoneNumber)!) { (result) in
-           
-        
             let dict = result as? [String : Any]
             
             let code = dict?["code"] as? Int
@@ -229,9 +223,60 @@ extension LoginViewController:LoginViewDelegate{
     }
     
     
+    
+    //MARK:- 第三方登录
+    func loginView(_ loginView: ThirdLoginView, loginType: Int) {
+        switch loginType {
+        case 0:
+                if WeChatManager.isInstalledWeChat(){
+                    WeChatManager.sharedInstace.delegate = self
+                   WeChatAuth.sendAuthRequest(controller: self)
+                }else{
+                    HUDTool.show(showType: .Info, text: "手机未安装微信客户端",  viewController: self )
+                }
+
+            break
+            
+        case 1:
+            break
+        case 2:
+            break
+        default:
+            break
+        }
+       
+    }
+
+    
+    
  
     
 }
+
+
+// MARK: - 微信WeChatManagerDelegate
+extension LoginViewController:WeChatManagerDelegate{
+    //MARK:- 微信授权回调
+    func weChatManager(_ manager: WeChatManager, resp: SendAuthResp) {
+        printData(message: resp.code)
+        printData(message: resp.state)
+        printData(message: resp.lang)
+        printData(message: resp.country)
+        
+    }
+
+
+
+}
+
+
+
+
+
+
+
+
+
 
 
 

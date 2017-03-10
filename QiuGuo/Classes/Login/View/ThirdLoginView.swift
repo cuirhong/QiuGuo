@@ -9,31 +9,31 @@
 import UIKit
 import SVProgressHUD
 
-
 enum ThirdLoginType{
     case weChatLogin;
     case tencentLogin;
     case weiboLogin;
-
 }
+
+
 
 
 class ThirdLoginView: UIView {
     
-  
+    //MARK:- 第三方登录代理
+    weak var delegate:LoginViewDelegate?
+    
+    
+    //MARK:- 初始化
    override init(frame: CGRect) {
     super.init(frame: frame)
-    
     setupUI()
-
     }
     
     
     
     //MARK:- 设置界面
    func setupUI(){
-    
-    
     addSubview(weChatBtn)
     addSubview(tencentBtn)
     addSubview(weiboBtn)
@@ -84,6 +84,7 @@ class ThirdLoginView: UIView {
         make.centerY.width.height.equalTo(weChatBtn)
         make.left.equalTo(separator2.snp.right).offset(56*LayoutWidthScale)
     
+    
     }
 
     }
@@ -102,9 +103,8 @@ class ThirdLoginView: UIView {
     
     //MARK:- 微信登录
     func weChatLogin(){
-        printLog(message:  #function)
-        SVProgressHUD.showInfo(withStatus: "抱歉!暂未开通此功能")
-    
+       
+      delegate?.loginView!(self, loginType:0)
     
     }
     
@@ -119,7 +119,6 @@ class ThirdLoginView: UIView {
      //MARK:- 微博登录
     func weiboLogin(){
         printLog(message:  #function)
-        
           SVProgressHUD.showInfo(withStatus: "抱歉!暂未开通此功能")
         
     }

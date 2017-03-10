@@ -11,11 +11,12 @@ import SnapKit
 import SwiftyJSON
 import Kingfisher
 
+
 typealias SucceedBlock = (_ result: JSON) -> ()
 typealias FailureBlock = (_ error: Any?) -> ()
 
 //http://api-test.qiu.com
-let AppRootUrl:String = "http://api-test.qiu.com"
+let AppRootUrl:String = "http://api.qiu.com"
 
 /**
  *  项目主题颜色

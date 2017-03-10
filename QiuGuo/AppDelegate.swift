@@ -9,8 +9,9 @@
 import UIKit
 import SwiftyJSON
 
+
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate,WXApiDelegate {
 
     var window: UIWindow?
 
@@ -22,18 +23,31 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let tabBarController = TabBarController.init()
         window?.rootViewController = tabBarController
         window?.makeKeyAndVisible()
+   
         
-        initData()
+        initRegister()
         
        
       
         return true
     }
     
-    func initData(){
+    //MARK:- 注册第三方
+    private func  initRegister(){
+        WeChatManager.registerWeChat()
+
+    }
     
-     
     
+    
+    
+    
+    func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
+        return WXApi.handleOpen(url, delegate: self)
+    }
+    
+    func application(_ application: UIApplication, handleOpen url: URL) -> Bool {
+         return WXApi.handleOpen(url, delegate: self)
     }
  
 

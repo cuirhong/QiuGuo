@@ -19,7 +19,14 @@ enum LoginProfileType {
 
 class LoginHeadView: UIView {
     
-    weak var delegate:LoginViewDelegate?
+    weak var delegate:LoginViewDelegate?{
+        didSet{
+        
+          thirdLoginView.delegate = delegate
+        }
+    
+    
+    }
     
     let left = 141 * LayoutWidthScale
     let right = 155 * LayoutWidthScale
@@ -51,8 +58,6 @@ class LoginHeadView: UIView {
     convenience init(loginType:LoginProfileType){
         self.init(frame:CGRect(x: 0, y: 0, width: 0, height: 0))
         setupUI(loginType: loginType)
-        
-        
         //添加点击
         addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(endEdit)))
         
@@ -117,11 +122,7 @@ class LoginHeadView: UIView {
             make.left.right.equalTo(thirdLoginView.superview!)
             make.bottom.equalTo(agreeProtocalLabel.snp.top).offset(-63*LayoutHeightScale)
             make.height.equalTo(120*LayoutHeightScale)
-            
         }
-
-
-        
     }
     
 

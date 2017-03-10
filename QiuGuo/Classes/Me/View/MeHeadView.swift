@@ -47,7 +47,7 @@ class MeHeadView:BaseView{
         setupHeadView()
 
         //如果登录过
-        if UserInfo.userLogin() {
+        if (UserInfo.loadAccount() != nil) {
             addSubview(arrowImageView)
             arrowImageView.snp.remakeConstraints({ (make) in
                 make.centerY.equalTo(headBottomView)
