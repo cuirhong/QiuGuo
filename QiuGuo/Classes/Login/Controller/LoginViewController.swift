@@ -22,7 +22,6 @@ protocol LoginViewDelegate : NSObjectProtocol {
     
     //MARK:- 获取验证码
     @objc optional func loginView(_ loginHeadView:LoginHeadView,getCodeWithPhoneNumber:String)
-
     
 
     //MARK:- 点击忘记密码按钮
@@ -38,6 +37,9 @@ protocol LoginViewDelegate : NSObjectProtocol {
     //MARK:- 注册成功
     @objc optional func loginView(_ loginIsSuccess:Bool)
     
+    //MARK:- 绑定手机号码
+    @objc optional func loginView(_ loginHeadView:LoginHeadView,isBindPhoneNumber:Bool)
+    
     //MARK:- 第三方登录
     @objc  optional func loginView(_ thirldLoginView:ThirdLoginView,loginType:Int)
     
@@ -51,6 +53,11 @@ class LoginViewController:  BaseViewController{
     //MARK:- 声明属性
     var bottomScrollView:UIScrollView?
     var loginHeadView:LoginHeadView?
+    
+    //MARK:- 第三方登录viewModel
+    fileprivate lazy var thirdLoginViewModel:ThirdLoginViewModel = ThirdLoginViewModel()
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     
@@ -93,19 +100,88 @@ class LoginViewController:  BaseViewController{
         
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        loginHeadView?.link?.invalidate()
+    //MARK:- 获取微信token
+    func getWeChatToken(code:String){
+        
+     WeChatAuth.getWeChatToken(code: code, successCallBack: {[weak self] (result) in
+        self?.weChatLogin()
+        
+     }) { (error) in
+        HUDTool.show(showType: .Failure, text: error.debugDescription)
+        }
+
+    }
+    
+    //MARK:- 微信登录
+    func weChatLogin(){
+        thirdLoginViewModel.thrirdLoginType = .weChatLogin
+        thirdLoginViewModel.access_token = WeChatManager.accessToken
+        thirdLoginViewModel.openid = WeChatManager.openId
+        thirdLoginViewModel.thirdLogin(successCallBack: {[weak self] (result) in
+            DispatchQueue.main.async {
+               self?.bindPhoneNumber()
+            }
+        }) {(error) in
+            HUDTool.show(showType: .Failure, text: error.debugDescription)
+        }
+
+    }
+    
+    //MARK:- 绑定手机号码 
+    func bindPhoneNumber(){
+        //如果已经绑定
+        if UserInfo.loadAccount()?.isPhone == 1{
+           back()
+        }else{
+            let nextRegister = BindPhoneViewController()
+            nextRegister.delegate = self
+            addChildViewController(nextRegister)
+            view.addSubview(nextRegister.view)
+            nextRegister.view.snp.remakeConstraints { (make) in
+                make.left.right.bottom.top.equalTo(nextRegister.view.superview!)
+            }
+        }
     }
     
     
-    deinit {
-        loginHeadView?.link?.invalidate()
+    //MARK:- 个人信息是否已经完善
+    func userInfoIsReal(){
+        if UserInfo.loadAccount()?.isReal == 1{
+            back()
+        }else{
+            realUserInfo()
+        }
+
+    }
+    
+    //MARK:- 完善个人信息
+    func  realUserInfo(){
+        let nextRegister = RegisterSecondViewController()
+        nextRegister.delegate = self
+        self.addChildViewController(nextRegister)
+        view.addSubview(nextRegister.view)
+        nextRegister.view.snp.remakeConstraints { (make) in
+            make.left.right.bottom.top.equalTo(nextRegister.view.superview!)
+        }
+    }
+    
+    
+    
+    
+    
+    //MARK:- 视图将要消失
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+         loginHeadView?.link?.invalidate()
     }
     
 
-    
-   
+    //MARK:- 返回
+    override func back() {
+          loginHeadView?.link?.invalidate()
+          dismiss(animated: true, completion: nil)
+        
+    }
 }
 
 
@@ -148,13 +224,7 @@ extension LoginViewController:LoginViewDelegate{
                 if  let data = json?["data"].dictionaryObject{
                     let userInfo = UserInfo.init(dict: data)
                     if userInfo.saveUserInfo(){
-                        let nextRegister = RegisterSecondViewController()
-                        nextRegister.delegate = self
-                        self?.addChildViewController(nextRegister)
-                        self?.view.addSubview(nextRegister.view)
-                        nextRegister.view.snp.remakeConstraints { (make) in
-                            make.left.right.bottom.top.equalTo(nextRegister.view.superview!)
-                        }
+                        self?.realUserInfo()
                         SVProgressHUD.showSuccess(withStatus: "登录成功")
                     }else{
                         printData(message: "登录信息归档失败")
@@ -246,10 +316,20 @@ extension LoginViewController:LoginViewDelegate{
         }
        
     }
-
     
     
- 
+    //MARK:- 绑定手机号码成功
+    func loginView(_ loginHeadView: LoginHeadView, isBindPhoneNumber: Bool) {
+       
+        userInfoIsReal()
+        
+    }
+    
+    
+    
+    
+    
+    
     
 }
 
@@ -258,15 +338,21 @@ extension LoginViewController:LoginViewDelegate{
 extension LoginViewController:WeChatManagerDelegate{
     //MARK:- 微信授权回调
     func weChatManager(_ manager: WeChatManager, resp: SendAuthResp) {
-        printData(message: resp.code)
-        printData(message: resp.state)
-        printData(message: resp.lang)
-        printData(message: resp.country)
-        
+        switch resp.errCode {
+        case 0://用户同意
+            if let code = resp.code{
+            getWeChatToken(code: code)
+            }
+          
+        case -4://用户拒绝授权
+            
+            break
+        case -2://用户取消
+            break
+        default:
+            break
+        }
     }
-
-
-
 }
 
 

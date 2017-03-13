@@ -12,7 +12,8 @@ import SVProgressHUD
 enum LoginProfileType {
     case passwordLogin;
     case codeLogin;
-    case register
+    case register;
+    case bindPhoneNumber
 }
 
 
@@ -58,11 +59,11 @@ class LoginHeadView: UIView {
     convenience init(loginType:LoginProfileType){
         self.init(frame:CGRect(x: 0, y: 0, width: 0, height: 0))
         setupUI(loginType: loginType)
+        //初始化不会调用didSet方法
+        self.loginType = loginType
         //添加点击
         addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(endEdit)))
-        
-        phoneInput.textFiled.text = "15521377654"
-    
+
     }
     
     
@@ -76,7 +77,9 @@ class LoginHeadView: UIView {
         case LoginProfileType.codeLogin:
             setupCodeLogin()
         case LoginProfileType.register:
-            setupRegisterLogin()   
+            setupRegisterLogin()
+        case .bindPhoneNumber:
+            setupBindPhonenumber()
         }
         
     }
@@ -116,13 +119,7 @@ class LoginHeadView: UIView {
             make.centerX.equalTo(agreeProtocalLabel.superview!)
         }
         
-        //第三方登录
-        addSubview(thirdLoginView)
-        thirdLoginView.snp.remakeConstraints { (make) in
-            make.left.right.equalTo(thirdLoginView.superview!)
-            make.bottom.equalTo(agreeProtocalLabel.snp.top).offset(-63*LayoutHeightScale)
-            make.height.equalTo(120*LayoutHeightScale)
-        }
+      
     }
     
 
@@ -173,6 +170,14 @@ class LoginHeadView: UIView {
             make.top.equalTo(changeLoginBtn.snp.bottom).offset(73*LayoutHeightScale)
             make.left.equalTo(156*LayoutHeightScale)
             make.right.equalTo(-154*LayoutHeightScale)
+        }
+        
+        //第三方登录
+        addSubview(thirdLoginView)
+        thirdLoginView.snp.remakeConstraints { (make) in
+            make.left.right.equalTo(thirdLoginView.superview!)
+            make.bottom.equalTo(agreeProtocalLabel.snp.top).offset(-63*LayoutHeightScale)
+            make.height.equalTo(120*LayoutHeightScale)
         }
 
         
@@ -228,6 +233,13 @@ class LoginHeadView: UIView {
         codeInput.codeButton.addTarget(self, action: #selector(getCode), for: .touchUpInside)
     
       
+        //第三方登录
+        addSubview(thirdLoginView)
+        thirdLoginView.snp.remakeConstraints { (make) in
+            make.left.right.equalTo(thirdLoginView.superview!)
+            make.bottom.equalTo(agreeProtocalLabel.snp.top).offset(-63*LayoutHeightScale)
+            make.height.equalTo(120*LayoutHeightScale)
+        }
         
     
     }
@@ -277,6 +289,47 @@ class LoginHeadView: UIView {
             make.right.equalTo(-154*LayoutHeightScale)
         }
 
+    }
+    
+    //MARK:- 第三方绑定手机号码
+    func setupBindPhonenumber(){
+        
+        loginTitleLabel.text = "绑定手机号码录"
+        doneBtn.setTitle("完成", for: .normal)
+        
+        
+        //电话输入框
+        addSubview(phoneInput)
+        phoneInput.snp.remakeConstraints { (make) in
+            make.left.equalTo(phoneInput.superview!).offset(left)
+            make.right.equalTo(phoneInput.superview!).offset(-right)
+            make.height.equalTo(100*LayoutHeightScale)
+            make.top.equalTo(loginTitleLabel.snp.bottom).offset(270*LayoutHeightScale)
+            
+        }
+        
+        
+        
+        //验证码登录框
+        addSubview(codeInput)
+        codeInput.snp.remakeConstraints { (make) in
+            make.top.equalTo(phoneInput.snp.bottom).offset(50 * LayoutHeightScale)
+            make.left.right.height.equalTo(phoneInput)
+        }
+        
+
+        
+        //登录按钮
+        addSubview(doneBtn)
+        doneBtn.snp.remakeConstraints { (make) in
+            make.top.equalTo(changeLoginBtn.snp.bottom).offset(73*LayoutHeightScale)
+            make.left.equalTo(156*LayoutHeightScale)
+            make.right.equalTo(-154*LayoutHeightScale)
+        }
+        
+        codeInput.codeButton.addTarget(self, action: #selector(getCode), for: .touchUpInside)
+        
+  
     }
     
     //MARK:- 创建取消按钮
@@ -391,7 +444,7 @@ class LoginHeadView: UIView {
              profile.codeNum = codeInput.textFiled.text
 
            delegate?.loginView!(self, clickNextRegister: doneBtn, loginProfile: profile)
-        }else {
+        }else  {
             
             if(loginType == LoginProfileType.passwordLogin){
                 profile.password = passwordInput.textFiled.text

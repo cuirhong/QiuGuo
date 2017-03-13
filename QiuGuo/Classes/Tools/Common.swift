@@ -16,7 +16,7 @@ typealias SucceedBlock = (_ result: JSON) -> ()
 typealias FailureBlock = (_ error: Any?) -> ()
 
 //http://api-test.qiu.com
-let AppRootUrl:String = "http://api.qiu.com"
+let AppRootUrl:String = "http://api-test.qiu.com"
 
 /**
  *  项目主题颜色
@@ -90,11 +90,30 @@ let KuserLoginPath = "userLoginInfo.archiver".docStr()
  *  设置消息推送
  */
 let KisPushMessage = "isPushMessage"
-
+/**
+ *  设置仅仅在wifi下下载图片
+ */
 
 let KonlyWIFILoadImage = "onlyWIFILoadImage"
 
+/**
+ *  微信登录state
+ */
+let weChatLoginState = "weChatLoginState"
+/**
+ *  微信appid
+ */
+let weChatAppId = "xxxxx"
+/**
+ *  微信Secret
+ */
+let weChatSecret = "xxxxx"
 
+
+/**
+ *  保存信息
+ */
+let userDefault = UserDefaults.standard
 
 
 

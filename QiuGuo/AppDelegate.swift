@@ -12,6 +12,8 @@ import SwiftyJSON
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate,WXApiDelegate {
+    
+    
 
     var window: UIWindow?
 
@@ -43,7 +45,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate,WXApiDelegate {
     
     
     func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
-        return WXApi.handleOpen(url, delegate: self)
+        var open:Bool = false
+        if sourceApplication == "com.tencent.xin"{
+            //微信登录
+            open = WXApi.handleOpen(url, delegate: WeChatManager.sharedInstace)
+        
+        
+        }
+      
+        return open
     }
     
     func application(_ application: UIApplication, handleOpen url: URL) -> Bool {

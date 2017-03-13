@@ -33,6 +33,19 @@ class UserInfo: NSObject,NSCoding {
     dynamic var Signature:String = ""
     
     
+    /**********第三方登录信息*/
+    //MARK:- 是否绑定手机 1 是 0 否
+    dynamic var isPhone:Int = -1
+    
+    //MARK:- 昵称是否重复 1 是 0 否
+    dynamic var isRepeat:Int = 0
+ 
+   /**********/
+    
+    
+
+    
+    
     
     init(dict:[String:Any]){
        super.init()

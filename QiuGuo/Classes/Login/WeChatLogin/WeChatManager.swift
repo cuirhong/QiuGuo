@@ -24,6 +24,7 @@ protocol WeChatManagerDelegate:NSObjectProtocol {
 struct WeChatInfoSaveKey {
     var openId = "weChat_key_openId"
     var accessToken = "weChat_key_accessToken"
+    var refreshToken = "weChat_key_refreshToken"
     
 }
 
@@ -38,14 +39,13 @@ class WeChatManager: NSObject {
     //MARK:- 微信基本信息保存
     fileprivate static let saveKey = WeChatInfoSaveKey()
 
-    //MARK:- 保存微信登录几本信息
-    fileprivate static let userDefault = UserDefaults.standard
+
     
     //MARK:- 微信开放平台，注册的应用程序id
      static var appId:String!
     
     //MARK:- 微信开放平台，注册的应用程序secret
-    static var appSecret:String!
+    static var appSecret:String! = weChatSecret
     
     //MARK:- 微信授权之后的openId
     static var openId:String!{
@@ -63,11 +63,19 @@ class WeChatManager: NSObject {
         }
     }
     
+    //MARK:- refreshToken
+    static var refreshToken:String!{
+        didSet{
+            userDefault.set(self.refreshToken, forKey: saveKey.refreshToken)
+            userDefault.synchronize()
+        }
+    }
+    
     
     
     //MARK:- 注册appId
    class func  registerWeChat(){
-        WeChatManager.appId = "wx403be30bc08421ac"
+        WeChatManager.appId = weChatAppId
         WXApi.registerApp(WeChatManager.appId)
     }
     
