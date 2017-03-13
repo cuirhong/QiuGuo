@@ -88,11 +88,9 @@ class ShufflingFigureView: BaseView {
         }
         
         addSubview(pageControll)
-        
         pageControll.snp.remakeConstraints { (make) in
             make.right.equalTo(-40*LayoutWidthScale)
             make.centerY.equalTo(bottomMaskView)
-
         }
         
         addSubview(titleLabel)
@@ -101,9 +99,6 @@ class ShufflingFigureView: BaseView {
             make.top.equalTo(bottomMaskView.snp.top).offset(20*LayoutHeightScale)
             make.right.lessThanOrEqualTo(pageControll.snp.left).offset(-5)
         }
-        
-      
-        
     }
     
     
@@ -152,7 +147,8 @@ class ShufflingFigureView: BaseView {
     // MARK:- 创建pageControll
     fileprivate lazy var pageControll:UIPageControl = {
         
-        let pageControl = UIPageControl()
+        let pageControl = PageControl.init(dotWidth: 7, dotHeight: 25*LayoutHeightScale, margin: 3)
+        pageControl.isUserInteractionEnabled = false
         pageControl.setValue(UIImage.getImage("banner_point_n.png"), forKey: "pageImage")
         pageControl.setValue(UIImage.getImage("banner_point_h.png"), forKey: "currentPageImage")
         return pageControl
@@ -237,20 +233,14 @@ extension ShufflingFigureView:UICollectionViewDataSource{
 
 // MARK: - 遵守UICollectionViewDelegateFlowLayout协议
 extension ShufflingFigureView:UICollectionViewDelegateFlowLayout{
-
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
          return (newFrame?.size)!
     }
-
-
-
-
 }
+
 
 // MARK: - UICollectionViewDelegate
 extension ShufflingFigureView:UICollectionViewDelegate{
-
-
     //MARK:- 开始滑动，cell有重用功能，titleLabel是单个
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
          let offX = scrollView.contentOffset.x

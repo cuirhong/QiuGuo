@@ -97,6 +97,7 @@
 		377D67211E7639BD0027D696 /* ThirdLoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 377D67201E7639BD0027D696 /* ThirdLoginViewModel.swift */; };
 		377D67231E76737C0027D696 /* BindPhoneViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 377D67221E76737C0027D696 /* BindPhoneViewController.swift */; };
 		377D67251E7674CC0027D696 /* BindPhoneViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 377D67241E7674CC0027D696 /* BindPhoneViewModel.swift */; };
+		377D67271E76A4C50027D696 /* PageControll.swift in Sources */ = {isa = PBXBuildFile; fileRef = 377D67261E76A4C50027D696 /* PageControll.swift */; };
 		3790AA021E72839B007ABC75 /* README.txt in Resources */ = {isa = PBXBuildFile; fileRef = 3790A9FD1E72839B007ABC75 /* README.txt */; };
 		3790AA041E728967007ABC75 /* libstdc++.6.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 3790AA031E728967007ABC75 /* libstdc++.6.tbd */; };
 		3790AA061E728974007ABC75 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 3790AA051E728974007ABC75 /* libsqlite3.tbd */; };
@@ -233,6 +234,7 @@
 		377D67201E7639BD0027D696 /* ThirdLoginViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThirdLoginViewModel.swift; sourceTree = "<group>"; };
 		377D67221E76737C0027D696 /* BindPhoneViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BindPhoneViewController.swift; sourceTree = "<group>"; };
 		377D67241E7674CC0027D696 /* BindPhoneViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BindPhoneViewModel.swift; sourceTree = "<group>"; };
+		377D67261E76A4C50027D696 /* PageControll.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageControll.swift; sourceTree = "<group>"; };
 		3790A9FC1E72839B007ABC75 /* libWeChatSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libWeChatSDK.a; sourceTree = "<group>"; };
 		3790A9FD1E72839B007ABC75 /* README.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.txt; sourceTree = "<group>"; };
 		3790A9FE1E72839B007ABC75 /* WechatAuthSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WechatAuthSDK.h; sourceTree = "<group>"; };
@@ -645,6 +647,7 @@
 				373363551E6976DB00ED96E1 /* UIFont-Extentsion.swift */,
 				18FF2EA91E6B825E0037DBF5 /* UIBarButtonItem-Extension.swift */,
 				370A9E0F1E6FEA45003F8D47 /* Date-Extension.swift */,
+				377D67261E76A4C50027D696 /* PageControll.swift */,
 			);
 			path = Category;
 			sourceTree = "<group>";
@@ -1144,6 +1147,7 @@
 				373B9C571E70F33900D49F74 /* ArticleDetailModel.swift in Sources */,
 				37491D241E682D1E00E10D2E /* NotificationName.swift in Sources */,
 				37491D1D1E68112C00E10D2E /* NetworkTool.swift in Sources */,
+				377D67271E76A4C50027D696 /* PageControll.swift in Sources */,
 				3703DDDB1E6E6F40003471FD /* MatchListViewModel.swift in Sources */,
 				370A9E041E6FAB3B003F8D47 /* ElasticRefreshHeader.swift in Sources */,
 				18F1AEC71E6C936D00CAF31C /* ArticleListViewController.swift in Sources */,

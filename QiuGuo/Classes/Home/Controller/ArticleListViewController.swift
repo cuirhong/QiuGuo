@@ -195,7 +195,12 @@ extension ArticleListViewController:UICollectionViewDelegate,ArticleHorizontalCe
     //MARK:- 点击cell
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         var index = indexPath.item
+        
         if  barnerViewModel.barnerArr.count > 0 {
+            if index == 0{
+                //防止奔溃
+                return
+            }
             index = indexPath.item - 1           
         }
         let articleModel = articleViewModel.articleListArr[index]
