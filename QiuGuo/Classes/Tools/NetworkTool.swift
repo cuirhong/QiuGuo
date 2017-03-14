@@ -39,6 +39,9 @@ class NetworkTool {
         Alamofire.request(urlString, method: method, parameters: parameter).responseJSON { (response) in
              HUDTool.dismiss()
             
+        
+            printData(message: response.result)
+            
             if response.result.isSuccess{
                 if let json = response.result.value{
                     let swiftJson = JSON(json)

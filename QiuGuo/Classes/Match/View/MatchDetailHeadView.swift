@@ -167,17 +167,23 @@ class MatchDetailHeadView: BaseView {
             make.centerY.equalTo(leftMaskImageView)
         }
         
-        addSubview(scroceLabel)
-        scroceLabel.snp.makeConstraints { (make) in
+        //比分label不好控制布局，多加一个方便布局
+        let label = UILabel()
+        addSubview(label)
+        label.snp.makeConstraints { (make) in
             make.top.equalTo(roundNameLabel.snp.bottom)
             make.bottom.equalTo(matchStatusButton.snp.top)
-            make.centerX.equalTo(scroceLabel.superview!)
-            
+            make.centerX.equalTo(label.superview!)
+        }
+        
+        addSubview(scroceLabel)
+        scroceLabel.snp.makeConstraints { (make) in
+            make.centerX.centerY.equalTo(label)  
         }
         
         addSubview(pkImageView)
         pkImageView.snp.makeConstraints { (make) in
-            make.centerX.centerY.equalTo(pkImageView.superview!)
+            make.centerX.centerY.equalTo(scroceLabel)
         }
         
         

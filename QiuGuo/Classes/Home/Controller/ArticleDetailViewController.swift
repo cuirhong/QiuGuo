@@ -36,8 +36,6 @@ class ArticleDetailViewController: BaseViewController {
               webView.addObserver(controller, forKeyPath: "estimatedProgress", options: .new, context: nil)
               controller.navigationController?.navigationBar.addSubview(controller.progressView)
         }
-       
-     
         return webView
 
     }()

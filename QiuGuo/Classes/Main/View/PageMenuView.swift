@@ -14,9 +14,9 @@ private let selFontColor:UIFont = UIFont.font(psFontSize: 60)
 
 private var oneMenuWidth:CGFloat = 40
 
-private let normalMargin:CGFloat = 72*LayoutWidthScale
+private var normalMargin:CGFloat = 72*LayoutWidthScale
 
-private let selMargin:CGFloat = 66*LayoutWidthScale
+private var selMargin:CGFloat = 66*LayoutWidthScale
 
 
 // MARK: - 代理
@@ -31,6 +31,8 @@ class PageMenuView: BaseView {
     var menuTitles:[String] = []
     //MARK:- 是否需要底部的蒙版
     var isMask:Bool = true
+    //MARK:- 是否需要被点击之后的下划线显示
+    private var isUnline:Bool = false
     //MARK:- 代理
     weak var delegate:PageMenuViewDelegate?
     //MARK:- 源index
@@ -40,11 +42,20 @@ class PageMenuView: BaseView {
     
     
     //MARK:- 初始化方法
-    init(titles:[String],isNeedUnline:Bool=false,isNeedMask:Bool=true){
-    super.init(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
-      menuTitles = titles
+    convenience init(titles:[String],isNeedUnline:Bool=false,isNeedMask:Bool=true,norMargin:CGFloat?=0,selectedMargin:CGFloat?=0){
+
+        self.init(frame:CGRect.zero)
+        if (norMargin != nil) , norMargin != 0{
+            normalMargin = norMargin!
+        }
+        if (selectedMargin != nil), selectedMargin != 0{
+            selMargin = selectedMargin!
+        }
+
+        menuTitles = titles
         isMask = isNeedMask
-    addSubview(scrollView)
+        isUnline = isNeedUnline
+        addSubview(scrollView)
         let  left = 50*LayoutWidthScale
         scrollView.snp.remakeConstraints { (make) in
             make.left.equalTo(scrollView.superview!).offset(left)
@@ -55,6 +66,10 @@ class PageMenuView: BaseView {
 
         
         setupMenuButton()
+    }
+    
+   public  override init(frame: CGRect) {
+        super.init(frame: frame)
     }
     
     //MARK:-设置约束
@@ -76,6 +91,17 @@ class PageMenuView: BaseView {
                 btn.isSelected = true
                 btn.titleLabel?.font = UIFont.font(psFontSize: 60)
                 selectorBtn = btn
+                
+                if isUnline{//如果需要下划线
+                    scrollView.addSubview(undline)
+                    undline.snp.remakeConstraints({ (make) in
+                      make.top.equalTo(btn.snp.bottom)
+                        make.centerX.equalTo(btn)
+                       make.width.equalTo(57*LayoutWidthScale)
+                        make.height.equalTo(4*LayoutHeightScale)
+                    })
+                
+                }
             }
             
             if newIndex == 0{
@@ -142,7 +168,7 @@ class PageMenuView: BaseView {
     }()
     
     //MARK:- 创建标题按钮
-    private func createMenuButton(title:String,tag:Int) -> UIButton {
+     func createMenuButton(title:String,tag:Int) -> UIButton {
         let btn:UIButton = UIButton(title: title, target: self, selector: #selector(clickTitleMenu), font: UIFont.font(psFontSize: 52), titleColor: normalColor,selTitleColor:selectorColor)
         btn.tag = tag
         btn.sizeToFit()
@@ -161,6 +187,12 @@ class PageMenuView: BaseView {
     }()
     
 
+    //MARK:- 被点击之后的下划线
+     lazy var undline:UILabel = {
+        let label = UILabel()
+        label.backgroundColor = THEMECOLOR
+        return label
+    }()
    
     
     

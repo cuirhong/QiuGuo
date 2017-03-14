@@ -14,11 +14,11 @@ import UIKit
 class ThirdLoginViewModel: BaseViewModel {
     
     //MARK:- 授权之后的access_token
-    var access_token:String!
+    var access_token:String = ""
     //MARK:- 授权之后的openid
-    var openid:String!
+    var openid:String = ""
     //MARK:- 微博授权之后的uid
-    var uid:String!
+    var uid:String = ""
     //MARK:- 第三方登录类型
     var thrirdLoginType:ThirdLoginType = .weChatLogin
     
@@ -44,7 +44,7 @@ class ThirdLoginViewModel: BaseViewModel {
             paramters["openid"] = self.openid
         }
         
-        NetworkTool.request(type: .POST, urlString: urlString,paramters: paramters, finishedCallback: { (result) in
+        NetworkTool.request(type: .POST, urlString: urlString,isQiuUrl:false,paramters: paramters, finishedCallback: { (result) in
             if  let data = result["data"].dictionaryObject{
                 let userInfo = UserInfo.init(dict: data)
                 if userInfo.saveUserInfo(){

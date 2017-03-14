@@ -22,11 +22,15 @@ class BindPhoneViewController: BaseViewController {
     //MARK:- 加载view
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        setupView()
     }
     
     //MARK:- loadData
     override func initData() {
         super.initData()
+       
+        
     }
     
     //MARK:- 设置界面

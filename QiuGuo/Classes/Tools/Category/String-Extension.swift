@@ -9,6 +9,9 @@
 import UIKit
 
 extension String{
+    
+   
+    
   
     static func localPath(_ localFileName:String) -> String {
       
@@ -87,6 +90,14 @@ extension String{
     
     }
     
+    
+    
+
+    //MARK:- 从int转换成string
+    static func getString(intData:Int?) -> String{
+      let string = String(format: "%d", intData ?? 0)
+        return string
+    }
     
     
     

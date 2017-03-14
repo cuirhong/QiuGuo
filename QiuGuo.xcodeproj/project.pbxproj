@@ -52,6 +52,8 @@
 		373363561E6976DB00ED96E1 /* UIFont-Extentsion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 373363551E6976DB00ED96E1 /* UIFont-Extentsion.swift */; };
 		373363581E69950A00ED96E1 /* PersonalInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 373363571E69950A00ED96E1 /* PersonalInfoCell.swift */; };
 		3733635A1E69952A00ED96E1 /* BaseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 373363591E69952A00ED96E1 /* BaseTableViewCell.swift */; };
+		37346F371E778DCE00CF2721 /* ChatBallViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37346F361E778DCE00CF2721 /* ChatBallViewController.swift */; };
+		37346F391E77A44800CF2721 /* MenuToolView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37346F381E77A44800CF2721 /* MenuToolView.swift */; };
 		373B9C531E70F1CF00D49F74 /* ArticleDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 373B9C521E70F1CF00D49F74 /* ArticleDetailViewController.swift */; };
 		373B9C571E70F33900D49F74 /* ArticleDetailModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 373B9C561E70F33900D49F74 /* ArticleDetailModel.swift */; };
 		373B9C591E70F35300D49F74 /* ArticleDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 373B9C581E70F35300D49F74 /* ArticleDetailViewModel.swift */; };
@@ -91,6 +93,8 @@
 		3757F1C81E6424AD00632C75 /* BaseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3757F1C71E6424AD00632C75 /* BaseViewModel.swift */; };
 		3757F1CB1E642A7A00632C75 /* launchScreen.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 3757F1CA1E642A7A00632C75 /* launchScreen.jpg */; };
 		3757F1D41E6437C600632C75 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3757F1D31E6437C600632C75 /* LoginViewController.swift */; };
+		3776DF7B1E77DD5000256FD4 /* HintView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3776DF7A1E77DD5000256FD4 /* HintView.swift */; };
+		3776DF7F1E77FF0200256FD4 /* MatchGuessSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3776DF7E1E77FF0200256FD4 /* MatchGuessSectionView.swift */; };
 		37779ADB1E651A3C00A360F7 /* UITextView-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37779ADA1E651A3C00A360F7 /* UITextView-Extension.swift */; };
 		37779ADD1E6527D300A360F7 /* UIDevice-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37779ADC1E6527D300A360F7 /* UIDevice-Extension.swift */; };
 		377D671F1E76395D0027D696 /* WeChatAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 377D671E1E76395D0027D696 /* WeChatAuth.swift */; };
@@ -98,6 +102,8 @@
 		377D67231E76737C0027D696 /* BindPhoneViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 377D67221E76737C0027D696 /* BindPhoneViewController.swift */; };
 		377D67251E7674CC0027D696 /* BindPhoneViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 377D67241E7674CC0027D696 /* BindPhoneViewModel.swift */; };
 		377D67271E76A4C50027D696 /* PageControll.swift in Sources */ = {isa = PBXBuildFile; fileRef = 377D67261E76A4C50027D696 /* PageControll.swift */; };
+		377D67291E76BCE30027D696 /* MatchDetailGuessController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 377D67281E76BCE30027D696 /* MatchDetailGuessController.swift */; };
+		377D672B1E76BE530027D696 /* MatchDetailGuessViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 377D672A1E76BE530027D696 /* MatchDetailGuessViewModel.swift */; };
 		3790AA021E72839B007ABC75 /* README.txt in Resources */ = {isa = PBXBuildFile; fileRef = 3790A9FD1E72839B007ABC75 /* README.txt */; };
 		3790AA041E728967007ABC75 /* libstdc++.6.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 3790AA031E728967007ABC75 /* libstdc++.6.tbd */; };
 		3790AA061E728974007ABC75 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 3790AA051E728974007ABC75 /* libsqlite3.tbd */; };
@@ -183,6 +189,8 @@
 		373363551E6976DB00ED96E1 /* UIFont-Extentsion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIFont-Extentsion.swift"; sourceTree = "<group>"; };
 		373363571E69950A00ED96E1 /* PersonalInfoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersonalInfoCell.swift; sourceTree = "<group>"; };
 		373363591E69952A00ED96E1 /* BaseTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseTableViewCell.swift; sourceTree = "<group>"; };
+		37346F361E778DCE00CF2721 /* ChatBallViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatBallViewController.swift; sourceTree = "<group>"; };
+		37346F381E77A44800CF2721 /* MenuToolView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuToolView.swift; sourceTree = "<group>"; };
 		373B9C521E70F1CF00D49F74 /* ArticleDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArticleDetailViewController.swift; sourceTree = "<group>"; };
 		373B9C561E70F33900D49F74 /* ArticleDetailModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArticleDetailModel.swift; sourceTree = "<group>"; };
 		373B9C581E70F35300D49F74 /* ArticleDetailViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArticleDetailViewModel.swift; sourceTree = "<group>"; };
@@ -228,6 +236,8 @@
 		3757F1C71E6424AD00632C75 /* BaseViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseViewModel.swift; sourceTree = "<group>"; };
 		3757F1CA1E642A7A00632C75 /* launchScreen.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = launchScreen.jpg; sourceTree = "<group>"; };
 		3757F1D31E6437C600632C75 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		3776DF7A1E77DD5000256FD4 /* HintView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HintView.swift; sourceTree = "<group>"; };
+		3776DF7E1E77FF0200256FD4 /* MatchGuessSectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MatchGuessSectionView.swift; sourceTree = "<group>"; };
 		37779ADA1E651A3C00A360F7 /* UITextView-Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITextView-Extension.swift"; sourceTree = "<group>"; };
 		37779ADC1E6527D300A360F7 /* UIDevice-Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIDevice-Extension.swift"; sourceTree = "<group>"; };
 		377D671E1E76395D0027D696 /* WeChatAuth.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeChatAuth.swift; sourceTree = "<group>"; };
@@ -235,6 +245,8 @@
 		377D67221E76737C0027D696 /* BindPhoneViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BindPhoneViewController.swift; sourceTree = "<group>"; };
 		377D67241E7674CC0027D696 /* BindPhoneViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BindPhoneViewModel.swift; sourceTree = "<group>"; };
 		377D67261E76A4C50027D696 /* PageControll.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageControll.swift; sourceTree = "<group>"; };
+		377D67281E76BCE30027D696 /* MatchDetailGuessController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MatchDetailGuessController.swift; sourceTree = "<group>"; };
+		377D672A1E76BE530027D696 /* MatchDetailGuessViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MatchDetailGuessViewModel.swift; sourceTree = "<group>"; };
 		3790A9FC1E72839B007ABC75 /* libWeChatSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libWeChatSDK.a; sourceTree = "<group>"; };
 		3790A9FD1E72839B007ABC75 /* README.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.txt; sourceTree = "<group>"; };
 		3790A9FE1E72839B007ABC75 /* WechatAuthSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WechatAuthSDK.h; sourceTree = "<group>"; };
@@ -514,6 +526,7 @@
 				37E09DE11E6D3DFB001718D5 /* BaseCollectionViewCell.swift */,
 				370A9E0B1E6FABD2003F8D47 /* RefreshHeaderView.swift */,
 				370A9E0D1E6FABE9003F8D47 /* RefreshFooterView.swift */,
+				3776DF7A1E77DD5000256FD4 /* HintView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -543,6 +556,8 @@
 				3757F1B91E64048700632C75 /* MatchViewController.swift */,
 				3703DDD81E6E6D1B003471FD /* MatchListViewController.swift */,
 				373B9C5A1E713C0600D49F74 /* MatchDetailViewController.swift */,
+				377D67281E76BCE30027D696 /* MatchDetailGuessController.swift */,
+				37346F361E778DCE00CF2721 /* ChatBallViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -562,6 +577,8 @@
 				37BC55FE1E6E984F00227759 /* MatchListSectionView.swift */,
 				37BC56001E6E9A4D00227759 /* MatchListCell.swift */,
 				373B9C5C1E713CC900D49F74 /* MatchDetailHeadView.swift */,
+				37346F381E77A44800CF2721 /* MenuToolView.swift */,
+				3776DF7E1E77FF0200256FD4 /* MatchGuessSectionView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -571,6 +588,7 @@
 			children = (
 				3703DDD41E6E5A91003471FD /* MatchLeagueViewModel.swift */,
 				3703DDDA1E6E6F40003471FD /* MatchListViewModel.swift */,
+				377D672A1E76BE530027D696 /* MatchDetailGuessViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -1118,6 +1136,7 @@
 				374D529F1E656F910060EE78 /* UILable-Extension.swift in Sources */,
 				3757F1B11E64039900632C75 /* HomeViewController.swift in Sources */,
 				374D52931E6554910060EE78 /* LoginInputView.swift in Sources */,
+				377D67291E76BCE30027D696 /* MatchDetailGuessController.swift in Sources */,
 				370A9E061E6FAB3B003F8D47 /* Header.swift in Sources */,
 				377D67251E7674CC0027D696 /* BindPhoneViewModel.swift in Sources */,
 				18F1AED31E6CBB8400CAF31C /* ArticleListModel.swift in Sources */,
@@ -1129,6 +1148,7 @@
 				373363561E6976DB00ED96E1 /* UIFont-Extentsion.swift in Sources */,
 				37491D1F1E6811D300E10D2E /* LoginViewModel.swift in Sources */,
 				37779ADB1E651A3C00A360F7 /* UITextView-Extension.swift in Sources */,
+				3776DF7F1E77FF0200256FD4 /* MatchGuessSectionView.swift in Sources */,
 				3757F1C61E64246400632C75 /* BaseView.swift in Sources */,
 				370A9E051E6FAB3B003F8D47 /* Footer.swift in Sources */,
 				3757F1BC1E6404B500632C75 /* MeViewController.swift in Sources */,
@@ -1137,6 +1157,7 @@
 				374D52991E65616D0060EE78 /* String-Extension.swift in Sources */,
 				374D52971E65581A0060EE78 /* LoginProfile.swift in Sources */,
 				3733635A1E69952A00ED96E1 /* BaseTableViewCell.swift in Sources */,
+				3776DF7B1E77DD5000256FD4 /* HintView.swift in Sources */,
 				370A9E0E1E6FABE9003F8D47 /* RefreshFooterView.swift in Sources */,
 				37779ADD1E6527D300A360F7 /* UIDevice-Extension.swift in Sources */,
 				37E09DDE1E6D0335001718D5 /* HUDTool.swift in Sources */,
@@ -1144,6 +1165,7 @@
 				37BC55FF1E6E984F00227759 /* MatchListSectionView.swift in Sources */,
 				377D67211E7639BD0027D696 /* ThirdLoginViewModel.swift in Sources */,
 				373363501E69710800ED96E1 /* UIImage-Extenstion.swift in Sources */,
+				37346F391E77A44800CF2721 /* MenuToolView.swift in Sources */,
 				373B9C571E70F33900D49F74 /* ArticleDetailModel.swift in Sources */,
 				37491D241E682D1E00E10D2E /* NotificationName.swift in Sources */,
 				37491D1D1E68112C00E10D2E /* NetworkTool.swift in Sources */,
@@ -1156,6 +1178,7 @@
 				3757F1BE1E640E2F00632C75 /* NavigationController.swift in Sources */,
 				3703DDD31E6E59EC003471FD /* MatchLeagueModel.swift in Sources */,
 				3757F1C81E6424AD00632C75 /* BaseViewModel.swift in Sources */,
+				377D672B1E76BE530027D696 /* MatchDetailGuessViewModel.swift in Sources */,
 				3733634C1E696DA600ED96E1 /* MeHeadView.swift in Sources */,
 				37BC56011E6E9A4D00227759 /* MatchListCell.swift in Sources */,
 				18F1AEC91E6C970900CAF31C /* SpecialModel.swift in Sources */,
@@ -1176,6 +1199,7 @@
 				373B9C531E70F1CF00D49F74 /* ArticleDetailViewController.swift in Sources */,
 				3757F1AD1E63FCBC00632C75 /* UIColor-Extension.swift in Sources */,
 				370A9E101E6FEA45003F8D47 /* Date-Extension.swift in Sources */,
+				37346F371E778DCE00CF2721 /* ChatBallViewController.swift in Sources */,
 				3790AA121E72972A007ABC75 /* WeChatManager.swift in Sources */,
 				373B9C591E70F35300D49F74 /* ArticleDetailViewModel.swift in Sources */,
 				18FF2EAD1E6B9F610037DBF5 /* CacheTool.swift in Sources */,

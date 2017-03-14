@@ -8,13 +8,20 @@
 
 import UIKit
 
-
-
 /// 球赛详情
 class MatchDetailViewController: BaseViewController {
     
     //MARK:- 比赛模型
     var matchModel:MatchListModel = MatchListModel()
+    
+    //MARK:- 赛程
+    fileprivate lazy var detailHeadView:MatchDetailHeadView = MatchDetailHeadView()
+    
+    //MARK:- pageMenu
+    fileprivate lazy  var pageMenuView:MenuToolView = MenuToolView.init(titles: ["资讯","对战","聊个球"])
+    
+    //MARK:- pageContent
+    fileprivate var pageContentView:PageContentView?
 
     //MARK:- 加载
     override func viewDidLoad() {
@@ -40,7 +47,7 @@ class MatchDetailViewController: BaseViewController {
     //MARK:- 设置界面
     override func setupView() {
         super.setupView()
-        let detailHeadView = MatchDetailHeadView()
+        //比赛赛程
         detailHeadView.matchModel = matchModel
         detailHeadView.delegate = self
        view.addSubview(detailHeadView)
@@ -50,17 +57,45 @@ class MatchDetailViewController: BaseViewController {
         }
         
         
+        //设置menuView
+        let pageMenuHeight = 120*LayoutHeightScale
+        pageMenuView.delegate = self
+        view.addSubview(pageMenuView)
+        pageMenuView.snp.remakeConstraints({ (make) in
+            make.top.equalTo(detailHeadView.snp.bottom)
+            make.left.equalTo(pageMenuView.superview!).offset(100*LayoutWidthScale)
+            make.right.equalTo(pageMenuView.superview!).offset(-100*LayoutWidthScale)
+            make.height.equalTo(pageMenuHeight)
+            
+        })
         
+        //设置pageContentView
+        var childVcArr:[UIViewController] = []
+        
+        //资讯
         let articleController = ArticleListViewController()
         articleController.articleViewModel.leagueID = matchModel.LeagueID
         articleController.articleViewModel.matchID = matchModel.MatchID
         articleController.articleViewModel.articleListType = .MatchDetail
-        addChildViewController(articleController)
-        view.addSubview(articleController.view)
-        articleController.view.snp.makeConstraints { (make) in
-            make.top.equalTo(detailHeadView.snp.bottom)
-            make.left.bottom.right.equalTo(articleController.view.superview!)
-        }
+        childVcArr.append(articleController)
+        
+        //对战
+        let guessController = MatchDetailGuessController()
+        guessController.matchGuessViewModel.matchId = matchModel.MatchID
+        childVcArr.append(guessController)
+        
+        //聊个球 
+        let chatBallController = ChatBallViewController()
+        childVcArr.append(chatBallController)
+
+        let contentFrame = CGRect(x: 0, y: kStatusBarH + kNavigationBarH + pageMenuHeight, width: ScreenWidth, height: ScreenHeight - kStatusBarH - kNavigationBarH-pageMenuHeight-kTabBarH)
+        pageContentView = PageContentView.init(frame: contentFrame, childVcs: childVcArr, parentVc: self)
+        view.addSubview(pageContentView!)
+        pageContentView?.delegate = self
+        pageContentView?.snp.makeConstraints({ (make) in
+            make.top.equalTo((pageMenuView.snp.bottom))
+            make.bottom.left.right.equalTo((pageContentView?.superview!)!)
+        })   
     }
 }
 
@@ -70,7 +105,26 @@ extension MatchDetailViewController:MatchDetailHeadViewDelegate{
     func matchDetailHeadView(_ headView: MatchDetailHeadView) {
         back()
     }
-
-
-
 }
+
+
+// MARK: - 遵守PageMenuViewDelegate
+extension MatchDetailViewController:PageMenuViewDelegate{
+    func pageMenuView(_ titleView: PageMenuView, sourceIndex: Int, targetIndex: Int) {
+        pageContentView?.settingCurrenIndex(courceIndex: sourceIndex, targetIndex: targetIndex)
+    }
+}
+
+// MARK: - 遵守PageContentViewDelegate
+extension MatchDetailViewController:PageContentViewDelegate{
+    func pageContentView(_ contentView: PageContentView, progress: CGFloat, sourceIndex: Int, targetIndex: Int) {
+        pageMenuView.setupMenuButton(index: targetIndex)
+    }
+}
+
+
+
+
+
+
+
