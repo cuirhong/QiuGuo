@@ -10,10 +10,14 @@ import UIKit
 
 extension UIButton
 {
-    convenience init(title: String?, imageName: String?=nil,backImageName:String?=nil, highlightedImageName:String?=nil, target: Any?=nil ,selector: Selector?=nil, font: UIFont?=nil, titleColor: UIColor?=nil,selTitleColor:UIColor?=nil) {
+    convenience init(title: String?,backgroundColor:UIColor?=nil, imageName: String?=nil,backImageName:String?=nil, highlightedImageName:String?=nil,selBackImageName:String?=nil, target: Any?=nil ,selector: Selector?=nil, font: UIFont?=nil, titleColor: UIColor?=nil,selTitleColor:UIColor?=nil) {
         self.init()
         if let imageN = imageName {
             setImage(UIImage(named:imageN), for: UIControlState())
+        }
+        if let backColor = backgroundColor{
+           self.backgroundColor = backColor
+        
         }
         if let newBackImageName = backImageName{
             setBackgroundImage(UIImage(named:newBackImageName), for: .normal)
@@ -24,6 +28,10 @@ extension UIButton
             let image = UIImage(contentsOfFile: String.localPath(hImage))
             setImage(image, for: .highlighted)
         
+        }
+        if let selImage = selBackImageName{
+          
+             setBackgroundImage(UIImage(named:selImage), for: .selected)
         }
         if let newFont = font {
          titleLabel?.font = newFont

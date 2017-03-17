@@ -84,6 +84,7 @@ class MatchListViewController: BaseViewController {
             collectionView.register(MatchListCell.self, forCellWithReuseIdentifier: matchListCell)
             collectionView.register(MatchListSectionView.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: matchListSectionView)
             view.addSubview(collectionView)
+            addRefresh()
             collectionView.snp.remakeConstraints { (make) in
                 make.top.left.right.bottom.equalTo(collectionView.superview!)
             }

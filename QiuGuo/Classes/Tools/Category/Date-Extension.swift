@@ -17,14 +17,14 @@ enum CHDateType {
 
 
 extension Date{
-
+    
 
     // 获取日期是星期几
     func getDateWeekDay() ->Int {
         
         let dateFmt         = DateFormatter()
         
-        dateFmt.dateFormat  = "yyyy-MM-dd HH:mm:ss"
+        dateFmt.dateFormat  = dateFormaterString
         
         let interval        = Int(self.timeIntervalSince1970)
         
@@ -64,6 +64,15 @@ extension Date{
     }
 
 
+    //MARK:- 时间间隔
+    static func dateInterval(date1:Date,date2:Date) -> DateComponents{
+        let gregorian = NSCalendar(calendarIdentifier: NSCalendar.Identifier.gregorian)
+        let result = gregorian?.components([NSCalendar.Unit.day,NSCalendar.Unit.hour], from: date1, to: date2)
+        guard result == nil else {
+            return result!
+        }
+        return DateComponents.init()
+    }
 
 
 

@@ -8,9 +8,9 @@
 
 import UIKit
 
- let normalInformationCell = "informationCell"
+private let normalInformationCell = "informationCell"
  let shuffingFigureCell = "shuffingFigureCell"
-let horizontalArticleCell = "horizontalArticleCell"
+private let horizontalArticleCell = "horizontalArticleCell"
 
 
 
@@ -108,7 +108,7 @@ class ArticleListViewController: BaseViewController {
             collectionView.register(BarnerCell.self, forCellWithReuseIdentifier: shuffingFigureCell)
             collectionView.register(ArticleHorizontalCell.self, forCellWithReuseIdentifier: horizontalArticleCell)
             view.addSubview(collectionView)
-            
+            addRefresh()
             collectionView.snp.remakeConstraints { (make) in
                 make.top.right.bottom.left.equalTo(collectionView.superview!)
             }

@@ -96,25 +96,27 @@ class BaseViewController: UIViewController {
         collectionView.dataSource = self as! UICollectionViewDataSource?
         collectionView.delegate = self as! UICollectionViewDelegate?
         collectionView.backgroundColor = UIColor.white
-        
-        //添加下拉刷新
-        let headerView = RefreshHeaderView.init(frame: CGRect(x: 0, y: 0, width: ScreenWidth, height: 70))
-       _ = collectionView.setUpHeaderRefresh(headerView, action: {[weak self] in
-          self?.downLoadRefresh()
-        })
-        
-        //添加上啦加载
-        let footer = RefreshFooterView.init(frame: CGRect(x: 0, y: 0, width: ScreenWidth, height: 70))
-        
-        _ = collectionView.setUpFooterRefresh(footer, action: { 
-             self?.upLoadRefresh()
-        })
-  
-            
-               
+     
         return collectionView
         
         }()
+    //MARK:- 添加上拉刷新下拉加载
+    func addRefresh(downLoadRefresh:Bool=true,upLoadRefresh:Bool=true){
+        if downLoadRefresh{
+            //添加下拉刷新
+            let headerView = RefreshHeaderView.init(frame: CGRect(x: 0, y: 0, width: ScreenWidth, height: 70))
+            _ = collectionView.setUpHeaderRefresh(headerView, action: {[weak self] in
+                self?.downLoadRefresh()
+            })
+        }
+        if upLoadRefresh {
+            //添加上啦加载
+            let footer = RefreshFooterView.init(frame: CGRect(x: 0, y: 0, width: ScreenWidth, height: 70))            
+            _ = collectionView.setUpFooterRefresh(footer, action: {[weak self] in
+                self?.upLoadRefresh()
+            })
+        }
+    }
     
     //MARK:- 下拉刷新
     func downLoadRefresh() {
@@ -161,6 +163,7 @@ class BaseViewController: UIViewController {
             }
         }
     }
+
     
     
     //MARK:- 返回事件

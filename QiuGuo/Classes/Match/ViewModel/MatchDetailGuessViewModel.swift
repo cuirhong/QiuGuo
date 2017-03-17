@@ -19,15 +19,20 @@ class MatchDetailGuessViewModel: BaseViewModel {
     //MARK:- 赛事的编号
     var matchId:Int = 0
     
+    //MARK:- 比赛竞猜模型
+    var matchGuessModel:MatchGuessModel?
+    
+    
     
     //MARK:- 加载比赛对战数据
     func loadDataMatchGuess(successCallBack:@escaping SucceedBlock,failureCallBack:@escaping FailureBlock){
         let urlString = jointUrlString("/quizs/Football/quizInfo/", paramters: ["quizId":String.getString(intData: self.quizId),"matchId":String.getString(intData: self.matchId),"UserID":String.getString(intData: UserInfo.loadAccount()?.UserID),"UserToken":UserInfo.loadAccount()?.UserToken ?? ""])
         
         NetworkTool.request(type: .GET, urlString: urlString, isQiuUrl: true, paramters: nil , finishedCallback: {[weak self] (result) in
-            if let data = result["data"].dictionary{
+            if let data = result["data"].dictionaryObject{
                 self?.dataAbnormalType = .noAbnormal
-              
+                self?.matchGuessModel = MatchGuessModel.init(dict:data)
+                
                 
             }else{
              self?.dataAbnormalType = .noData
@@ -37,14 +42,9 @@ class MatchDetailGuessViewModel: BaseViewModel {
         }) { (error) in
              failureCallBack(error)
         }
-    
-   
     }
     
-
-
-
-
+    
 
 
 

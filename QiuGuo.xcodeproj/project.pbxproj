@@ -45,6 +45,11 @@
 		370A9E101E6FEA45003F8D47 /* Date-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 370A9E0F1E6FEA45003F8D47 /* Date-Extension.swift */; };
 		370A9E121E7012C2003F8D47 /* ArticleHorizontalCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 370A9E111E7012C1003F8D47 /* ArticleHorizontalCell.swift */; };
 		3720ECD91E6D4DD60088CF9C /* BarnerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3720ECD81E6D4DD60088CF9C /* BarnerCell.swift */; };
+		3726FA781E78EBFB00B7A60B /* SingleGuessInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3726FA771E78EBFB00B7A60B /* SingleGuessInfoView.swift */; };
+		3726FA7A1E79297400B7A60B /* GuessResultRankCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3726FA791E79297400B7A60B /* GuessResultRankCell.swift */; };
+		3726FA7C1E79360E00B7A60B /* MatchGuessModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3726FA7B1E79360E00B7A60B /* MatchGuessModel.swift */; };
+		3726FA7E1E793C4A00B7A60B /* GuessResultUserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3726FA7D1E793C4A00B7A60B /* GuessResultUserModel.swift */; };
+		3726FA801E7942A500B7A60B /* GuessResultRankViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3726FA7F1E7942A500B7A60B /* GuessResultRankViewModel.swift */; };
 		373363481E69147700ED96E1 /* UserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 373363471E69147700ED96E1 /* UserInfo.swift */; };
 		3733634C1E696DA600ED96E1 /* MeHeadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3733634B1E696DA600ED96E1 /* MeHeadView.swift */; };
 		3733634E1E696F4300ED96E1 /* UIImageView-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3733634D1E696F4300ED96E1 /* UIImageView-Extension.swift */; };
@@ -182,6 +187,11 @@
 		370A9E0F1E6FEA45003F8D47 /* Date-Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Date-Extension.swift"; sourceTree = "<group>"; };
 		370A9E111E7012C1003F8D47 /* ArticleHorizontalCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArticleHorizontalCell.swift; sourceTree = "<group>"; };
 		3720ECD81E6D4DD60088CF9C /* BarnerCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BarnerCell.swift; sourceTree = "<group>"; };
+		3726FA771E78EBFB00B7A60B /* SingleGuessInfoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SingleGuessInfoView.swift; sourceTree = "<group>"; };
+		3726FA791E79297400B7A60B /* GuessResultRankCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GuessResultRankCell.swift; sourceTree = "<group>"; };
+		3726FA7B1E79360E00B7A60B /* MatchGuessModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MatchGuessModel.swift; sourceTree = "<group>"; };
+		3726FA7D1E793C4A00B7A60B /* GuessResultUserModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GuessResultUserModel.swift; sourceTree = "<group>"; };
+		3726FA7F1E7942A500B7A60B /* GuessResultRankViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GuessResultRankViewModel.swift; sourceTree = "<group>"; };
 		373363471E69147700ED96E1 /* UserInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserInfo.swift; sourceTree = "<group>"; };
 		3733634B1E696DA600ED96E1 /* MeHeadView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeHeadView.swift; sourceTree = "<group>"; };
 		3733634D1E696F4300ED96E1 /* UIImageView-Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImageView-Extension.swift"; sourceTree = "<group>"; };
@@ -567,6 +577,8 @@
 			children = (
 				3703DDD21E6E59EC003471FD /* MatchLeagueModel.swift */,
 				3703DDD61E6E647B003471FD /* MatchListModel.swift */,
+				3726FA7B1E79360E00B7A60B /* MatchGuessModel.swift */,
+				3726FA7D1E793C4A00B7A60B /* GuessResultUserModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -579,6 +591,8 @@
 				373B9C5C1E713CC900D49F74 /* MatchDetailHeadView.swift */,
 				37346F381E77A44800CF2721 /* MenuToolView.swift */,
 				3776DF7E1E77FF0200256FD4 /* MatchGuessSectionView.swift */,
+				3726FA771E78EBFB00B7A60B /* SingleGuessInfoView.swift */,
+				3726FA791E79297400B7A60B /* GuessResultRankCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -589,6 +603,7 @@
 				3703DDD41E6E5A91003471FD /* MatchLeagueViewModel.swift */,
 				3703DDDA1E6E6F40003471FD /* MatchListViewModel.swift */,
 				377D672A1E76BE530027D696 /* MatchDetailGuessViewModel.swift */,
+				3726FA7F1E7942A500B7A60B /* GuessResultRankViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -1127,6 +1142,7 @@
 				3703DDD51E6E5A91003471FD /* MatchLeagueViewModel.swift in Sources */,
 				373B9C5B1E713C0600D49F74 /* MatchDetailViewController.swift in Sources */,
 				370A9E081E6FAB3B003F8D47 /* PullToRefresh.swift in Sources */,
+				3726FA781E78EBFB00B7A60B /* SingleGuessInfoView.swift in Sources */,
 				373B9C5D1E713CC900D49F74 /* MatchDetailHeadView.swift in Sources */,
 				18F1AED51E6CBBA600CAF31C /* ArticleListViewModel.swift in Sources */,
 				37C612C31E67CB0F004E9CED /* RegisterSecondViewController.swift in Sources */,
@@ -1153,7 +1169,10 @@
 				370A9E051E6FAB3B003F8D47 /* Footer.swift in Sources */,
 				3757F1BC1E6404B500632C75 /* MeViewController.swift in Sources */,
 				3757F1BA1E64048700632C75 /* MatchViewController.swift in Sources */,
+				3726FA7A1E79297400B7A60B /* GuessResultRankCell.swift in Sources */,
 				374D52951E6554AC0060EE78 /* ThirdLoginView.swift in Sources */,
+				3726FA7C1E79360E00B7A60B /* MatchGuessModel.swift in Sources */,
+				3726FA7E1E793C4A00B7A60B /* GuessResultUserModel.swift in Sources */,
 				374D52991E65616D0060EE78 /* String-Extension.swift in Sources */,
 				374D52971E65581A0060EE78 /* LoginProfile.swift in Sources */,
 				3733635A1E69952A00ED96E1 /* BaseTableViewCell.swift in Sources */,
@@ -1209,6 +1228,7 @@
 				18FF2EAA1E6B825E0037DBF5 /* UIBarButtonItem-Extension.swift in Sources */,
 				3720ECD91E6D4DD60088CF9C /* BarnerCell.swift in Sources */,
 				3757F1AA1E63FBE400632C75 /* Common.swift in Sources */,
+				3726FA801E7942A500B7A60B /* GuessResultRankViewModel.swift in Sources */,
 				3757F1A81E63FA6800632C75 /* TabBarController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

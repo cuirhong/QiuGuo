@@ -59,7 +59,7 @@ extension String{
     
    
     //MARK:- 字符串得到Date
-    static func getDateFromString(dateStr:String?="",formatter:String?="yyyy-MM-dd HH:mm:ss")->Date?{
+    static func getDateFromString(dateStr:String?="",formatter:String?=dateFormaterString)->Date?{
         let f = DateFormatter()
         f.dateFormat = formatter
         let date = f.date(from: dateStr!)
@@ -99,9 +99,9 @@ extension String{
         return string
     }
     
+  
     
     
-
 
 }
 

@@ -45,6 +45,7 @@ class RefreshFooterView: UIView {
             make.centerX.centerY.equalTo(noMoreDataLabel.superview!)
         }
 
+        noMoreDataLabel.isHidden = true
         
     }
     

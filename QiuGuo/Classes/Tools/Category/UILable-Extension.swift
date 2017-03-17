@@ -25,6 +25,20 @@ extension UILabel
     }
     
     
+    //MARK:- 设置不同的文本
+    func setDiffirentText(needText:String,fontSize:CGFloat,fontColor:UIColor?){
+        let string = self.text ?? ""
+        let attributedString = NSMutableAttributedString.init(string: string)
+        if let range = (string as? NSString)?.range(of: needText){
+         attributedString.addAttribute(NSFontAttributeName, value: UIFont.font(psFontSize: fontSize), range: range)
+            if let color = fontColor{
+            attributedString.addAttribute(NSForegroundColorAttributeName, value: color, range: range)
+            }
+            self.attributedText = attributedString
+        }
+    }
+    
+    
     /**
      计算label的宽度和高度
      
@@ -33,7 +47,7 @@ extension UILabel
      
      :returns: 返回计算后label的CGRece
      */
-    func labelSize(text:String,size:CGSize?, font:UIFont?) -> CGRect{
+    func labelSize(text:String,size:CGSize?=nil, font:UIFont?) -> CGRect{
         var rect = CGRect();
          var newSize:CGSize = CGSize.init(width: 100000, height: 100000)
         if size != nil {

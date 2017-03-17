@@ -103,17 +103,21 @@ let weChatLoginState = "weChatLoginState"
 /**
  *  微信appid
  */
-let weChatAppId = "wx403be30bc08421ac"
+let weChatAppId = "xxxxxxx"
 /**
  *  微信Secret
  */
-let weChatSecret = "3b5bc191a5ab3437e77c62b22f574205"
+let weChatSecret = "xxxxxxx"
 
 /**
  *  保存信息
  */
 let userDefault = UserDefaults.standard
 
+/**
+ *  保存信息
+ */
+let dateFormaterString = "yyyy-MM-dd HH:mm:ss"
 
 
 

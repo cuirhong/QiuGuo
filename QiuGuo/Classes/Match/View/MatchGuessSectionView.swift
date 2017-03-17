@@ -9,17 +9,43 @@
 import UIKit
 
 
-class MatchGuessSectionView: BaseView {
+class MatchGuessSectionView: UICollectionReusableView {
+    
+    //MARK:- title
+    var title:String?{
+    
+        didSet{
+            titleLable.text = title
+        }
+    
+    }
     
     
     //MARK:- 初始化
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupUI()
+       
         
     }
     
-    func setupUI(){}
+    //MARK:- 布局
+    func setupUI(){
+        
+        
+        addSubview(backMaskImageView)
+        backMaskImageView.snp.remakeConstraints { (make) in
+            make.top.left.right.bottom.equalTo(backMaskImageView.superview!)
+        }
+        
+        addSubview(titleLable)
+        titleLable.snp.remakeConstraints { (make) in
+            make.centerX.centerY.equalTo(titleLable.superview!)
+        }
+    
+    
+    
+    }
     
     
     //MARK:- 背景阴影图片 
@@ -37,14 +63,5 @@ class MatchGuessSectionView: BaseView {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-
-
-
-
-
-
-
-
 
 }
