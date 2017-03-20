@@ -24,11 +24,13 @@ class BarnerViewModel: BaseViewModel {
                     let model = BarnerModel.init(dict: (dict as? Dictionary)!)
                     self?.barnerArr.append(model)
                 }
-               
+            }else{
+               self?.dataAbnormalType = .noData
             }
           successCallBack!(result)
 
-        }) { (error) in
+        }) {[weak self] (error) in
+            self?.settingFailure()
             failureCallBack!(error)
         }
     }

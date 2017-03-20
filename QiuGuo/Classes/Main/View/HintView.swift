@@ -17,24 +17,26 @@ class HintView: BaseView {
     init(_ imageName:String="no_data.png",textArr:[String]=["抱歉，暂无数据"]){
         super.init(frame: CGRect.zero)
         
-         //提示图片
-        let imageView = UIImageView.init(image: UIImage.getImage(imageName))
-        addSubview(imageView)
-        
-        imageView.snp.makeConstraints({ (make) in
-            make.top.left.right.equalTo(imageView.superview!)
-           
-        })
-        
+   
         //占位空格，便于布局
         let label = UILabel()
         addSubview(label)
         label.snp.makeConstraints { (make) in
-            make.top.equalTo(imageView.snp.bottom)
-            make.centerX.equalTo(imageView)
+           make.centerX.equalTo(label.superview!)
+            make.bottom.equalTo(label.superview!.snp.centerY).offset(-5)
             make.height.equalTo(40*LayoutHeightScale)
-            
         }
+        
+        //提示图片
+        let imageView = UIImageView.init(image: UIImage.getImage(imageName))
+        addSubview(imageView)
+        
+        imageView.snp.makeConstraints({ (make) in
+            make.centerX.equalTo(label)
+            make.bottom.equalTo(label.snp.top)
+            
+        })
+        
         
         
         //提示文字

@@ -15,6 +15,13 @@ enum LoginProfileType {
     case register;
     case bindPhoneNumber
 }
+//验证码的类型
+@objc
+enum CodeType:Int{
+    case Login = 0;
+    case Register;
+    case BindPhoneNumber;
+}
 
 
 
@@ -90,7 +97,7 @@ class LoginHeadView: UIView {
         //取消按钮
         addSubview(cancelBtn)
         cancelBtn.snp.remakeConstraints { (make) in
-            make.left.equalTo(cancelBtn.superview!).offset(20)
+            make.left.equalTo(cancelBtn.superview!).offset(20*LayoutWidthScale)
             make.top.equalTo(cancelBtn.superview!).offset(20)
             make.width.height.equalTo(30)
         }
@@ -294,7 +301,7 @@ class LoginHeadView: UIView {
     //MARK:- 第三方绑定手机号码
     func setupBindPhonenumber(){
         
-        loginTitleLabel.text = "绑定手机号码录"
+        loginTitleLabel.text = "绑定手机号码"
         doneBtn.setTitle("完成", for: .normal)
         
         
@@ -322,7 +329,7 @@ class LoginHeadView: UIView {
         //登录按钮
         addSubview(doneBtn)
         doneBtn.snp.remakeConstraints { (make) in
-            make.top.equalTo(changeLoginBtn.snp.bottom).offset(73*LayoutHeightScale)
+            make.top.equalTo(codeInput.snp.bottom).offset(176*LayoutHeightScale)
             make.left.equalTo(156*LayoutHeightScale)
             make.right.equalTo(-154*LayoutHeightScale)
         }
@@ -333,7 +340,7 @@ class LoginHeadView: UIView {
     }
     
     //MARK:- 创建取消按钮
-    fileprivate lazy var cancelBtn:UIButton = UIButton(title: "", imageName: "icon_close.png", target: self, selector: #selector(LoginHeadView.cancel), font: nil, titleColor: nil)
+    fileprivate lazy var cancelBtn:UIButton = UIButton(title: "", imageName: "arrow_back_b.png", target: self, selector: #selector(LoginHeadView.cancel), font: nil, titleColor: nil)
     
     //MARK:- 创建登录／注册按钮
     fileprivate lazy var loginOrRegisterBtn:UIButton = UIButton(title: "注册", imageName: "", target: self, selector: #selector(LoginHeadView.clickLoginOrRegister), font: UIFont.systemFont(ofSize: DEFAULTFONTSIZE), titleColor: DEFAUlTFONTCOLOR)
@@ -417,6 +424,9 @@ class LoginHeadView: UIView {
     //MARK:- ok点击事件
     func done() {
          printLog(message:  #function)
+//        //崔
+//        delegate?.loginView!(self, clickNextRegister: UIButton(), loginProfile: LoginProfile())
+//        return
   
         guard isPhoneNumber(number: phoneInput.textFiled.text!) else {
             return
@@ -509,7 +519,9 @@ class LoginHeadView: UIView {
             seconds = 60
             
         }else{
+            codeInput.codeButton.isUserInteractionEnabled = false
             
+            codeInput.codeButton.backgroundColor = UIColor.white
             //设置界面的按钮显示 根据自己需求设置
             UIView.beginAnimations(nil, context: nil)
             UIView.setAnimationDuration(1)
@@ -528,20 +540,29 @@ class LoginHeadView: UIView {
         
         if isPhoneNumber(number: phoneInput.textFiled.text!){
         
-            codeInput.codeButton.isUserInteractionEnabled = false
-            
-            delegate?.loginView!(self, getCodeWithPhoneNumber: phoneInput.textFiled.text!)
+          
+            var codeType:CodeType = .Login
+            switch loginType {
+            case .codeLogin:
+                 codeType = .Login
+            case .register:
+                codeType = .Register
+            case .bindPhoneNumber:
+                codeType = .BindPhoneNumber
+            default:
+                break
 
-            codeInput.codeButton.backgroundColor = UIColor.white
+            }
+
+            delegate?.loginView!(self, getCodeWithPhoneNumber: phoneInput.textFiled.text!,codeType:codeType)
+
+            
             link = CADisplayLink(target: self, selector: #selector(update))
             link?.frameInterval = 30
             link?.add(to: RunLoop.current, forMode: RunLoopMode.defaultRunLoopMode)
             link?.isPaused = true
-            
-         
+                
             hint("", isError: false)
-
-        
         }
      
         
@@ -564,8 +585,6 @@ class LoginHeadView: UIView {
                 make.left.equalTo(158*LayoutHeightScale)
             })
         }
-        
-      
          hintLabel.text = text
         if isError {
              hintLabel.textColor = UIColor.red

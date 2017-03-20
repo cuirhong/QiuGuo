@@ -36,14 +36,17 @@ class MatchListViewController: BaseViewController {
     //MARK:- 网络请求数据
     override func loadData() {
         super.loadData()
+        matchListViewModel.dataAbnormalType = .noAbnormal   
         matchListViewModel.loadMatchList(successCallBack: {[weak self] (result) in
-            DispatchQueue.main.async {
-                 self?.setupUI()
-                self?.endRefreshing()
-
+            let isNormal = self?.checkDataIsNormal( dataAbnormalType: (self?.matchListViewModel.dataAbnormalType)!)
+            if isNormal == true {
+                DispatchQueue.main.async {
+                    self?.setupUI()
+                    self?.endRefreshing()
+                }
             }
-        }) { (error) in
-            HUDTool.show(showType:.Failure,text: error.debugDescription)
+        }) {[weak self]  (error) in
+            self?.loadDataFailure(error: error, abnormalType: self?.matchListViewModel.dataAbnormalType)
         }
    
     }
@@ -54,6 +57,7 @@ class MatchListViewController: BaseViewController {
         matchListViewModel.refreshType = .PullDownRefresh
         matchListViewModel.page = 1
         matchListViewModel.type = "end"
+         matchListViewModel.dataAbnormalType = .noAbnormal
         DispatchQueue.global().async {[weak self] in
             self?.loadData()
         }
@@ -66,9 +70,9 @@ class MatchListViewController: BaseViewController {
             matchListViewModel.refreshType = .UpDownRefresh
             matchListViewModel.page += 1
             matchListViewModel.type = "head"
+            matchListViewModel.dataAbnormalType = .noAbnormal
             DispatchQueue.global().async {[weak self] in
-                self?.loadData()
-                
+                self?.loadData()   
             }
         }else{            
             collectionView.endFooterRefreshingWithNoMoreData()

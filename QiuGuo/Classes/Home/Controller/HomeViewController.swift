@@ -38,15 +38,21 @@ class HomeViewController: BaseViewController {
     }
     
 
-    
+    //MARK:- 加载数据
+
+
     override func loadData(){
         super.loadData()
-
+        spercialViewModel.dataAbnormalType = .noAbnormal    
         spercialViewModel.loadSpecialData(success: {[weak self](result) in
-   
-            self?.refreshUI()
-        }) { (error) in
-            printData(message: "获取数据失败")
+             let isNormal = self?.checkDataIsNormal(dataAbnormalType: (self?.spercialViewModel.dataAbnormalType)!)
+            if isNormal == true {
+              self?.refreshUI()
+            }
+            
+        }) {[weak self] (error) in
+           
+            self?.loadDataFailure(error: error, abnormalType: self?.spercialViewModel.dataAbnormalType)
         }
     }
     // MARK: -刷新界面

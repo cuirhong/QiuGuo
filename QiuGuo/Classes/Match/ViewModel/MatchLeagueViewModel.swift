@@ -26,12 +26,15 @@ class MatchLeagueViewModel: BaseViewModel {
                 }
             
             }
+            if self?.matchLeagueArr.count == 0{
+              self?.dataAbnormalType = .noData
+            
+            }
             successCallBack(result)
-        }) { (error) in
-             failureCallBack(error)
+        }) {[weak self] (error) in
+            self?.settingFailure()
+            failureCallBack(error)
         }
-    
-        
         
     }
     

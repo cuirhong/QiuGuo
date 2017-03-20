@@ -49,11 +49,12 @@ class MatchDetailViewController: BaseViewController {
         super.setupView()
         //比赛赛程
         detailHeadView.matchModel = matchModel
+        let headViewHeight = 272*LayoutHeightScale
         detailHeadView.delegate = self
        view.addSubview(detailHeadView)
         detailHeadView.snp.makeConstraints { (make) in
             make.top.right.left.equalTo(detailHeadView.superview!)
-            make.height.equalTo(272*LayoutHeightScale)
+            make.height.equalTo(headViewHeight)
         }
         
         
@@ -86,9 +87,11 @@ class MatchDetailViewController: BaseViewController {
         
         //聊个球 
         let chatBallController = ChatBallViewController()
+        chatBallController.matchModel = matchModel
         childVcArr.append(chatBallController)
 
-        let contentFrame = CGRect(x: 0, y: kStatusBarH + kNavigationBarH + pageMenuHeight, width: ScreenWidth, height: ScreenHeight - kStatusBarH - kNavigationBarH-pageMenuHeight-kTabBarH)
+        //导航栏已经隐藏了
+        let contentFrame = CGRect(x: 0, y:  headViewHeight + pageMenuHeight, width: ScreenWidth, height: ScreenHeight  - headViewHeight-pageMenuHeight)
         pageContentView = PageContentView.init(frame: contentFrame, childVcs: childVcArr, parentVc: self)
         view.addSubview(pageContentView!)
         pageContentView?.delegate = self

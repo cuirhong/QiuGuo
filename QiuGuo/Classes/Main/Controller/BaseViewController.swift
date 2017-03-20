@@ -120,6 +120,7 @@ class BaseViewController: UIViewController {
     
     //MARK:- 下拉刷新
     func downLoadRefresh() {
+        
        collectionView.endFooterRefreshing()
         hintView?.removeFromSuperview()
     }
@@ -138,32 +139,50 @@ class BaseViewController: UIViewController {
     }
     
     //MARK:- 设置数据异常界面
-    func setUpDataAbnormalUI(topView:UIView?=nil,topOffSet:CGFloat=0, hintTextArr:[String],dataAbnormalType:DataAbnormalType = .noData){
+    func checkDataIsNormal(hintTextArr:[String]=["没有更多数据了!"],dataAbnormalType:DataAbnormalType = .noData)->Bool{
         var imageString = ""
         switch dataAbnormalType {
         case .noData:
-            imageString = "no_data"
+            imageString = "no_data.png"
+             hintView = HintView.init(imageString, textArr: hintTextArr)
         case .noNetwork:
-            imageString = ""
+            imageString = "no-network.png"
+            let textArr:[String] = ["网络不可用,点击屏幕重试"]
+             hintView = HintView.init(imageString, textArr: textArr)
+            hintView?.addGestureRecognizer(UITapGestureRecognizer.init(target:self, action:#selector(noNetworkTapLoadData)))
         default:
-             return
+             return true
         }
         
-        hintView = HintView.init(imageString, textArr: hintTextArr)
         self.view.addSubview(hintView!)
-        if let view = topView{
-            hintView?.snp.makeConstraints { (make) in
-                make.top.equalTo(view.snp.bottom).offset(topOffSet)
-                make.centerX.equalTo((hintView?.superview!)!)
-            }
-        }else{
-                hintView?.snp.makeConstraints { (make) in
-                    make.top.equalTo((hintView?.superview!)!).offset(topOffSet)
-                    make.centerX.equalTo((hintView?.superview!)!)
-            }
+        hintView?.snp.makeConstraints { (make) in
+           make.top.right.bottom.left.equalTo((hintView?.superview!)!)
+            
+        }
+        
+        return false
+    }
+    
+    //MARK:- 无网络点击加载数据
+    func noNetworkTapLoadData(){
+        hintView?.removeFromSuperview()
+        DispatchQueue.global().async {[weak self] in
+          self?.loadData()
         }
     }
 
+    
+    //MARK:- 加载数据失败
+    func loadDataFailure(error:Any?=nil,abnormalType:DataAbnormalType?){
+        if abnormalType == .noNetwork{
+            _ = checkDataIsNormal(dataAbnormalType: abnormalType ?? .noNetwork)
+        }else{
+            HUDTool.show(showType: .Failure, text: error.debugDescription,viewController:self)
+            
+        }
+    
+    }
+    
     
     
     //MARK:- 返回事件

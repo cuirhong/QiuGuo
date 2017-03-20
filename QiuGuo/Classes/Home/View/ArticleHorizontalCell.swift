@@ -38,7 +38,9 @@ class ArticleHorizontalCell: ArticleNormalCell {
                 }
             }
  
-            commentButton.setTitle((articleListModel?.Comments.description)! + " " + "评论", for: .normal)
+            if let model = articleModel{
+                self.settingComment(articleModel: model)
+            }
             collectionView.reloadData()
         }
     }

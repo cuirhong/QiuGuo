@@ -38,6 +38,11 @@ class TabBarController : UITabBarController{
         tabBar.isOpaque = true
     }
     
+    
+    func initData(){
+    
+    
+    }
    
 
     /**

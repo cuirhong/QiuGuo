@@ -11,16 +11,30 @@ import UIKit
 class LoginViewModel: BaseViewModel {
     
     //MARK:- 获取验证码
-    class func getCode(phoneNumber:Int,finishedCallback : @escaping (_ result: Any) -> ()){
-        
-        let urlString = AppRootUrl +  "/oauth/Captcha/loginCaptcha"
-        NetworkTool.request(type: .POST, urlString: urlString, paramters: ["PhoneNumber":phoneNumber], finishedCallback: { (result) in
-            finishedCallback(result)
-        }) { (error) in
-            
+    class func getCode(codeType:CodeType, phoneNumber:Int?,successCallBack:@escaping SucceedBlock,failureCallBack:@escaping FailureBlock){
+        var urlString = AppRootUrl
+        var paramters:[String:Any] = [String:Any]()
+        if let num = phoneNumber{
+        paramters["PhoneNumber"] = num
         }
-      
-        
+    
+        switch codeType {
+        case .Login:
+            urlString += "/oauth/Captcha/loginCaptcha"
+        case .Register:
+             urlString += "/oauth/Captcha/registerCaptcha"
+        case .BindPhoneNumber:
+             urlString += "/oauth/Captcha/bindCaptcha"
+            paramters["UserID"] = String.getString(intData: UserInfo.loadAccount()?.UserID)
+             paramters["UserToken"] = UserInfo.loadAccount()?.UserToken
+     
+        }
+
+        NetworkTool.request(type: .POST, urlString: urlString, paramters: paramters, finishedCallback: { (result) in
+            successCallBack(result)
+        }) { (error) in
+            failureCallBack(error)
+        }
     }
     
     
@@ -63,23 +77,21 @@ class LoginViewModel: BaseViewModel {
     }
     
     
+    
+    
     //MARK:- 上传图片
-    class func upload(image:UIImage,finishedCallback : @escaping (_ result: Any) -> ()) {
+    class func upload(image:UIImage,successCallBack:@escaping SucceedBlock,failureCallBack:@escaping FailureBlock) {
         let urlString = AppRootUrl +  "/oauth/Qauth/imageUpload"
         //将image转成Data
         var imageData:Data? = UIImagePNGRepresentation(image)
         if imageData == nil {
             imageData = UIImageJPEGRepresentation(image, 0.5)
         }
-//        let imageStr:String? = String(data: imageData!, encoding: String.Encoding(rawValue: String.Encoding.utf8.rawValue))
-        
-
-        printData(message: UserInfo.loadAccount()?.UserToken)
-        
-        NetworkTool.request(type: .POST, urlString: urlString, paramters: ["UserID":UserInfo.loadAccount()?.UserID,"UserToken":UserInfo.account?.UserToken,"Headimg":imageData!], finishedCallback: { (result) in
-             finishedCallback(result)
-        }) { (error) in
+        NetworkTool.request(type: .POST, urlString: urlString, paramters: ["UserID":String.getString(intData: UserInfo.loadAccount()?.UserID),"UserToken":UserInfo.account?.UserToken ?? "","Headimg":imageData! ], finishedCallback: { (result) in
             
+             successCallBack(result)
+        }) { (error) in
+            failureCallBack(error)
         }
         
     }

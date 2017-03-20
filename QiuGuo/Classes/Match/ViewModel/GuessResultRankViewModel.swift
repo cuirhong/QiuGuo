@@ -36,7 +36,8 @@ class GuessResultRankViewModel: BaseViewModel {
             }
             self?.guessResultUserArr = self?.setupRefresh(preArray: (self?.guessResultUserArr)!, newArray: modelArr) as? [GuessResultUserModel]
             successCallBack(result)
-        }) {(error) in
+        }) {[weak self] (error) in
+            self?.settingFailure()
             failureCallBack(error)
         }
     }

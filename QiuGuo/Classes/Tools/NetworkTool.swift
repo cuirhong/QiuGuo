@@ -10,6 +10,7 @@ import UIKit
 import Alamofire
 import SwiftyJSON
 
+
 enum MethodType {
     case GET
     case POST
@@ -53,13 +54,37 @@ class NetworkTool {
                 }
             }else{
                  HUDTool.dismiss()
+                 
                 failureCallback!(response.result.error)
                 printData(message: response.result.error)
-               
-            }
+             }
         }
     }
     
+    
+    //MARK:- 检测网络是否连接
+    class  func requestUrl(urlString: String) -> Bool {
+        let url: NSURL = NSURL(string: urlString)!
+        let request: NSMutableURLRequest = NSMutableURLRequest(url: url as URL)
+        request.timeoutInterval = 5
+        
+        var response: URLResponse?
+        
+        do {
+            try NSURLConnection.sendSynchronousRequest(request as URLRequest, returning: &response)
+            if let httpResponse = response as? HTTPURLResponse {
+                if httpResponse.statusCode == 200 {
+                    print("response:\(httpResponse.statusCode)")
+                    return true
+                }
+            }
+            return false
+        }
+        catch (let error) {
+            print("error:\(error)")
+            return false
+        }
+    }
     
     
     class func taskRequest(type: MethodType, urlString: String,paramters: [String: Any]? = nil, finishedCallback: @escaping (_ result: JSON) -> (),failureCallback:FailureBlock? = nil){

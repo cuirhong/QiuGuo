@@ -31,16 +31,15 @@ class MatchDetailGuessViewModel: BaseViewModel {
         NetworkTool.request(type: .GET, urlString: urlString, isQiuUrl: true, paramters: nil , finishedCallback: {[weak self] (result) in
             if let data = result["data"].dictionaryObject{
                 self?.dataAbnormalType = .noAbnormal
-                self?.matchGuessModel = MatchGuessModel.init(dict:data)
-                
-                
+                self?.matchGuessModel = MatchGuessModel.init(dict:data)   
             }else{
              self?.dataAbnormalType = .noData
             
             }
             successCallBack(result)
-        }) { (error) in
-             failureCallBack(error)
+        }) {[weak self] (error) in
+            self?.settingFailure()
+            failureCallBack(error)
         }
     }
     

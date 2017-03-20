@@ -8,9 +8,6 @@
 
 import UIKit
 
-
-
-
 class SpecialViewModel: BaseViewModel {
     
     lazy var spericalModels:[SpecialModel] = []
@@ -30,8 +27,12 @@ class SpecialViewModel: BaseViewModel {
                     self?.spericalModels.append(model)
                 }
             }
+            if self?.spericalModels.count == 0{
+              self?.dataAbnormalType = .noData
+            }
             success(result)
-        }) { (error) in
+        }) {[weak self] (error) in
+            self?.settingFailure()
             failure(error)
         }
 

@@ -11,5 +11,10 @@ import UIKit
 
 let LoginNotificationName = "loginNotificationName"
 
+/**
+ *  网络已经发生了变化通知
+ */
+let NetworkDidChangeNotifName = "networkDidChangeNotifName"
+
 
 

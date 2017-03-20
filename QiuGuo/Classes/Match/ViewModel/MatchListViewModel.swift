@@ -42,9 +42,13 @@ class MatchListViewModel: BaseViewModel {
             }
             
             self?.matchListArr = self?.setupRefresh(isHead: dataDict["isHead"].stringValue, isEnd: dataDict["isEnd"].stringValue, preArray: (self?.matchListArr)! , newArray: modelArray) as! [[MatchListModel]]
+            if self?.matchListArr.count == 0{
+              self?.dataAbnormalType = .noData
+            }
             successCallBack(result)
             
-        }) { (error) in
+        }) {[weak self] (error) in
+            self?.settingFailure()
             failureCallBack(error)
         }
     }

@@ -27,14 +27,14 @@ class MatchViewController: BaseViewController {
     //MARK:- 加载数据
     override func loadData() {
         super.loadData()
-       
-        
-        matchLeagueViewModel.loadMatchLeague(successCallBack: {(result) in
-            DispatchQueue.main.async {[weak self] in
-                self?.setupUI()
+        matchLeagueViewModel.dataAbnormalType = .noAbnormal 
+        matchLeagueViewModel.loadMatchLeague(successCallBack: {[weak self] (result) in
+            let isNormal = self?.checkDataIsNormal(dataAbnormalType: (self?.matchLeagueViewModel.dataAbnormalType)!)
+            if isNormal == true {
+               self?.setupUI()
             }
-        }) { (error) in
-            HUDTool.show(showType: .Failure, text: error.debugDescription)
+        }) {[weak self] (error) in
+           self?.loadDataFailure(error: error, abnormalType: self?.matchLeagueViewModel.dataAbnormalType)
         }
     }
     

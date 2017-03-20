@@ -65,14 +65,18 @@ class ArticleDetailViewController: BaseViewController {
     //MARK:- 加载数据
     override func loadData() {
         super.loadData()
+        articleDetailViewModel.dataAbnormalType = .noAbnormal   
         articleDetailViewModel.loadArticleDetail(successCallBack: {[weak self] (result) in
-            DispatchQueue.main.async {
-                 self?.setupView()
+            let isNormal = self?.checkDataIsNormal(dataAbnormalType: (self?.articleDetailViewModel.dataAbnormalType)!)
+            if isNormal == true {
+                DispatchQueue.main.async {
+                  self?.setupView()
+                }
             }
-           
+  
             
-        }) { (error) in
-              HUDTool.show(showType: .Failure, text:error.debugDescription )
+        }) {[weak self] (error) in
+           self?.loadDataFailure(error: error, abnormalType: self?.articleDetailViewModel.dataAbnormalType)
         }
     }
     

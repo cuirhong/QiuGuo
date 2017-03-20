@@ -27,13 +27,22 @@ extension UIImageView{
     
     
     
-    func kf_setImage(imageUrlStr:String?){
+    func kf_setImage(imageUrlStr:String?,placeholder:String?=nil){
         guard imageUrlStr != nil else {
              return
         }
-         let resource = ImageResource(downloadURL:NSURL.init(string:imageUrlStr!) as! URL, cacheKey: imageUrlStr)
-
-        self.kf.setImage(with: resource, placeholder: UIImage(named:"placeholder.png"), options: nil, progressBlock: nil, completionHandler: nil)
+        
+        let onlyWIFILoadImage:Bool = userDefault.value(forKey: KonlyWIFILoadImage) as? Bool ?? false
+        
+        let placeholderImage = UIImage(named:placeholder ?? "placeholder.png")
+        if onlyWIFILoadImage == true {
+            if NetworkMonitor.sharedNetworkMonitor()?.currentNetworkType != .WIFI{
+                self.image = placeholderImage
+                return
+            }
+        }
+        let resource = ImageResource(downloadURL:NSURL.init(string:imageUrlStr!) as! URL, cacheKey: imageUrlStr)
+        self.kf.setImage(with: resource, placeholder:placeholderImage , options: nil, progressBlock: nil, completionHandler: nil)
 
     }
     

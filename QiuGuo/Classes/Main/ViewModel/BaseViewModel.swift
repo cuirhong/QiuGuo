@@ -76,6 +76,15 @@ class BaseViewModel: NSObject {
         }
     }
     
+    //MARK:- 设置无网络
+    func settingFailure(){
+
+        if NetworkTool.requestUrl(urlString: "www.qiu.com") == false{
+            self.dataAbnormalType = .noNetwork
+        }
+
+    }
+
     //MARK:-  拼接get请求的url
     func jointUrlString(_ urlString:String,paramters:[String:String])->String{
         let urlStr = AppRootUrl + urlString + "?" + query(paramters)

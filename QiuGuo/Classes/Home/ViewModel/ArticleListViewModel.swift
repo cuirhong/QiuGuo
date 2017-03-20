@@ -18,8 +18,7 @@ class ArticleListViewModel: BaseViewModel {
      var articleListArr:[ArticleListModel] = []
     //MARK:- 文章ID
     lazy var SpecialID:Int = -1
-    
-    
+
     //MARK:- 赛事ID
     lazy var matchID:Int = -1
     //MARK:- 联赛ID（赛事详情界面的资讯才用到）
@@ -51,8 +50,12 @@ class ArticleListViewModel: BaseViewModel {
             }
 
             self?.articleListArr = (self?.setupRefresh( preArray: (self?.articleListArr)!, newArray: newModelArr) as? [ArticleListModel])!
+            if self?.articleListArr.count == 0{
+                self?.dataAbnormalType = .noData
+            }
             successCallBack!(result)
-        }) { (error) in
+        }) {[weak self] (error) in
+            self?.settingFailure()
             failureCallBack!(error)
         }
     }

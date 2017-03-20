@@ -8,6 +8,15 @@
 
 import UIKit
 import WebKit
+//代理
+@objc
+
+protocol SingleGuessInfoViewDelegate : NSObjectProtocol {
+
+    @objc optional func singleGuessInfoView(_ singleGuessInfoView:SingleGuessInfoView?,supportBtn:UIButton)
+   
+}
+
 
 enum SupportTeamType:Int {
     case None;//无
@@ -16,10 +25,15 @@ enum SupportTeamType:Int {
     case SupportDeuce;//平局
 }
 
+
 private let GuessInfoDefaultFontColor = UIColor.init(hexString: "#7f7f7f")
 
 class SingleGuessInfoView: BaseView {
     
+    //MARK:- 代理
+    weak var delegate:SingleGuessInfoViewDelegate?
+    
+    //MARK:- 比赛模型
     var matchGuessModel:MatchGuessModel?{
     
         didSet{
@@ -119,6 +133,12 @@ class SingleGuessInfoView: BaseView {
         
         supportBeTeamView.supportBtn.setTitle("客胜", for: .normal)
         supportBeTeamView.supportBtn.tag = SupportTeamType.SupportBeTeam.rawValue
+        
+        supportTeamView.supportBtn.addTarget(self, action: #selector(chooseSupportTeam(sender:)), for: .touchUpInside)
+        
+         supportDeuceView.supportBtn.addTarget(self, action: #selector(chooseSupportTeam(sender:)), for: .touchUpInside)
+        
+         supportBeTeamView.supportBtn.addTarget(self, action: #selector(chooseSupportTeam(sender:)), for: .touchUpInside)
 
     }
  
@@ -185,8 +205,28 @@ class SingleGuessInfoView: BaseView {
         }
         
         
-        
     
+    }
+    
+    //MARK:- 选择支持
+     func chooseSupportTeam(sender:UIButton){
+//        let image = UIImage.getImage("choosed_none_support_team.png")
+//        supportTeamView.supportBtn.setBackgroundImage(image, for: .normal)
+//        supportDeuceView.supportBtn.setBackgroundImage(image, for: .normal)
+//        supportBeTeamView.supportBtn.setBackgroundImage(image, for: .normal)
+//        sender.setBackgroundImage(UIImage.getImage("choosed_support_team.png"), for: .normal)
+//        
+//        
+        supportTeamView.supportBtn.isSelected = false
+        supportDeuceView.supportBtn.isSelected = false
+        supportBeTeamView.supportBtn.isSelected = false
+        sender.isSelected = true 
+        
+       delegate?.singleGuessInfoView!(self, supportBtn: sender)
+        
+        printData(message:  #function)
+        
+        
     }
     
     //MARK:- 主队logo
@@ -215,11 +255,12 @@ class SingleGuessInfoView: BaseView {
     
     
     //MARK:- 比赛支持信息view
-    class GuessSupportTeamView: BaseView {
+     class GuessSupportTeamView: BaseView {
         //MARK:- 初始化
         override init(frame: CGRect) {
             super.init(frame: frame)
             setupUI()
+            
         }
         
         //MARK:- 设置界面
@@ -256,7 +297,8 @@ class SingleGuessInfoView: BaseView {
         }
         
         //MARK:- 支持按钮
-        fileprivate lazy var supportBtn:UIButton = UIButton(title: "主胜", backImageName: "",  target: self, selector: #selector(chooseSupportTeam), font: UIFont.font(psFontSize: 45), titleColor: UIColor.init(hexString: "#7f7f7f"), selTitleColor: THEMECOLOR)
+        fileprivate lazy var supportBtn:UIButton = UIButton (title: "主胜",backImageName: "choosed_none_support_team.png", selBackImageName: "choosed_support_team.png", font: UIFont.font(psFontSize: 45), titleColor: UIColor.init(hexString: "#7f7f7f"), selTitleColor: UIColor.init(hexString: "#ffffff"))
+
         
         //MARK:- progress
         fileprivate lazy var progressBar:UIProgressView = {
@@ -272,11 +314,7 @@ class SingleGuessInfoView: BaseView {
         //MARK:- 支持label
         fileprivate lazy var supportLabel:UILabel = UILabel(text: "", font: UIFont.font(psFontSize: 34), textColor: UIColor.init(hexString: "#bdbdbd"))
         
-        //MARK:- 选择支持
-        @objc private func chooseSupportTeam(sender:UIButton){
-         printData(message:  #function)
-        
-        }
+
     }
     
 }
@@ -301,10 +339,20 @@ class GuessExpirationDateView: BaseView {
         
             if  let date1 = String.getDateFromString(dateStr: startDate){
             
-              let com = Date.dateInterval(date1: date1, date2:Date())
-                dayLabel.text = "\(com.day)"
-                hourLabel.text = "\(com.hour)"
-                minuteLabel.text = "\(com.minute)"
+              let com = Date.dateInterval(date1: Date(), date2:date1)
+                if let day = com.day {
+                
+                 dayLabel.text = String(format: "%02d", day)
+                }
+               
+                if let hour = com.hour {
+                 hourLabel.text = String(format: "%02d", hour)
+                }
+               
+                if let minute = com.minute{
+                  minuteLabel.text = String(format: "%02d", minute)
+                }
+              
             }
         }
     }
@@ -335,6 +383,7 @@ class GuessExpirationDateView: BaseView {
         addSubview(minuteLabel)
         minuteLabel.snp.remakeConstraints { (make) in
             make.left.equalTo(hourUnitLabel.snp.right).offset(40*LayoutWidthScale)
+            make.bottom.equalTo(hourLabel)
         }
         
         let dayUnitLabel = createDateUnitLabel(text:"天")

@@ -29,14 +29,13 @@ class BindPhoneViewController: BaseViewController {
     //MARK:- loadData
     override func initData() {
         super.initData()
-       
-        
+   
     }
     
     //MARK:- 设置界面
     override func setupView() {
         super.setupView()
-        loginHeadView = LoginHeadView(loginType: .passwordLogin)
+        loginHeadView = LoginHeadView(loginType: .bindPhoneNumber)
         loginHeadView?.delegate = self
         view.addSubview(loginHeadView!)
         loginHeadView?.snp.makeConstraints { (make) in
@@ -48,6 +47,7 @@ class BindPhoneViewController: BaseViewController {
     
     //MARK:- 返回
     override func back() {
+         UserInfo.logout()   
          view.removeFromSuperview()
         self.removeFromParentViewController()
     }
@@ -61,8 +61,24 @@ class BindPhoneViewController: BaseViewController {
 
 /// MARK: - 遵守LoginViewDelegate
 extension BindPhoneViewController:LoginViewDelegate{
+    //MARK:- 点击取消
     func loginView(_ loginHeadView: LoginHeadView, clickCancelBtn: UIButton) {
         back()
+    }
+    
+    //MARK:- 获取验证码
+    func loginView(_ loginHeadView: LoginHeadView, getCodeWithPhoneNumber: String, codeType: CodeType) {
+        LoginViewModel.getCode(codeType:codeType, phoneNumber: Int(getCodeWithPhoneNumber)!, successCallBack: { (result) in
+            let code = result["code"]
+            if code == 1{
+                loginHeadView.link?.isPaused = false
+                loginHeadView.hint("验证码已发送至手机:"+getCodeWithPhoneNumber, isError: false)
+            }else{
+                loginHeadView.hint(result["msg"].stringValue, isError: true)
+            }
+        }) { (error ) in
+            HUDTool.show(showType: .Failure, text: error.debugDescription)
+        }
     }
     
     //MARK:- 绑定手机号码

@@ -36,8 +36,9 @@ class MeHeadView:BaseView{
         setupUI()
         backgroundColor = THEMECOLOR
 
+        
     }
-    
+
     
     
     //MARK:- 布局
@@ -54,6 +55,21 @@ class MeHeadView:BaseView{
                  make.width.height.equalTo(88*LayoutWidthScale)
                 make.right.equalTo(-44*LayoutWidthScale)
             })
+            //崔
+            arrowImageView.isHidden = true
+            
+            
+            if let headUrl = UserInfo.loadAccount()?.Headimgurl,headUrl != ""{
+                var sexUserImageName = "avatar_female.png"
+                if UserInfo.loadAccount()?.Sex == 1{
+                   sexUserImageName = "avatar_male.png"
+                }
+                //加载头像
+                headImageView.kf_setImage(imageUrlStr: headUrl,placeholder:sexUserImageName)
+            }
+           
+            
+            
             addSubview(nickLabel)
             nickLabel.snp.remakeConstraints({ (make) in
                 make.top.equalTo(137*LayoutHeightScale)
@@ -124,6 +140,7 @@ class MeHeadView:BaseView{
         width -= margin
         
         headImageView.layer.cornerRadius = width / 2
+        headImageView.clipsToBounds = true 
         headImageView.snp.remakeConstraints { (make) in
             make.top.left.equalTo(headImageView.superview!).offset(margin/2)
             make.width.height.equalTo(width)

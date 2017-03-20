@@ -239,7 +239,7 @@ class MatchDetailHeadView: BaseView {
     fileprivate lazy var backButton:UIButton = UIButton(title: "", imageName: "arrow_back", target: self, selector: #selector(MatchDetailHeadView.back))
     
     //MARK:- 未开始pk图标
-    private lazy var pkImageView:UIImageView = UIImageView(image: UIImage.getImage("compared"))
+    private lazy var pkImageView:UIImageView = UIImageView(image: UIImage.getImage("pk_image.png"))
     
     
     //MARK:- 返回按钮事件

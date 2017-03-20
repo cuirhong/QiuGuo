@@ -95,7 +95,7 @@ class ShufflingFigureView: BaseView {
         
         addSubview(titleLabel)
         titleLabel.snp.remakeConstraints { (make) in
-            make.left.equalTo(30*LayoutWidthScale)
+            make.left.equalTo(20*LayoutWidthScale)
             make.top.equalTo(bottomMaskView.snp.top).offset(20*LayoutHeightScale)
             make.right.lessThanOrEqualTo(pageControll.snp.left).offset(-5)
         }
@@ -116,6 +116,7 @@ class ShufflingFigureView: BaseView {
     
         collectionView.reloadData()
     
+        scrollViewDidScroll(collectionView)
     }
     
     
@@ -141,7 +142,7 @@ class ShufflingFigureView: BaseView {
         }()
 
     // MARK:- 创建轮播图的标题
-    fileprivate lazy var titleLabel:UILabel = UILabel(text: "梅西捧起冠军奖杯", font: UIFont.font(psFontSize: 46), textColor: UIColor.init(hexString: "#ffffff"), textAlignment: .left)
+    fileprivate lazy var titleLabel:UILabel = UILabel(text: "梅西捧起冠军奖杯", font: UIFont.font(psFontSize: 42), textColor: UIColor.init(hexString: "#ffffff"), textAlignment: .left)
    
     
     // MARK:- 创建pageControll

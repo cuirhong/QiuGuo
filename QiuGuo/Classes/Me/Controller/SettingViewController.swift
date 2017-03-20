@@ -45,11 +45,11 @@ class SettingViewController: BaseViewController {
     
     // MARK: - 设置是否推送消息
     func settingIsPushMessage(sender:UISwitch){
-        UserDefaults.standard.set(sender.isOn, forKey: KisPushMessage)
+        userDefault.set(sender.isOn, forKey: KisPushMessage)
     }
     
     func settingOnlyWIFILoadImage(sender:UISwitch){
-     UserDefaults.standard.set(sender.isOn, forKey: KonlyWIFILoadImage)
+     userDefault.set(sender.isOn, forKey: KonlyWIFILoadImage)
     
     }
 
@@ -107,7 +107,7 @@ extension SettingViewController:UITableViewDelegate,UITableViewDataSource{
  
         if indexPath.section == 1 {
         
-            var isCanPush:Bool? = UserDefaults.standard.value(forKey: KisPushMessage) as? Bool
+            var isCanPush:Bool? = userDefault.value(forKey: KisPushMessage) as? Bool
             if isCanPush == nil{
                 isCanPush = false
             }
@@ -117,7 +117,7 @@ extension SettingViewController:UITableViewDelegate,UITableViewDataSource{
         
         }else if indexPath.section == 2{
             if indexPath.row == 0{
-                var isLoadImage:Bool? = UserDefaults.standard.value(forKey: KonlyWIFILoadImage) as? Bool
+                var isLoadImage:Bool? = userDefault.value(forKey: KonlyWIFILoadImage) as? Bool
                 if isLoadImage == nil{
                     isLoadImage = false
                 }
@@ -205,6 +205,7 @@ extension SettingViewController:UITableViewDelegate,UITableViewDataSource{
              HUDTool.show(showType: .Success, text: "清除成功", viewController: self)
             tableView.reloadSections([indexPath.section], with: .none)
     
+        }else if indexPath.section == 4{
         }else{
            HUDTool.show(showType: .Info, text: "抱歉,暂未开通此功能", viewController: self)
         }

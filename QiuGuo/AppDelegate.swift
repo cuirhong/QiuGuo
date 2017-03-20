@@ -12,8 +12,6 @@ import SwiftyJSON
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate,WXApiDelegate {
-    
-    
 
     var window: UIWindow?
 
@@ -25,13 +23,30 @@ class AppDelegate: UIResponder, UIApplicationDelegate,WXApiDelegate {
         let tabBarController = TabBarController.init()
         window?.rootViewController = tabBarController
         window?.makeKeyAndVisible()
+        
+        initSetting()
    
         
         initRegister()
         
+        NotificationCenter.default.addObserver(self, selector: #selector(login), name: NSNotification.Name(rawValue: LoginNotificationName), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(networkDidChange), name: NSNotification.Name(rawValue: NetworkDidChangeNotifName), object: nil)
        
+        //开始网络监控
+        NetworkMonitor.sharedNetworkMonitor()?.startMonitor()
       
         return true
+    }
+    //MARK:- 初始化个人设置
+    private func  initSetting(){        
+        let isSetedPush = userDefault.value(forKey: KisPushMessage)
+        if isSetedPush == nil {
+             userDefault.set(true, forKey: KisPushMessage)
+        }
+        let isOnlyWifiLoad = userDefault.value(forKey: KonlyWIFILoadImage)
+        if isOnlyWifiLoad == nil {
+           userDefault.set(true, forKey: KonlyWIFILoadImage)
+        }
     }
     
     //MARK:- 注册第三方
@@ -55,6 +70,47 @@ class AppDelegate: UIResponder, UIApplicationDelegate,WXApiDelegate {
       
         return open
     }
+    
+    //MARK:- 登录
+    func login() {
+        let loginController = LoginViewController()
+        let currentController = getCurrentVC()
+        currentController.present(loginController, animated: true, completion: nil)
+        
+    }
+    
+    //MARK:- 网络已经发生了变化 
+    func networkDidChange(){
+       
+        let networkType:CurrentNetworkType = NetworkMonitor.sharedNetworkMonitor()?.currentNetworkType ?? .UnKown
+        if networkType == .NotReachable || networkType == .UnKown {
+            printData(message: NSStringFromClass(getCurrentVC().classForCoder))
+            if  let controller = getCurrentVC() as? BaseViewController{
+                _ = controller.checkDataIsNormal( dataAbnormalType: .noNetwork)
+            }
+        }
+    }
+    
+    //MARK:- 获取当前正在显示的controller
+    func getCurrentVC()->UIViewController{
+         //只针对本项目有效
+        let tabbarController:TabBarController? =  window?.rootViewController as? TabBarController
+        let controller =  tabbarController?.selectedViewController
+        if let navi = controller as? NavigationController{
+            if let viewController = navi.visibleViewController as? BaseViewController{
+                return viewController
+            }
+        }
+        return (window?.rootViewController)!
+        
+    }
+    
+
+    //MARK:- 移除通知
+    deinit {
+         NotificationCenter.default.removeObserver(self)
+    }
+
     
     func application(_ application: UIApplication, handleOpen url: URL) -> Bool {
          return WXApi.handleOpen(url, delegate: self)

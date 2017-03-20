@@ -36,8 +36,23 @@ class ArticleNormalCell: BaseCollectionViewCell {
                 
             }
 
-            commentButton.setTitle((articleModel?.Comments.description)! + " " + "评论", for: .normal)
+            if let model = articleModel{
+             settingComment(articleModel: model)
+            }
+  
         }
+    }
+    
+    //MARK:- 设置评论
+     func settingComment(articleModel:ArticleListModel){
+        commentButton.setTitle((articleModel.Comments.description) + " " + "评论", for: .normal)
+        let width = (commentButton.titleLabel?.labelSize(text: (commentButton.titleLabel?.text)!, font: commentButton.titleLabel?.font).width)! + 3*2
+        commentButton.snp.remakeConstraints { (make) in
+            make.bottom.equalTo(-25*LayoutHeightScale)
+            make.right.equalTo(-30*LayoutWidthScale)
+            make.width.equalTo(width)
+        }
+        
     }
     
     override init(frame: CGRect) {

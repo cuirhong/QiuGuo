@@ -45,11 +45,15 @@ class ArticleListViewController: BaseViewController {
     
     //MARK:- 加载首页文章列表数据
     func loadBarnerAndArticleList(){
-    
+        barnerViewModel.dataAbnormalType = .noAbnormal
         barnerViewModel.loadBarnerData(SpecialID: articleViewModel.SpecialID, successCallBack: {[weak self] (result) in
-            self?.loadMatchArticleList()
-        }) { (error) in
-            printData(message: "请求Barner数据出错")
+            let isNormal = self?.checkDataIsNormal(dataAbnormalType: (self?.barnerViewModel.dataAbnormalType)!)
+            if isNormal == true {
+               self?.loadMatchArticleList()
+            }
+            
+        }) {[weak self] (error) in
+          self?.loadDataFailure(error: error, abnormalType: self?.barnerViewModel.dataAbnormalType)
         }
     }
     
@@ -58,24 +62,28 @@ class ArticleListViewController: BaseViewController {
     func loadMatchArticleList(){
     
         //请求咨询列表数据
+        articleViewModel.dataAbnormalType = .noAbnormal 
         self.articleViewModel.loadArticleListData(successCallBack: {[weak self] (result) in
-            DispatchQueue.main.async {
-                self?.refreshUI()
-                self?.endRefreshing()
+            let isNormal = self?.checkDataIsNormal(dataAbnormalType: (self?.articleViewModel.dataAbnormalType)!)
+            if isNormal == true {
+                DispatchQueue.main.async {
+                    self?.refreshUI()
+                    self?.endRefreshing()
+                }
             }
-        }, failureCallBack: { (error) in
-            printData(message: "请求专题列表数据出错")
+        }, failureCallBack: {[weak self]  (error) in
+            self?.loadDataFailure(error: error, abnormalType: self?.articleViewModel.dataAbnormalType)
+          
+            
         })
     }
-    
-    
-    
- 
+
     //MARK:- 下拉刷新
     override func downLoadRefresh() {
         super.downLoadRefresh()
         articleViewModel.refreshType = .PullDownRefresh
         articleViewModel.page = 1
+        articleViewModel.dataAbnormalType = .noAbnormal
         DispatchQueue.global().async {[weak self] in
             self?.loadData()
         }
@@ -87,14 +95,13 @@ class ArticleListViewController: BaseViewController {
         if articleViewModel.refreshType == .PullDownRefresh || articleViewModel.isEnd == "1"{
             articleViewModel.refreshType = .UpDownRefresh
             articleViewModel.page += 1
+             articleViewModel.dataAbnormalType = .noAbnormal 
             DispatchQueue.global().async {[weak self] in
                 self?.loadData()
             }
         }else{
           collectionView.endFooterRefreshingWithNoMoreData()            
         }
-
-        
     }
     
 
@@ -236,25 +243,15 @@ extension ArticleListViewController:UICollectionViewDelegateFlowLayout{
             }
             index = indexPath.item - 1
             if indexPath.item == 0{
-             return CGSize(width: ScreenWidth, height: 530*LayoutHeightScale)
-            
+             return CGSize(width: ScreenWidth, height: 530*LayoutHeightScale)            
             }
-            
-            
         }
             let articleModel = articleViewModel.articleListArr[index]
             if (articleModel.Covers?.count)! > 1 {
-              
-               return CGSize(width: ScreenWidth, height: 408*LayoutHeightScale)
+               return CGSize(width: ScreenWidth, height: 410*LayoutHeightScale)
             }
-        
-    
         return CGSize(width: ScreenWidth, height: 266*LayoutHeightScale)
     }
-
-    
-
-
 }
 
 

@@ -21,7 +21,7 @@ protocol LoginViewDelegate : NSObjectProtocol {
     @objc optional func loginView(_ loginHeadView:LoginHeadView,clickCancelBtn:UIButton)
     
     //MARK:- 获取验证码
-    @objc optional func loginView(_ loginHeadView:LoginHeadView,getCodeWithPhoneNumber:String)
+    @objc optional func loginView(_ loginHeadView:LoginHeadView,getCodeWithPhoneNumber:String,codeType:CodeType)
     
 
     //MARK:- 点击忘记密码按钮
@@ -124,7 +124,6 @@ class LoginViewController:  BaseViewController{
         }) {(error) in
             HUDTool.show(showType: .Failure, text: error.debugDescription)
         }
-
     }
     
     //MARK:- 绑定手机号码 
@@ -133,13 +132,15 @@ class LoginViewController:  BaseViewController{
         if UserInfo.loadAccount()?.isPhone == 1{
            back()
         }else{
+  
             let nextRegister = BindPhoneViewController()
             nextRegister.delegate = self
-            addChildViewController(nextRegister)
+            self.addChildViewController(nextRegister)
             view.addSubview(nextRegister.view)
             nextRegister.view.snp.remakeConstraints { (make) in
                 make.left.right.bottom.top.equalTo(nextRegister.view.superview!)
             }
+           
         }
     }
     
@@ -210,7 +211,7 @@ extension LoginViewController:LoginViewDelegate{
 //            make.left.right.bottom.top.equalTo(nextRegister.view.superview!)
 //        }
 //        
-//
+//        //崔
 //        return
         
         LoginViewModel.register(loginProfile) {[weak self] (result) in
@@ -240,27 +241,25 @@ extension LoginViewController:LoginViewDelegate{
             
         }
     }
- 
-    
-    
-    //获取验证码
-    func loginView(_ loginHeadView: LoginHeadView, getCodeWithPhoneNumber: String) {
-        LoginViewModel.getCode(phoneNumber:Int(getCodeWithPhoneNumber)!) { (result) in
-            let dict = result as? [String : Any]
-            
-            let code = dict?["code"] as? Int
-            if code == 100{
-                //手机号码未注册
-              loginHeadView.clickLoginOrRegister()
-                loginHeadView.hint("手机号码未注册", isError: true)
+     //MARK:- 获取验证码
+    func loginView(_ loginHeadView: LoginHeadView, getCodeWithPhoneNumber: String, codeType: CodeType) {
+        LoginViewModel.getCode(codeType:codeType, phoneNumber: Int(getCodeWithPhoneNumber)!, successCallBack: { (result) in
+            let code = result["code"]
+            if code == 1{
+                loginHeadView.link?.isPaused = false
+                loginHeadView.hint("验证码已发送至手机:"+getCodeWithPhoneNumber, isError: false)
             }else{
-                 loginHeadView.link?.isPaused = false
-                 loginHeadView.hint("验证码已发送至手机:"+getCodeWithPhoneNumber, isError: false)
+                loginHeadView.clickLoginOrRegister()
+                loginHeadView.hint(result["msg"].stringValue, isError: true)
             }
-            
+        }) { (error ) in
+            HUDTool.show(showType: .Failure, text: error.debugDescription)
         }
+  
     }
+
     
+
     
     
     //登录
@@ -304,9 +303,7 @@ extension LoginViewController:LoginViewDelegate{
                 }else{
                     HUDTool.show(showType: .Info, text: "手机未安装微信客户端",  viewController: self )
                 }
-
             break
-            
         case 1:
             break
         case 2:
@@ -314,23 +311,13 @@ extension LoginViewController:LoginViewDelegate{
         default:
             break
         }
-       
     }
-    
-    
+  
     //MARK:- 绑定手机号码成功
     func loginView(_ loginHeadView: LoginHeadView, isBindPhoneNumber: Bool) {
-       
         userInfoIsReal()
-        
     }
-    
-    
-    
-    
-    
-    
-    
+   
 }
 
 
@@ -342,10 +329,8 @@ extension LoginViewController:WeChatManagerDelegate{
         case 0://用户同意
             if let code = resp.code{
             getWeChatToken(code: code)
-            }
-          
+            }          
         case -4://用户拒绝授权
-            
             break
         case -2://用户取消
             break

@@ -31,8 +31,9 @@ class ArticleDetailViewModel: BaseViewModel {
             successCallBack(result)
             
             
-        }) { (error) in
-             failureCallBack(error)
+        }) {[weak self] (error) in
+            self?.settingFailure()
+            failureCallBack(error)
         }
 
     }

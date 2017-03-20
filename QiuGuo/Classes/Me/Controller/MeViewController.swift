@@ -39,7 +39,7 @@ class MeViewController: BaseViewController {
         initData()
 
         setupUI()
-         NotificationCenter.default.addObserver(self, selector: #selector(login), name: NSNotification.Name(rawValue: LoginNotificationName), object: nil)
+        
         
     }
     
@@ -69,20 +69,16 @@ class MeViewController: BaseViewController {
     
  
     
-    //MARK:- 登录
-    func login() {
-        let loginController = LoginViewController()
-        present(loginController, animated: true, completion: nil)
-      
-    }
+  
     
-    
+    //MARK:- 设置界面
     func setupUI(){
  
         let headView = MeHeadView(frame: CGRect(x: 0, y: 0, width: ScreenWidth, height: 400*LayoutHeightScale))
         if UserInfo.loadAccount() == nil {
             headView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(clickUserHeadView)))
         }
+
         tabelView.rowHeight = 174*LayoutHeightScale
         tabelView.tableHeaderView = headView
         
@@ -92,8 +88,7 @@ class MeViewController: BaseViewController {
         }
     }
     
-    
-    
+    //MARK:- 点击用户头像
     func clickUserHeadView(){
 
         if UserInfo.userLogin() {

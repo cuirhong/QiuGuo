@@ -16,7 +16,7 @@ typealias SucceedBlock = (_ result: JSON) -> ()
 typealias FailureBlock = (_ error: Any?) -> ()
 
 //http://api-test.qiu.com
-let AppRootUrl:String = "http://api.qiu.com"
+let AppRootUrl:String = "http://api-test.qiu.com"
 
 /**
  *  项目主题颜色
@@ -103,11 +103,11 @@ let weChatLoginState = "weChatLoginState"
 /**
  *  微信appid
  */
-let weChatAppId = "xxxxxxx"
+let weChatAppId = "xxxxxxxx"
 /**
  *  微信Secret
  */
-let weChatSecret = "xxxxxxx"
+let weChatSecret = "xxxxxxxx"
 
 /**
  *  保存信息

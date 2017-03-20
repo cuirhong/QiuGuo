@@ -35,8 +35,11 @@ class MatchDetailGuessController: BaseViewController {
      lazy var matchGuessViewModel = MatchDetailGuessViewModel()
     //MARK:- 竞猜结果排名viewModel
      lazy var guessResultRankViewModel = GuessResultRankViewModel()
+    //MARK:- 已经选择支持的队
+    fileprivate lazy var didSupportTeam:SupportTeamType = .None
+    
     //MARK:- 参加竞猜按钮 
-    fileprivate lazy var joinGuessBtn:UIButton = UIButton(title: "参与竞猜",backgroundColor:THEMECOLOR, target: self, selector: #selector(joinGuess), font: UIFont.font(psFontSize: 45), titleColor: UIColor.init(hexString: "#ffffff"))
+    fileprivate lazy var joinGuessBtn:UIButton = UIButton(title: "参与竞猜",backgroundColor:UIColor.gray, target: self, selector: #selector(joinGuess), font: UIFont.font(psFontSize: 45), titleColor: UIColor.init(hexString: "#ffffff"))
     
     
     //MARK:- 加载view
@@ -54,21 +57,20 @@ class MatchDetailGuessController: BaseViewController {
     //MARK:- 加载数据
     override func loadData() {
         super.loadData()
-        
+        matchGuessViewModel.dataAbnormalType = .noAbnormal
         matchGuessViewModel.loadDataMatchGuess(successCallBack: {[weak self] (result) in
-            if self?.matchGuessViewModel.dataAbnormalType == .noAbnormal{
+            let isNormal = self?.checkDataIsNormal( hintTextArr: ["抱歉","本场比赛暂无竞猜"])
+            if isNormal == true{
                 if (self?.matchGuessViewModel.matchGuessModel?.Status)! >= 2{
-                  self?.loadGuessResultRank()
+                    self?.loadGuessResultRank()
                 }else{
                     DispatchQueue.main.async {
                         self?.setupView()
                     }
                 }
-            }else{
-                self?.setUpDataAbnormalUI(topOffSet: 150*LayoutHeightScale, hintTextArr: ["抱歉","本场比赛暂无竞猜"])
             }
         }) {[weak self] (error) in
-          HUDTool.show(showType: .Failure, text: error.debugDescription,viewController:self)
+            self?.loadDataFailure(error: error, abnormalType: self?.matchGuessViewModel.dataAbnormalType ?? .noNetwork)
         }
     }
     
@@ -78,13 +80,19 @@ class MatchDetailGuessController: BaseViewController {
         if let match = matchGuessViewModel.matchGuessModel?.Matchs.first{
           guessResultRankViewModel.quizId = match.QuizID
         }
-    
+      guessResultRankViewModel.dataAbnormalType = .noAbnormal   
       guessResultRankViewModel.loadGuessResultRankList(successCallBack: {[weak self] (result) in
-        DispatchQueue.main.async {
-            self?.setupView()
+        let isNormal = self?.checkDataIsNormal( hintTextArr: ["抱歉","本场比赛暂无竞猜"])
+        if isNormal == true{
+            DispatchQueue.main.async {
+                self?.setupView()
+            }
         }
-      }) {[weak self] (error) in
-         HUDTool.show(showType: .Failure, text: error.debugDescription,viewController: self)
+       
+      }) {[weak self](error) in
+        
+           self?.loadDataFailure(error: error, abnormalType: (self?.guessResultRankViewModel.dataAbnormalType)!)
+        
         }
     }
     
@@ -107,8 +115,10 @@ class MatchDetailGuessController: BaseViewController {
                 }
             }else if matchGuessViewModel.matchGuessModel?.Status == 0{
                view.addSubview(joinGuessBtn)
+                joinGuessBtn.isUserInteractionEnabled = false
                 joinGuessBtn.snp.remakeConstraints({ (make) in
-                    make.bottom.left.right.equalTo(joinGuessBtn.superview!)
+                    make.left.right.equalTo(joinGuessBtn.superview!)
+                    make.bottom.equalTo(-0.5)
                     make.height.equalTo(140*LayoutHeightScale)
                 })
                 
@@ -172,8 +182,15 @@ class MatchDetailGuessController: BaseViewController {
     
     //MARK:- 参与竞猜
     @objc private func joinGuess(sender:UIButton){
-        printData(message:  #function)
-    
+         printData(message:  #function)
+        if UserInfo.userLogin(){//出发登录操作
+           let betView = BetView()
+            view.addSubview(betView)
+            betView.snp.makeConstraints({ (make) in
+                make.left.right.bottom.equalTo(joinGuessBtn)
+               make.top.equalTo(betView.superview!)
+            })
+        }
     }
     
 }
@@ -182,7 +199,6 @@ class MatchDetailGuessController: BaseViewController {
 extension MatchDetailGuessController:UICollectionViewDataSource{
     //MARK:- 多少个分区
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        
         return 6
     }
     //MARK:- 一个分区多少行
@@ -190,7 +206,6 @@ extension MatchDetailGuessController:UICollectionViewDataSource{
         if (matchGuessViewModel.matchGuessModel?.Status)! > 2,section == 5{
             return guessResultRankViewModel.guessResultUserArr?.count ?? 0
         }
-       
         return 1
     }
     //MARK:- cell
@@ -210,6 +225,7 @@ extension MatchDetailGuessController:UICollectionViewDataSource{
                 switch indexPath.section {
                 case 0:
                    let infoView = SingleGuessInfoView()
+                   infoView.delegate = self
                     infoView.matchGuessModel = matchGuessViewModel.matchGuessModel
                     view = infoView
                 case 1:
@@ -330,5 +346,19 @@ extension MatchDetailGuessController:UICollectionViewDelegateFlowLayout{
 
 }
 
+// MARK: - 遵守SingleGuessInfoViewDelegate
+extension MatchDetailGuessController:SingleGuessInfoViewDelegate{
+    
+    //MARK:- 选择支持的球队代理
+    func singleGuessInfoView(_ singleGuessInfoView: SingleGuessInfoView?, supportBtn: UIButton) {
+        joinGuessBtn.isUserInteractionEnabled = true
+        joinGuessBtn.backgroundColor = THEMECOLOR
+        didSupportTeam = SupportTeamType(rawValue: supportBtn.tag)!
+    }
+
+
+
+
+}
 
 

@@ -137,12 +137,12 @@ class RegisterSecondViewController: BaseViewController {
     
     
     //MARK:- 返回按钮
-    fileprivate lazy var backBtn:UIButton = UIButton(title: "", imageName: "test", target: self, selector: #selector(back), font: nil, titleColor: nil)
+    fileprivate lazy var backBtn:UIButton = UIButton(title: "", imageName: "arrow_back.png", target: self, selector: #selector(back), font: nil, titleColor: nil)
     //MARK:- 标题提示框
     fileprivate lazy var titleHintLabel:UILabel = UILabel(text: "填写个人信息", font: UIFont.systemFont(ofSize: DEFAULTFONTSIZE), textColor: DEFAUlTFONTCOLOR, textAlignment: .center)
     //MARK:- 头像
-    fileprivate lazy var headImageView:UIImageView = {
-        let imageView:UIImageView = UIImageView(image: UIImage(contentsOfFile: String.localPath("test.png")))
+    fileprivate lazy var headImageView:UIImageView = {[weak self] in
+        let imageView:UIImageView = UIImageView(image:UIImage.getImage("avatar_male.png"))
         imageView.isUserInteractionEnabled = true
         imageView.addGestureRecognizer(UITapGestureRecognizer.init(target: self, action: #selector(chooseHeadImage)))
         return imageView
@@ -360,27 +360,26 @@ extension RegisterSecondViewController:UIImagePickerControllerDelegate,UINavigat
         //显示的图片
         let image:UIImage?
         if let newImage = info[UIImagePickerControllerEditedImage] as? UIImage {
-            image = newImage
-            
+            image = newImage            
         }else{
             //获取选择的原图
             image = info[UIImagePickerControllerOriginalImage] as? UIImage
-        
         }
-        
-      
         guard image == nil else {
-             LoginViewModel.upload(image: image!, finishedCallback: { (result) in
-                 printData(message: "上传头像成功")
-             })
-            return
+           LoginViewModel.upload(image: image!, successCallBack: {[weak self] (result) in
+            let imageUrl = result["data"]["Headimgurl"].stringValue
+            if imageUrl != ""{
+                  UserInfo.loadAccount()?.Headimgurl = imageUrl
+                if (UserInfo.loadAccount()?.saveUserInfo())!{
+                   self?.headImageView.image = image
+                }
+            }
+           }, failureCallBack: { (error) in
+              HUDTool.show(showType: .Failure, text: error.debugDescription)
+           })
+           return
         }
-     
-   
-       
     }
-
-
 }
 
 
