@@ -45,6 +45,7 @@ class PageMenuView: BaseView {
     convenience init(titles:[String],isNeedUnline:Bool=false,isNeedMask:Bool=true,norMargin:CGFloat?=0,selectedMargin:CGFloat?=0){
 
         self.init(frame:CGRect.zero)
+  
         if (norMargin != nil) , norMargin != 0{
             normalMargin = norMargin!
         }
@@ -55,6 +56,13 @@ class PageMenuView: BaseView {
         menuTitles = titles
         isMask = isNeedMask
         isUnline = isNeedUnline
+        
+        addSubview(bottomMaskImageView)
+        bottomMaskImageView.snp.makeConstraints { (make) in
+            make.top.right.left.bottom.equalTo(bottomMaskImageView.superview!)
+        }
+        
+        
         addSubview(scrollView)
         let  left = 50*LayoutWidthScale
         scrollView.snp.remakeConstraints { (make) in
@@ -64,6 +72,13 @@ class PageMenuView: BaseView {
             make.height.equalTo(120*LayoutHeightScale)
         }
 
+        
+        let label = UILabel.unline()
+        addSubview(label)
+        label.snp.makeConstraints { (make) in
+            make.right.left.bottom.equalTo(label.superview!)
+            make.height.equalTo(1*LayoutHeightScale)
+        }
         
         setupMenuButton()
     }
@@ -82,6 +97,7 @@ class PageMenuView: BaseView {
         var preBtn:UIView = scrollView
         var totalWidth:CGFloat = 0
         var selectorBtn:UIButton?
+        let maskMargin = 7
         for newIndex in 0..<menuTitles.count {
             let btn:UIButton = createMenuButton(title: menuTitles[newIndex],tag:newIndex)
             oneMenuWidth = btn.bounds.size.width
@@ -89,7 +105,7 @@ class PageMenuView: BaseView {
 
             if index == newIndex{
                 btn.isSelected = true
-                btn.titleLabel?.font = UIFont.font(psFontSize: 60)
+                btn.titleLabel?.font = UIFont.font(psFontSize: 52)
                 selectorBtn = btn
                 
                 if isUnline{//如果需要下划线
@@ -105,9 +121,9 @@ class PageMenuView: BaseView {
             }
             
             if newIndex == 0{
-              
+                
                 btn.snp.remakeConstraints({ (make) in
-                    make.left.equalTo(preBtn).offset(0)
+                    make.left.equalTo(preBtn).offset(5)
                     make.centerY.equalTo(scrollView)
                 })
             }else if index == newIndex || newIndex == index+1{
@@ -134,9 +150,11 @@ class PageMenuView: BaseView {
             addSubview(rightMaskImageView)
             leftMaskImageView.snp.remakeConstraints({ (make) in
                 make.left.centerY.equalTo(leftMaskImageView.superview!)
+              
             })
             rightMaskImageView.snp.remakeConstraints({ (make) in
                 make.right.centerY.equalTo(rightMaskImageView.superview!)
+               
             })
         }
         
@@ -144,7 +162,7 @@ class PageMenuView: BaseView {
         let  margin = CGFloat(menuTitles.count - 1 - 2) * normalMargin + 2*selMargin + 5
         
         totalWidth += margin
-        scrollView.contentSize = CGSize(width: totalWidth, height: 0)
+        scrollView.contentSize = CGSize(width: totalWidth+5*2, height: 0)
         setupTitleCenter(button: selectorBtn!)
         
        
@@ -160,17 +178,18 @@ class PageMenuView: BaseView {
         let scrollView = UIScrollView()
         scrollView.showsHorizontalScrollIndicator = false
         scrollView.isPagingEnabled = false
-        scrollView.backgroundColor = UIColor.white
         scrollView.bounces = false
         scrollView.scrollsToTop = false
         scrollView.delegate = self
+        scrollView.backgroundColor = UIColor.clear
         return scrollView
     }()
     
     //MARK:- 创建标题按钮
      func createMenuButton(title:String,tag:Int) -> UIButton {
-        let btn:UIButton = UIButton(title: title, target: self, selector: #selector(clickTitleMenu), font: UIFont.font(psFontSize: 52), titleColor: normalColor,selTitleColor:selectorColor)
+        let btn:UIButton = UIButton(title: title, target: self, selector: #selector(clickTitleMenu), font: UIFont.font(psFontSize: 44), titleColor: normalColor,selTitleColor:selectorColor)
         btn.tag = tag
+        btn.backgroundColor = UIColor.clear
         btn.sizeToFit()
         return btn
     }
@@ -192,6 +211,15 @@ class PageMenuView: BaseView {
         let label = UILabel()
         label.backgroundColor = THEMECOLOR
         return label
+    }()
+    
+    //MARK:- 底部半透明效果
+    private lazy var bottomMaskImageView:UIImageView = {
+    
+        let imageView = UIImageView(image: UIImage.getImage("tabbar_mask.png"))
+        imageView.backgroundColor = UIColor.clear
+        return imageView
+    
     }()
    
     
@@ -237,6 +265,8 @@ extension PageMenuView{
             }
         }
         scrollView.setContentOffset(CGPoint(x: offsetX, y: 0), animated: true)
+      
+        
     }
     
 

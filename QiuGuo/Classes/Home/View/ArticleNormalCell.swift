@@ -58,6 +58,7 @@ class ArticleNormalCell: BaseCollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupUI()
+        commentButton.alpha = 0
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -99,11 +100,14 @@ class ArticleNormalCell: BaseCollectionViewCell {
         }
         
         
-        
+        var height = 1 * LayoutHeightScale
+        if height < 0.5{
+           height = 0.5
+        }
         contentView.addSubview(undlineLabel)
         undlineLabel.snp.remakeConstraints { (make) in
             make.bottom.left.right.equalTo(undlineLabel.superview!)
-            make.height.equalTo(1*LayoutHeightScale)
+            make.height.equalTo(height)
             
         }
     

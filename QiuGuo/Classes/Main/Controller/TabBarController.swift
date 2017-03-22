@@ -32,10 +32,15 @@ class TabBarController : UITabBarController{
     
     //MARK:- 设置界面
     func setupUI() {
-        let backView = UIView(frame: CGRect(x: 0, y: 0, width: ScreenWidth, height: 49))
-        backView.backgroundColor = UIColor.white
-        tabBar.insertSubview(backView, at: 0)
-        tabBar.isOpaque = true
+//        let backView = UIView(frame: CGRect(x: 0, y: 0, width: ScreenWidth, height: 49))
+//        tabBar.insertSubview(backView, at: 0)
+       
+        tabBar.isOpaque = false
+
+        tabBar.backgroundImage = UIImage.getImage("tabbar_mask.png")
+    
+
+        
     }
     
     

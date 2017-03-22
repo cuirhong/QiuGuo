@@ -16,6 +16,7 @@ class SpecialModel: BaseModel {
      "Weight": 99999
      */
     
+    
     //ID
     var SpecialID:Int = 0
     //名称

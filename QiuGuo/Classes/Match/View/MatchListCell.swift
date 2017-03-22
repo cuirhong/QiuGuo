@@ -30,8 +30,10 @@ class MatchListCell: BaseCollectionViewCell {
              settingWillStartMatchUI()            
             }else if matchListModel?.status == "1"{
             settingBeingMatchUI()
-            }else{
+            }else if matchListModel?.status == "4"{
             settingDidEndMatchUI()
+            }else{
+                settingDidCancelMatchUI()
             }
         }
     }
@@ -65,9 +67,11 @@ class MatchListCell: BaseCollectionViewCell {
             make.centerX.equalTo(roundNameLabel.superview!)
         }
         
+        let height = 1*heightScale
+      
         undline.snp.makeConstraints { (make) in
             make.bottom.left.right.equalTo(undline.superview!)
-            make.height.equalTo(1 * heightScale)
+            make.height.equalTo(height)
         }
         
         
@@ -81,13 +85,7 @@ class MatchListCell: BaseCollectionViewCell {
             make.top.equalTo(roundNameLabel.snp.bottom).offset(47*heightScale)
         }
         
-        pkImageView.snp.makeConstraints { (make) in
-            make.centerX.equalTo(pkImageView.superview!)
-            make.top.equalTo(roundNameLabel.snp.bottom).offset(18*heightScale)
-            make.width.height.equalTo(90*widthScale)
-            
-        }
-        
+      
         matchStatusButton.snp.makeConstraints { (make) in
            make.bottom.equalTo(undline.snp.top).offset(-8*heightScale)
             make.centerX.equalTo(matchStatusButton.superview!)
@@ -95,8 +93,8 @@ class MatchListCell: BaseCollectionViewCell {
         
         //主队
         teamLogoImageView.snp.makeConstraints { (make) in
-            make.right.equalTo(scoreLabel.snp.left).offset(-40*widthScale)
-            make.top.equalTo(roundNameLabel.snp.bottom).offset(20*heightScale)
+            make.right.equalTo(scoreLabel.snp.left).offset(-50*widthScale)
+           make.centerY.equalTo(scoreLabel)
             make.width.height.equalTo(100*widthScale)
         }
         
@@ -104,6 +102,12 @@ class MatchListCell: BaseCollectionViewCell {
             make.right.equalTo(teamLogoImageView.snp.left).offset(-10*widthScale)
             make.centerY.equalTo(teamLogoImageView)
         }
+        
+        pkImageView.snp.makeConstraints { (make) in
+            make.centerX.equalTo(pkImageView.superview!)
+             make.top.equalTo(roundNameLabel.snp.bottom).offset(47*heightScale)
+        }
+        
         
         
         
@@ -114,7 +118,7 @@ class MatchListCell: BaseCollectionViewCell {
         }
         
         beTeamLogoImageView.snp.makeConstraints { (make) in
-            make.left.equalTo(beScoreLabel.snp.right).offset(40*widthScale)
+            make.left.equalTo(beScoreLabel.snp.right).offset(50*widthScale)
             make.top.width.height.equalTo(teamLogoImageView)
             
         }
@@ -141,6 +145,20 @@ class MatchListCell: BaseCollectionViewCell {
         
         scoreLabel.text = matchListModel?.Score.description
         beScoreLabel.text = matchListModel?.BeScore.description
+        
+        //主队
+        teamLogoImageView.snp.makeConstraints { (make) in
+            make.right.equalTo(scoreLabel.snp.left).offset(-50*widthScale)
+            make.centerY.equalTo(scoreLabel)
+            make.width.height.equalTo(100*widthScale)
+        }
+         self.setNeedsLayout()
+    }
+    //MARK:- 设置已经取消比赛
+    private func settingDidCancelMatchUI(){
+        settingDidEndMatchUI()
+        matchStatusButton.setBackgroundImage(UIImage(named:"l_time_bg_red"), for: .normal)
+        matchStatusButton.setTitle("已取消", for: .normal)
     }
     //MARK:- 设置即将开始界面
     private func settingWillStartMatchUI(){
@@ -164,6 +182,15 @@ class MatchListCell: BaseCollectionViewCell {
             }
         }
          matchStatusButton.setTitle(time, for: .normal)
+        //主队
+        teamLogoImageView.snp.remakeConstraints { (make) in
+            make.right.equalTo(scoreLabel.snp.left).offset(-50*widthScale)
+            make.centerY.equalTo(pkImageView)
+            make.width.height.equalTo(100*widthScale)
+        }
+         self.setNeedsLayout()
+        
+       
     }
     //MARK:- 设置正在进行的比赛界面
     private func settingBeingMatchUI(){
@@ -177,8 +204,16 @@ class MatchListCell: BaseCollectionViewCell {
         matchStatusButton.setImage(nil, for: .normal)
         scoreLabel.text = matchListModel?.Score.description
         beScoreLabel.text = matchListModel?.BeScore.description
+        
+        //主队
+        teamLogoImageView.snp.makeConstraints { (make) in
+            make.right.equalTo(scoreLabel.snp.left).offset(-50*widthScale)
+            make.centerY.equalTo(scoreLabel)
+            make.width.height.equalTo(100*widthScale)
+        }
 
     
+        self.setNeedsLayout()
     
     }
     
@@ -209,26 +244,16 @@ class MatchListCell: BaseCollectionViewCell {
     //MARK:- 比赛状态按钮
     private lazy var matchStatusButton:UIButton = UIButton(title: "", font: UIFont.font(psFontSize: 32), titleColor: UIColor.white)
     //MARK:- 未开始pk图标
-    private lazy var pkImageView:UIImageView = UIImageView(image: UIImage.getImage("compared"))
+    private lazy var pkImageView:UIImageView = UIImageView(image: UIImage.getImage("pk_image.png"))
     //MARK:- 分割线
     private lazy var undline:UILabel = UILabel.unline(hexString: "#b3b3b3")
     
-    
-    
-    
-    
-    
-    
-    
+
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    
-    
-    
-    
+  
 }
 
 

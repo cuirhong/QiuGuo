@@ -45,6 +45,7 @@ class MatchDetailHeadView: BaseView {
                scroceLabel.text = "-- : --"
             }
 
+            matchStatusButton.isUserInteractionEnabled = false
             if matchModel?.status == "0"{
                 settingWillStartMatchUI()
             }else if matchModel?.status == "1"{
@@ -68,10 +69,7 @@ class MatchDetailHeadView: BaseView {
  
         matchStatusButton.setTitle("已结束", for: .normal)
         matchStatusButton.setImage(nil, for: .normal)
-        
-        
-  
-        
+    
     }
     //MARK:- 设置即将开始界面
     private func settingWillStartMatchUI(){
@@ -199,6 +197,12 @@ class MatchDetailHeadView: BaseView {
             make.centerY.equalTo(matchStatusButton)
         }
 
+        let label1 = UILabel.unline()
+        addSubview(label1)
+        label1.snp.makeConstraints { (make) in
+            make.bottom.left.right.equalTo(label1.superview!)
+            make.height.equalTo(1*LayoutHeightScale)
+        }
 
     }
     
@@ -239,7 +243,7 @@ class MatchDetailHeadView: BaseView {
     fileprivate lazy var backButton:UIButton = UIButton(title: "", imageName: "arrow_back", target: self, selector: #selector(MatchDetailHeadView.back))
     
     //MARK:- 未开始pk图标
-    private lazy var pkImageView:UIImageView = UIImageView(image: UIImage.getImage("pk_image.png"))
+    private lazy var pkImageView:UIImageView = UIImageView(image: UIImage.getImage("compared_w.png"))
     
     
     //MARK:- 返回按钮事件

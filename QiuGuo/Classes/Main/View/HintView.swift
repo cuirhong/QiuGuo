@@ -17,6 +17,7 @@ class HintView: BaseView {
     init(_ imageName:String="no_data.png",textArr:[String]=["抱歉，暂无数据"]){
         super.init(frame: CGRect.zero)
         
+        backgroundColor = UIColor.white
    
         //占位空格，便于布局
         let label = UILabel()

@@ -59,7 +59,8 @@ class MatchDetailGuessController: BaseViewController {
         super.loadData()
         matchGuessViewModel.dataAbnormalType = .noAbnormal
         matchGuessViewModel.loadDataMatchGuess(successCallBack: {[weak self] (result) in
-            let isNormal = self?.checkDataIsNormal( hintTextArr: ["抱歉","本场比赛暂无竞猜"])
+             let isNormal = self?.checkDataIsNormal( hintTextArr: ["抱歉","本场比赛暂无竞猜"],dataAbnormalType: (self?.matchGuessViewModel.dataAbnormalType)!)
+
             if isNormal == true{
                 if (self?.matchGuessViewModel.matchGuessModel?.Status)! >= 2{
                     self?.loadGuessResultRank()
@@ -82,11 +83,8 @@ class MatchDetailGuessController: BaseViewController {
         }
       guessResultRankViewModel.dataAbnormalType = .noAbnormal   
       guessResultRankViewModel.loadGuessResultRankList(successCallBack: {[weak self] (result) in
-        let isNormal = self?.checkDataIsNormal( hintTextArr: ["抱歉","本场比赛暂无竞猜"])
-        if isNormal == true{
-            DispatchQueue.main.async {
-                self?.setupView()
-            }
+        DispatchQueue.main.async {
+            self?.setupView()
         }
        
       }) {[weak self](error) in
@@ -319,7 +317,7 @@ extension MatchDetailGuessController:UICollectionViewDelegateFlowLayout{
         case .MatchInfo:
             height =  566*LayoutHeightScale
         case .GuessExpirationDate:
-            height = 222*LayoutHeightScale
+            height = 240*LayoutHeightScale
         case .TotalJackpot:
             height = 400*LayoutHeightScale
         case .GuessParticipator:

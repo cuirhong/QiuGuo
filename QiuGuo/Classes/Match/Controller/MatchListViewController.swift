@@ -16,6 +16,10 @@ class MatchListViewController: BaseViewController {
     //MARK:- 赛事栏目ID
     var leagueID:Int = 0
     
+    var headPage:Int = 0
+    
+    var footPage:Int = 0
+    
     //MARK:- 比赛列表viewModel
     fileprivate  var matchListViewModel = MatchListViewModel()
 
@@ -29,7 +33,8 @@ class MatchListViewController: BaseViewController {
     //MARK:- 初始化数据
     override func initData() {
         super.initData()
-        matchListViewModel.LeagueID = leagueID        
+        matchListViewModel.LeagueID = leagueID
+        matchListViewModel.refreshType = .FristRefresh
     }
 
     
@@ -55,8 +60,9 @@ class MatchListViewController: BaseViewController {
     override func downLoadRefresh() {
         super.downLoadRefresh()
         matchListViewModel.refreshType = .PullDownRefresh
-        matchListViewModel.page = 1
-        matchListViewModel.type = "end"
+        headPage += 1
+        matchListViewModel.page = headPage
+        matchListViewModel.type = "head"
          matchListViewModel.dataAbnormalType = .noAbnormal
         DispatchQueue.global().async {[weak self] in
             self?.loadData()
@@ -68,8 +74,9 @@ class MatchListViewController: BaseViewController {
         super.upLoadRefresh()
         if matchListViewModel.refreshType == .PullDownRefresh || matchListViewModel.isEnd == "1"{
             matchListViewModel.refreshType = .UpDownRefresh
-            matchListViewModel.page += 1
-            matchListViewModel.type = "head"
+            footPage += 1
+            matchListViewModel.page = footPage
+            matchListViewModel.type = "end"
             matchListViewModel.dataAbnormalType = .noAbnormal
             DispatchQueue.global().async {[weak self] in
                 self?.loadData()   
@@ -102,6 +109,10 @@ class MatchListViewController: BaseViewController {
     override func refreshUI() {
         super.refreshUI()
         collectionView.reloadData()
+        if matchListViewModel.refreshType == .PullDownRefresh {
+            collectionView.scrollToItem(at: IndexPath.init(row: 0, section: matchListViewModel.scrollToSection), at: .top, animated: false)  
+        }
+        
     }
 }
 
@@ -176,7 +187,7 @@ extension MatchListViewController:UICollectionViewDelegate{
 extension MatchListViewController:UICollectionViewDelegateFlowLayout{
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-         return CGSize(width: ScreenWidth, height: 260*LayoutHeightScale+20)
+         return CGSize(width: ScreenWidth, height: 275*LayoutHeightScale+20)
     }
     
     //返回分组的头部视图的尺寸，在这里控制分组头部视图的高度

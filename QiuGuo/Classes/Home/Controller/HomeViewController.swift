@@ -69,6 +69,7 @@ class HomeViewController: BaseViewController {
         
        pageMenuView = PageMenuView.init(titles:spercialNameArr)
         pageMenuView?.delegate = self
+        pageMenuView?.backgroundColor = UIColor.clear
         view.addSubview(pageMenuView!)
         let pageMenuHeight = 120*LayoutHeightScale
         pageMenuView?.snp.remakeConstraints { (make) in

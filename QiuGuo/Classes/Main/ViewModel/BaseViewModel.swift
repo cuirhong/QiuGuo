@@ -10,6 +10,7 @@ import UIKit
 
 //MARK:- 刷新类型
 enum ViewModelRefreshType {
+    case FristRefresh;//未知
     case PullDownRefresh;//下拉刷新
     case UpDownRefresh;//上啦加载
 }
@@ -60,7 +61,7 @@ class BaseViewModel: NSObject {
             }
             self.isEnd = "5"
            return newArray
-        }else{
+        }else if self.refreshType == .UpDownRefresh{
             if isEnd.isEmpty{
                 if newArray.count < self.rows {
                     self.isEnd = "0"
@@ -73,6 +74,11 @@ class BaseViewModel: NSObject {
             array.append(contentsOf: newArray)
             return array
             
+        }else{
+            self.isHead = isHead
+             self.isEnd = isEnd
+            return newArray
+
         }
     }
     

@@ -153,8 +153,10 @@ func printLog<T> (message:T,fileName:String=#file,funcName:String=#function,line
 }
 
 func printData<T>(message:T,fileName:String=#file,funcName:String=#function,lineNum:Int = #line) {
+    #if DEBUG
+       print(message)
+    #endif
    
-    print(message)
 }
 
 

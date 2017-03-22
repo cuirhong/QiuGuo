@@ -10,9 +10,5 @@
   "imageName": "tabbar_match"
   },
 
-  {
-  "vcName": "MeViewController",
-  "title": "我的",
-  "imageName": "tabbar_personal"
-  }
+
 ]

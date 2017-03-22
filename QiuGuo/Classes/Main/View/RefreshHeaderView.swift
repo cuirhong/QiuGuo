@@ -17,7 +17,7 @@ class RefreshHeaderView: UIView {
     //MARK:- 初始化
     override init(frame: CGRect) {
         super.init(frame: frame)
-        imageView.frame = CGRect(x: 0, y: 0, width: 27, height: 25)
+        imageView.frame = CGRect(x: 0, y: 0, width: 40, height: 62)
         imageView.center = CGPoint(x: self.bounds.width/2.0, y: self.bounds.height/2.0)
         addSubview(imageView)
     }
@@ -46,7 +46,7 @@ extension RefreshHeaderView:RefreshableHeader{
         imageView.transform = CGAffineTransform(scaleX: scale, y: scale)
         //22:图片总的张数
         let mappedIndex = Int(adjustPercent * 22)
-        let imageName = "pull_down_-loading_\(String(format: "%02d", mappedIndex))"
+        let imageName = "pull_down_loading_\(String(format: "%d", mappedIndex))"
         imageView.image = UIImage(named:imageName)
          
     }
@@ -55,7 +55,7 @@ extension RefreshHeaderView:RefreshableHeader{
     func didBeginRefreshingState() {
         var imageNames = [String]()
         for index in 1...22 {
-             imageNames.append("pull_down_-loading_\(String(format: "%02d", index))")
+             imageNames.append("pull_down_loading_\(String(format: "%d", index))")
         }
         let images = imageNames.map { (name) -> UIImage in
             return UIImage(named:name)!

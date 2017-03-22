@@ -73,6 +73,28 @@ extension Date{
         }
         return DateComponents.init()
     }
+    
+    //MARK:- 是否是同一天
+    static func isSameDate(dateString:String?,date2String:String?)->Bool{
+    
+        let date1 = String.getDateFromString(dateStr: dateString, formatter: dateFormaterString)
+         let date2 = String.getDateFromString(dateStr: date2String, formatter: dateFormaterString)
+        if date1 == nil || date2 == nil {
+        
+        
+        }
+        if let dateOne = date1,let dateTow = date2{
+            if Calendar.current.isDate(dateOne, inSameDayAs: dateTow){
+                
+                return true
+            }
+        }
+       
+        return false
+    
+    
+    
+    }
 
 
 
