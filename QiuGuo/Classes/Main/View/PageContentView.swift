@@ -51,9 +51,9 @@ class PageContentView: BaseView {
     
     
     //MARK:- 初始化
-    init(frame:CGRect,childVcs:[UIViewController],parentVc:UIViewController){
+   convenience init(frame:CGRect,childVcs:[UIViewController],parentVc:UIViewController){
     
-        super.init(frame: frame)
+        self.init(frame: frame)
         newFrame = frame
         childVcArr = childVcs
         self.parentVc = parentVc
@@ -61,6 +61,12 @@ class PageContentView: BaseView {
     
     
     }
+    
+    //MARK:- 初始化
+   override init(frame: CGRect) {
+        super.init(frame: frame)
+    }
+
     
     //MARK:- 设置界面
     private func setupUI(){

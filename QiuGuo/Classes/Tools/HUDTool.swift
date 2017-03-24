@@ -28,6 +28,7 @@ class HUDTool: NSObject {
                 SVProgressHUD.showSuccess(withStatus: text)
             case .Failure:
                 SVProgressHUD.showError(withStatus: text)
+                
             case .Info:
                 SVProgressHUD.showInfo(withStatus: text)
 

@@ -18,6 +18,10 @@ enum MethodType {
 
 class NetworkTool {
     class func request(type: MethodType, urlString: String,isQiuUrl:Bool=true, paramters: [String: Any]? = nil, finishedCallback: @escaping (_ result: JSON) -> (),failureCallback:FailureBlock? = nil) {
+        
+        
+        
+        
         printData(message: urlString)
         HUDTool.show(showType: .Load)
         // 获取类型

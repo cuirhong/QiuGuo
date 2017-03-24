@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import WebKit
 
 class CacheTool: NSObject {
     // 计算缓存大小
@@ -60,6 +61,19 @@ class CacheTool: NSObject {
             }
         }
         
+        result = CacheTool.clearWKWebViewCache()
         return result
     }
+    
+    
+    //MARK:- 清除wkWebview的缓存
+    class func clearWKWebViewCache()->Bool{
+        let websiteDataTypes = WKWebsiteDataStore.allWebsiteDataTypes()
+        let dateForm = Date.init(timeIntervalSince1970: 0)
+       WKWebsiteDataStore.default().removeData(ofTypes: websiteDataTypes, modifiedSince: dateForm) {
+            
+        }
+        return true
+    }
+    
 }

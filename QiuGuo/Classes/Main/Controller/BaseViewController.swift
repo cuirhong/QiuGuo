@@ -76,7 +76,7 @@ class BaseViewController: UIViewController {
 
     
     //MARK:- 设置返回按钮
-    func setupNaviBack(imageName:String="arrow_back",highlightedImage:String="",target:UIViewController) {
+    func setupNaviBack(imageName:String="arrow_back_b",highlightedImage:String="",target:UIViewController) {
         
         let item = UIBarButtonItem.init(imageName: imageName, highlightedImage: highlightedImage, target: target, action: #selector(back))
         self.navigationItem.leftBarButtonItem = item
@@ -134,21 +134,28 @@ class BaseViewController: UIViewController {
     
     //MARK:- 结束刷新
     func endRefreshing(){
-      collectionView.endFooterRefreshing()
-      collectionView.endHeaderRefreshing()
+        DispatchQueue.main.async {[weak self] in
+            self?.collectionView.endFooterRefreshing()
+            self?.collectionView.endHeaderRefreshing()
+        }
+     
     }
     
     //MARK:- 设置数据异常界面
-    func checkDataIsNormal(hintTextArr:[String]=["没有更多数据了!"],dataAbnormalType:DataAbnormalType = .noData)->Bool{
-        var imageString = ""
+    func checkDataIsNormal(hintTextArr:[String]=["没有更多数据了!"],hintImageName:String?=nil, dataAbnormalType:DataAbnormalType = .noData)->Bool{
+        var imageString = hintImageName
         switch dataAbnormalType {
         case .noData:
-            imageString = "no_data.png"
-             hintView = HintView.init(imageString, textArr: hintTextArr)
+            if hintImageName == nil{
+               imageString = "no_data.png"
+            }
+            
+             hintView = HintView.init(imageString!, textArr: hintTextArr)
+           
         case .noNetwork:
             imageString = "no-network.png"
             let textArr:[String] = ["网络不可用,点击屏幕重试"]
-             hintView = HintView.init(imageString, textArr: textArr)
+             hintView = HintView.init(imageString!, textArr: textArr)
             hintView?.addGestureRecognizer(UITapGestureRecognizer.init(target:self, action:#selector(noNetworkTapLoadData)))
         default:
              return true

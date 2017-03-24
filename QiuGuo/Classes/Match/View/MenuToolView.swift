@@ -13,6 +13,7 @@ class MenuToolView: PageMenuView {
     //MARK:- 初始化
     convenience init(titles:[String]){
         self.init(frame:CGRect.zero)
+       
         menuTitles = titles
         setupMenuButton()
 

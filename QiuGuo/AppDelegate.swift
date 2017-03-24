@@ -45,7 +45,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,WXApiDelegate {
         }
         let isOnlyWifiLoad = userDefault.value(forKey: KonlyWIFILoadImage)
         if isOnlyWifiLoad == nil {
-           userDefault.set(true, forKey: KonlyWIFILoadImage)
+           userDefault.set(false, forKey: KonlyWIFILoadImage)
         }
     }
     

@@ -12,20 +12,12 @@ var kPlaceholderLabelPointer:UInt8=0
 extension UITextView {
     
     
-    convenience init(text:String,fontSize:CGFloat,textColor:UIColor) {
+    convenience init(text:String,font:UIFont?=nil, textColor:UIColor) {
         self .init()
         self.text = text
-        self.font = UIFont.systemFont(ofSize: fontSize)
+        self.font = font
         self.textColor = textColor
-        
-        
     }
-    
-    
-    
-    
-    
-    
     
     var placeHolderTextView:UITextView? {
         
@@ -54,7 +46,8 @@ extension UITextView {
     placeHolderTextView?.text = placeHolderStr
     
     placeHolderTextView?.textColor=UIColor.gray
-    
+ 
+        
     self.insertSubview(placeHolderTextView!, at:0)
     
     }
@@ -65,7 +58,7 @@ extension UITextView {
     
     NotificationCenter.default.addObserver(self,
     
-    selector:Selector(("didChange:")),
+                                           selector:#selector(didChange(notification:)),
     
     name:NSNotification.Name.UITextViewTextDidChange,
     

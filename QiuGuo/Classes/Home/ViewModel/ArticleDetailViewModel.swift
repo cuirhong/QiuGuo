@@ -14,9 +14,21 @@ class ArticleDetailViewModel: BaseViewModel {
     //MARK:- 文章id
     var ID:Int = 0
     
+    var articleModelPointer:UInt8=0
+
     //MARK:- 文章详情模型
-    var articleDetailModel:ArticleDetailModel = ArticleDetailModel()
+     var articleDetailModel:ArticleDetailModel?{
+        get{
+         let key = String.getString(intData: self.ID)
+          if self.articleModels[key] != nil{
+             return self.articleModels[key]
+           }
+            return ArticleDetailModel()
+        }
+    }
     
+    //MARK:- 文章详情模型数组
+    var articleModels:[String:ArticleDetailModel] = [String:ArticleDetailModel]()
     
     
     
@@ -25,8 +37,9 @@ class ArticleDetailViewModel: BaseViewModel {
         
         let urlString = AppRootUrl + "/article/Article/getArticle/"
         NetworkTool.request(type: .POST, urlString: urlString, paramters: ["ID":self.ID,"isIos":1], finishedCallback: { (result) in
-            if let dict = result["data"].dictionaryObject{            
-            self.articleDetailModel = ArticleDetailModel.init(dict:dict)
+            if let dict = result["data"].dictionaryObject{
+                let key = String.getString(intData: self.ID)
+                self.articleModels[key] = ArticleDetailModel.init(dict:dict)
             }
             successCallBack(result)
             
@@ -37,17 +50,13 @@ class ArticleDetailViewModel: BaseViewModel {
         }
 
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
 }
+
+
+
+
+
+
+
+
+

@@ -14,15 +14,19 @@ extension UIImage{
 
 
    class  func getImage(_ imageName:String) -> UIImage? {
-    if let image = UIImage(contentsOfFile: String.localPath(imageName)){
-    
-    
+    var name = imageName
+    if imageName.hasSuffix(".png") == false , imageName.hasSuffix(".jpg") == false{
+      name = imageName + ".png"
+    }
+    if let image = UIImage(contentsOfFile: String.localPath(name)){
         return image
     }else{
+        if let image =  UIImage(named: name) {
+            return image
+        }
         if let image =  UIImage(named: imageName) {
             return image
         }
-       
     }
    
     return nil

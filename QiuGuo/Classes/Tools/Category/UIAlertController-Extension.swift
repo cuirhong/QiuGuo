@@ -46,15 +46,9 @@ extension UIAlertController{
         return alertController
         
     }
+
+
     
-
-    
-    
-
-
-
-
-
 
 
 

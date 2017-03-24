@@ -21,6 +21,7 @@ class HintView: BaseView {
    
         //占位空格，便于布局
         let label = UILabel()
+
         addSubview(label)
         label.snp.makeConstraints { (make) in
            make.centerX.equalTo(label.superview!)
