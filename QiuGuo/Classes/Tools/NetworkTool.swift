@@ -52,6 +52,16 @@ class NetworkTool {
                     let swiftJson = JSON(json)
                     printData(message: swiftJson)
                     // 回调
+                    if UserInfo.loadAccount() != nil {
+                        if let code = swiftJson["code"].int{
+                            if code == 10{
+                                //token失效
+                                HUDTool.show(showType: .Info, text: "用户登录失效,请重新登录")
+                                UserInfo.logout()
+                            }
+                        }
+                    }
+                 
                     finishedCallback(swiftJson)
                 }else{
                     printData(message: response.result.error)                    

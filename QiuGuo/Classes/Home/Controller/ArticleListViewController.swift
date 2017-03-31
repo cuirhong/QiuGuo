@@ -27,8 +27,7 @@ class ArticleListViewController: BaseViewController {
         super.viewDidLoad()
 
         setupView()
-       
-   
+        NotificationCenter.default.addObserver(self, selector: #selector(needRefreshData), name: NSNotification.Name(rawValue: reloadDataCommentNotifName), object: nil)
     }
     
 

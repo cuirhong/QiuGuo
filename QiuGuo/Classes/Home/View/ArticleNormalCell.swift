@@ -58,7 +58,7 @@ class ArticleNormalCell: BaseCollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupUI()
-        commentButton.alpha = 0
+       
     }
     
     required init?(coder aDecoder: NSCoder) {

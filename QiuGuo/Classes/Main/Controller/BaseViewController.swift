@@ -190,6 +190,10 @@ class BaseViewController: UIViewController {
     
     }
     
+    //MARK:- 需要刷新数据
+    func needRefreshData(){
+        isFirstLoadView = true
+    }
     
     
     //MARK:- 返回事件

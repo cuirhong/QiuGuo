@@ -15,4 +15,5 @@
 #import "WXApiObject.h"
 #import "WechatAuthSDK.h"
 
+
 #endif /* QiuGuo_Bridging_Header_h */

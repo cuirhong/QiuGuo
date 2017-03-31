@@ -48,6 +48,15 @@ extension UIAlertController{
     }
 
 
+    //MARK:- 设置alert中的title字体颜色
+    class func setActionTitle(actions:[UIAlertAction],color:UIColor){
+        for action in actions {
+            action.setValue(color, forKey: "titleTextColor")
+        }
+    
+    
+    
+    }
     
 
 

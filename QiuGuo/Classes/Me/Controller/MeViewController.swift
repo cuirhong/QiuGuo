@@ -8,9 +8,16 @@
 
 import UIKit
 
+
+
+
 class MeViewController: BaseViewController {
     
-    var array:[[String]] = []
+    //MARK:- 我的页面模型数组
+    var array:[[MeModel]] = []
+    
+    //MARK:- viewModel
+    lazy var meViewModel = MeViewModel()
     
     fileprivate lazy var tabelView:UITableView = {
         let tableView = UITableView()
@@ -31,40 +38,68 @@ class MeViewController: BaseViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        automaticallyAdjustsScrollViewInsets = false
         self.navigationItem.title = nil
-        for view in view.subviews {
-            view.removeFromSuperview()
-        }
-        
-        initData()
 
-        setupUI()
-        
+        initData()
+        if UserInfo.loadAccount() != nil {
+            DispatchQueue.global().async {[weak self]in
+                self?.loadData()
+            }
+        }else{
+            setupUI()
+        }
         
     }
     
     //MARK:- 初始化数据
     override func initData() {
         super.initData()
-   
-//        
-//        
-//        let meMessageArr = ["message","我的消息","10"]
-//        let meIntegralArr = ["integral","我的积分","234"]
-//         let meTicketArr = ["ticket","我的球票","4434"]
-//         let meGuesslArr = ["trophy","我的竞猜","378"]
-//         let giftArr = ["gift","兑换礼品","54"]
-         let settingArr = ["setting","设置",""]
         
-//        
-//        
-//        array.append(meMessageArr)
-//          array.append(meIntegralArr)
-//          array.append(meTicketArr)
-//          array.append(meGuesslArr)
-//          array.append(giftArr)
-          array.append(settingArr)
+        let jsonPath = Bundle.main.path(forResource: "MeCenterData.json", ofType: nil)
+        let jsonData = try! Data(contentsOf: URL(fileURLWithPath: jsonPath!))
+        let dataArr = try! JSONSerialization.jsonObject(with: jsonData, options: JSONSerialization.ReadingOptions.mutableContainers) as! [[[String:Any]]]
+        for jsonArr in dataArr {
+            var sectionArr = [MeModel]()
+            for dict in jsonArr {
+                let model = MeModel(dict: dict)
+                sectionArr.append(model)
+            }
+            array.append(sectionArr)
+            
+        }
+
    
+    }
+    
+    //MARK:- 加载数据
+    override func loadData() {
+        super.loadData()
+       
+        meViewModel.userCenter(successCallBack: {[weak self ] (result) in
+            let code = result["code"].intValue
+    
+            if let dict = result["data"].dictionaryObject , code == 1 {
+                //成功
+                let  userAccount = UserInfo.init(dict: dict)
+                UserInfo.loadAccount()?.isFirst = userAccount.isFirst
+                UserInfo.loadAccount()?.Headimgurl = userAccount.Headimgurl
+                UserInfo.loadAccount()?.Signature = userAccount.Signature
+                UserInfo.loadAccount()?.Nickname = userAccount.Nickname
+                UserInfo.loadAccount()?.Age = userAccount.Age
+                UserInfo.loadAccount()?.Point = userAccount.Point
+                UserInfo.loadAccount()?.Exp = userAccount.Exp
+                UserInfo.loadAccount()?.Notice = userAccount.Notice
+                UserInfo.loadAccount()?.Sex = userAccount.Sex
+  
+                _ =  UserInfo.loadAccount()?.saveUserInfo()
+            }
+            DispatchQueue.main.async {
+                self?.setupUI()
+            }
+        }) { (error) in
+            HUDTool.show(showType: .Failure, text: error.debugDescription)
+        }
     }
     
  
@@ -75,14 +110,14 @@ class MeViewController: BaseViewController {
     func setupUI(){
  
         let headView = MeHeadView(frame: CGRect(x: 0, y: 0, width: ScreenWidth, height: 400*LayoutHeightScale))
-        if UserInfo.loadAccount() == nil {
-            headView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(clickUserHeadView)))
-        }
+        headView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(clickUserHeadView)))
 
         tabelView.rowHeight = 174*LayoutHeightScale
         tabelView.tableHeaderView = headView
+        if tabelView.superview == nil{
+           view.addSubview(tabelView)
+        }
         
-         view.addSubview(tabelView)
         tabelView.snp.remakeConstraints { (make) in
             make.top.right.bottom.left.equalTo(tabelView.superview!)
         }
@@ -100,6 +135,37 @@ class MeViewController: BaseViewController {
     
     }
     
+    
+    //MARK:- 已经点击了row
+    func didSelectRow(meModel:MeModel){
+    
+        DispatchQueue.main.async {[weak self] in
+         
+            if (meModel.isNeedLogin) == 1{
+                
+                if UserInfo.userLogin() == false{
+                    return
+                }
+            }
+            
+            if (meModel.controller.characters.count) > 0 {
+                
+                let controller = meModel.controller
+                let spaceName = Bundle.main.infoDictionary!["CFBundleExecutable"]
+                
+                let className = (spaceName as! String) + "." + controller
+                let vcClass:AnyClass = NSClassFromString(className)!
+                //告诉编译器实际的类型
+                let trueClass = vcClass as! UIViewController.Type
+                let jumpController = trueClass.init()
+                
+                jumpController.title = meModel.title
+                self?.navigationController?.pushViewController(jumpController, animated: true)}
+
+        }
+    
+    
+    }
     
 
     
@@ -122,8 +188,8 @@ class MeViewController: BaseViewController {
 extension MeViewController:UITableViewDelegate,UITableViewDataSource{
     
     func numberOfSections(in tableView: UITableView) -> Int {
-//        return 3
-        return 1
+
+        return array.count
     }
     
     
@@ -134,26 +200,18 @@ extension MeViewController:UITableViewDelegate,UITableViewDataSource{
             cell = PersonalInfoCell.init(style: .default, reuseIdentifier: identifier, isNeedCount: true)
         }
         
-        switch indexPath.section {
-        case 0:
-            let infoArr = array[0]
-            cell?.array = infoArr
-        case 1:
-            let index = indexPath.row + 1
-            cell?.array = array[index]
-        case 2:
-            cell?.array = array.last
-    default: break
-        }
+        let modelArr = array[indexPath.section]
+        
+        cell?.meModel = modelArr[indexPath.row]
+ 
+        
         return cell!
 
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        if section == 1{
-//            return 4
-//        }
-        return 1
+        let modelArr = array[section]
+        return modelArr.count
     }
 
     
@@ -164,20 +222,12 @@ extension MeViewController:UITableViewDelegate,UITableViewDataSource{
 
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+
         tableView.deselectRow(at: indexPath, animated: true)
         let cell:PersonalInfoCell = tableView.cellForRow(at: indexPath) as! PersonalInfoCell
-        var controller:UIViewController?
-       
-        if cell.userInfoLineLabel.text == "设置"{
-        
-            controller = SettingViewController()
+        if let meModel = cell.meModel {
+          didSelectRow(meModel:meModel)
         }
-        guard controller == nil else {
-            controller?.title = cell.userInfoLineLabel.text
-            self.navigationController?.pushViewController(controller!, animated: true)
-            return
-        }
-        
     }
 
 

@@ -7,9 +7,14 @@
 //
 
 import UIKit
+
 var kPlaceholderLabelPointer:UInt8=0
 // MARK: - 扩展textView的placeholder属性
 extension UITextView {
+    
+    
+
+
     
     
     convenience init(text:String,font:UIFont?=nil, textColor:UIColor) {

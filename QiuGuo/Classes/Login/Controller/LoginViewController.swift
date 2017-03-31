@@ -130,6 +130,7 @@ class LoginViewController:  BaseViewController{
     func bindPhoneNumber(){
         //如果已经绑定
         if UserInfo.loadAccount()?.isPhone == 1{
+            
            back()
         }else{
   
@@ -181,7 +182,6 @@ class LoginViewController:  BaseViewController{
     override func back() {
           loginHeadView?.link?.invalidate()
           dismiss(animated: true, completion: nil)
-        
     }
 }
 
@@ -199,7 +199,15 @@ extension LoginViewController:LoginViewDelegate{
     
     //注册成功
     func loginView(_ loginIsSuccess: Bool) {
-         dismiss(animated: true, completion: nil)
+        if let acccount = UserInfo.loadAccount(){
+            acccount.isLoginSeccuss = 1
+           let result =  acccount.saveUserInfo()
+            if result == true {
+               dismiss(animated: true, completion: nil)
+            }else{
+              HUDTool.show(showType: .Info, text: "用户登录信息保存出错", viewController: self)
+            }
+        }
     }
     
     //点击下一步注册按钮
@@ -226,7 +234,7 @@ extension LoginViewController:LoginViewDelegate{
                     let userInfo = UserInfo.init(dict: data)
                     if userInfo.saveUserInfo(){
                         self?.realUserInfo()
-                        SVProgressHUD.showSuccess(withStatus: "登录成功")
+                        SVProgressHUD.showSuccess(withStatus: "注册下一步")
                     }else{
                         printData(message: "登录信息归档失败")
                     }
@@ -277,7 +285,7 @@ extension LoginViewController:LoginViewDelegate{
                 let userInfo = UserInfo.init(dict: data)
                 if userInfo.saveUserInfo(){
                     SVProgressHUD.showSuccess(withStatus: "登录成功")
-                    self?.dismiss(animated: true, completion: nil)
+                    self?.loginView(true)
                 }else{
                     printData(message: "登录信息归档失败")
                 }

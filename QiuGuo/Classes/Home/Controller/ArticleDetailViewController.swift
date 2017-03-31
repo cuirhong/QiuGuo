@@ -9,8 +9,13 @@
 import UIKit
 import WebKit
 
+
+struct  WebViewFromJsName {
+    var JumpToCommentMethod = "jumpToCommentList";
+}
+
 /// 文章详情
-class ArticleDetailViewController: BaseViewController {
+class ArticleDetailViewController: BaseWebViewController {
     
     //MARK:- 文章ID
     var articleID:Int = 0{
@@ -30,31 +35,12 @@ class ArticleDetailViewController: BaseViewController {
             }
         }
     }
-
+  
+    
     //MARK:- 文章详情viewModel
     private var articleDetailViewModel:ArticleDetailViewModel = ArticleDetailViewModel()
-    
-    //MARK:- 加载网页的进度
-    fileprivate lazy var progressView:UIProgressView = {
-    let progressView = UIProgressView(frame: CGRect(x: 0, y: 44-2, width: ScreenWidth, height: 2))
-        progressView.trackTintColor = UIColor.white
-        progressView.progressTintColor = THEMECOLOR
-        return progressView
-    
-    }()
-    
-    //MARK:- webView
-    private lazy var webView:WKWebView = {[weak self] in
-       let webView = WKWebView()
-        if let controller = self{
-              webView.navigationDelegate = controller
-            webView.uiDelegate = controller
-              webView.addObserver(controller, forKeyPath: "estimatedProgress", options: .new, context: nil)
-              controller.navigationController?.navigationBar.addSubview(controller.progressView)
-        }
-        return webView
 
-    }()
+    
     
     //MARK:- 评论工具
     private lazy var commentToolView:CommentToolViews = CommentToolViews(toolViewsType: .ArticleDetail)
@@ -62,8 +48,8 @@ class ArticleDetailViewController: BaseViewController {
     //MARK:- 加载view
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupNavi()
-    
+        setupNavi()        
+        NotificationCenter.default.addObserver(self, selector: #selector(needRefreshData), name: NSNotification.Name(rawValue: reloadDataCommentNotifName), object: nil)
     }
     
 
@@ -73,6 +59,7 @@ class ArticleDetailViewController: BaseViewController {
     override func setupNavi() {
         super.setupNavi()
         setupNaviBack(target: self)
+  
     }
     
     
@@ -116,31 +103,44 @@ class ArticleDetailViewController: BaseViewController {
                 make.left.right.top.equalTo(webView.superview!)
                 make.bottom.equalTo(commentToolView.snp.top)
             }
-            
-            if let url = URL(string: articleDetailViewModel.articleDetailModel?.url ?? ""){
-                let request = URLRequest(url: url)
-                webView.load(request)
-            }else{
-                HUDTool.show(showType: .Failure, text: "抱歉,加载出错!")
-            }
+        }
+        
+        if let url = URL(string: articleDetailViewModel.articleDetailModel?.url ?? ""){
+            let request = URLRequest(url: url)
+            webView.load(request)
+        }else{
+            HUDTool.show(showType: .Failure, text: "抱歉,加载出错!")
         }
     }
     
-
+    //MARK:- 需要刷新数据
+    override func needRefreshData(){
+        super.needRefreshData()
+        //清除webview的缓存
+       _ = CacheTool.clearWKWebViewCache()
+       
+    }
     
-    //MARK:- 观察webView加载的进度
-    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
-        if keyPath == "estimatedProgress"{
-            progressView.isHidden = webView.estimatedProgress == 1
-            progressView.setProgress(Float(webView.estimatedProgress), animated: true)
-        }
+
+ 
+    
+    //MARK:- 跳转到评论
+    func jumpToCommentList(){
+    
+        let commentController = CommentViewController()
+        commentController.ID = self.articleID
+        self.navigationController?.pushViewController(commentController, animated: true)
+    
     }
     
     
     //MARK:- 页面销毁
     deinit {        
         webView.removeObserver(self, forKeyPath: "estimatedProgress")
+        
+        
         progressView.reloadInputViews()
+        NotificationCenter.default.removeObserver(self)
     }
     
     
@@ -152,36 +152,16 @@ class ArticleDetailViewController: BaseViewController {
             super.back()
             progressView.removeFromSuperview()
         }
-       
     }
-    
     
 }
 
 
 // MARK: - 遵守WKNavigationDelegate,WKUIDelegate
-extension ArticleDetailViewController:WKNavigationDelegate,WKUIDelegate{
-
-    //MARK:- 已经开始加载
-    func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
-        HUDTool.show(showType: .Load)
-    }
-    
-    //已经加载完毕
-    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-        progressView.setProgress(0.0, animated: true)
-        HUDTool.dismiss()
-    }
-    
-    //MARK:- 加载失败调用
-    func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
-         progressView.setProgress(0.0, animated: true)
-         HUDTool.dismiss()
-        HUDTool.show(showType: .Failure, text: error.localizedDescription)
-    }
+extension ArticleDetailViewController{
     
     //MARK:- 发送请求之前决定是否跳转
-    func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+    override func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
         //获取到跳转之后文章的id,评论需要
         
         if let urlString = navigationAction.request.url?.absoluteString{
@@ -191,20 +171,11 @@ extension ArticleDetailViewController:WKNavigationDelegate,WKUIDelegate{
                 printData(message: navigationAction.request.url?.absoluteString)
                 if let articleID = newStringArr?.last{
                     self.jumpArticleID = Int(articleID)!
-                    printData(message: self.jumpArticleID)
-                    decisionHandler(WKNavigationActionPolicy.allow)
-                }else{
-                    decisionHandler(WKNavigationActionPolicy.cancel)
                 }
-            }else{
-               decisionHandler(WKNavigationActionPolicy.allow)
-            
             }
-        }else{
-           decisionHandler(WKNavigationActionPolicy.allow)
-            
-        
         }
+            decisionHandler(WKNavigationActionPolicy.allow)
+                
     }
 }
 
@@ -225,9 +196,7 @@ extension ArticleDetailViewController:CommentToolViewsDelegate{
             }
         case .JumpToComment:
            
-            let commentController = CommentViewController()
-            commentController.ID = self.articleID
-            self.navigationController?.pushViewController(commentController, animated: true)
+           jumpToCommentList()
         }
     }
 
@@ -277,6 +246,22 @@ extension ArticleDetailViewController:EditCommentViewDelegate{
 
 }
 
+// MARK: - WKScriptMessageHandler
+extension ArticleDetailViewController:WKScriptMessageHandler{
+
+    //MARK:- js传递过来的信息
+    func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
+         let method = message.name
+         let selector = Selector(method)
+        if self.responds(to: selector){
+        
+            self.perform(selector)
+        }
+         printData(message: message.body)
+    }
+
+
+}
 
 
 

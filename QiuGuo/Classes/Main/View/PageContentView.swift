@@ -43,6 +43,7 @@ class PageContentView: BaseView {
         collectionView.isPagingEnabled = true
         collectionView.dataSource = self
         collectionView.delegate = self
+        collectionView.backgroundColor = UIColor.white
         collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: contentCellID)
         return collectionView
 
@@ -202,7 +203,7 @@ extension PageContentView{
 
     //MARK:- 设置当前index
     func settingCurrenIndex(courceIndex:Int=0,targetIndex:Int){
-     isClickScrollDelegate = true
+        isClickScrollDelegate = true
         let offSetx = CGFloat(targetIndex) * newFrame.size.width
         collectionView.setContentOffset(CGPoint(x:offSetx,y:0), animated: true)
     }

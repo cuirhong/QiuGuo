@@ -93,17 +93,8 @@ extension BindPhoneViewController:LoginViewDelegate{
             self?.delegate?.loginView!(true)
         }) { (error) in            
             HUDTool.show(showType: .Failure, text: "绑定手机号失败")
-        }
-       
-       
+        }  
     }
-
-
-
-
-
-
-
 }
 
 

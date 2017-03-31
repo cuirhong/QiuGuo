@@ -227,11 +227,10 @@ class RegisterSecondViewController: BaseViewController {
               
                 if  let data = json?["data"].dictionaryObject{
                     let userInfo = UserInfo.init(dict: data)
+
                     if userInfo.saveUserInfo(){
-                      
                         self?.delegate?.loginView!(true)
                        self?.back()
-                        
                     }else{
                         printData(message: "登录信息归档失败")
                     }

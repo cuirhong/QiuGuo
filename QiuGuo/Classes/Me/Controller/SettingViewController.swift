@@ -210,9 +210,6 @@ extension SettingViewController:UITableViewDelegate,UITableViewDataSource{
            HUDTool.show(showType: .Info, text: "抱歉,暂未开通此功能", viewController: self)
         }
     }
-
-
-
 }
 
 

@@ -15,6 +15,9 @@ let LoginNotificationName = "loginNotificationName"
  *  网络已经发生了变化通知
  */
 let NetworkDidChangeNotifName = "networkDidChangeNotifName"
-
+/**
+ *  从新布局评论列表
+ */
+let reloadDataCommentNotifName = "reloadCommentDataNotifName"
 
 

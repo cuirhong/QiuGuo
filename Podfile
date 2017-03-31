@@ -9,7 +9,7 @@ pod 'Kingfisher'
 pod 'SnapKit'
 pod 'SwiftyJSON'
 pod 'SVProgressHUD'
-
+pod 'YYText'
 
   # Pods for QiuGuo
 

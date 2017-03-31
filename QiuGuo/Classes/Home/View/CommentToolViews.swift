@@ -120,12 +120,7 @@ class CommentToolViews: BaseView {
     
     
     //MARK:- 顶部线
-    fileprivate lazy var topLine:UILabel =  {
-        let label = UILabel()
-        label.backgroundColor = UIColor.init(hexString: "#cccccc")
-        return label
-    }()
-    
+    fileprivate lazy var topLine:UILabel =  UILabel.unline()
     
     //MARK:- 发布评论按钮
     fileprivate lazy var releaseCommentBtn:UIButton = UIButton(title: " 我也说两句", imageName: "edit", backImageName: "input_box.png",highlightedImageName:"input_box.png",selBackImageName:"input_box.png", target: self, selector: #selector(releaseComment), font: UIFont.font(psFontSize: 40), titleColor: UIColor.init(hexString: "#cccccc"))

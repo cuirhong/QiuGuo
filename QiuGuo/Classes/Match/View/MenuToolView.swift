@@ -10,11 +10,14 @@ import UIKit
 
 /// 比赛详情页的menu工具
 class MenuToolView: PageMenuView {
+    //MARK:- 是否放大选择的字体
+    private lazy var isSelMaxFont:Bool? = true
     //MARK:- 初始化
-    convenience init(titles:[String]){
+    convenience init(titles:[String],isSelMaxFont:Bool=true){
         self.init(frame:CGRect.zero)
-       
+        self.isSelMaxFont = isSelMaxFont
         menuTitles = titles
+        
         setupMenuButton()
 
     }
@@ -63,7 +66,11 @@ class MenuToolView: PageMenuView {
             
             if index == newIndex{
                 btn.isSelected = true
-                btn.titleLabel?.font = UIFont.font(psFontSize: 60)
+                if self.isSelMaxFont == true {
+                   btn.titleLabel?.font = UIFont.font(psFontSize: 60)
+                
+                }
+               
                 addSubview(undline)
                 undline.snp.remakeConstraints({ (make) in
                     make.top.equalTo(btn.snp.bottom)

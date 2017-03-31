@@ -43,10 +43,22 @@ class UserInfo: NSObject,NSCoding {
    /**********/
     
     
+    //MARK:- 是否已经登录成功(可能登录一半的时候关闭手机，再打开情况) 0:未登录成功 1:登录成功
+    dynamic var isLoginSeccuss:Int = 0
+    //MARK:- 是否是首次充值
+    dynamic var isFirst:Bool = false
+    //MARK:- 年龄
+    dynamic var Age:Int = 0
+    //MARK:- 球票数
+    dynamic var Point:Int = 0
+    //MARK:- 积分数
+    dynamic var Exp:Int = 0
+     //MARK:- 消息数
+    dynamic var Notice:Int = 0
 
     
     
-    
+    //MARK:- 初始化
     init(dict:[String:Any]){
        super.init()
        setValuesForKeys(dict)
@@ -54,17 +66,22 @@ class UserInfo: NSObject,NSCoding {
     }
     
     
-    
+    //MARK:- 保存用户登录信息
     func saveUserInfo()->Bool {
         let filePath = KuserLoginPath
         UserInfo.account = self
         let isSccussful = NSKeyedArchiver.archiveRootObject(self, toFile: filePath)
 
+        if isSccussful == false {
+        
+            isLoginSeccuss = 0
+        }
         printData(message: isSccussful)
        return isSccussful
         
     }
     
+    //MARK:- set方法
     override func setValue(_ value: Any?, forUndefinedKey key: String) {
         if key.isEmpty{
          super.setValue(value, forUndefinedKey: key)
@@ -73,7 +90,9 @@ class UserInfo: NSObject,NSCoding {
     }
     
     
+    //MARK:- 用户登录模型
      static var account:UserInfo?
+    
     //读取数据模型，返回值类型一定是可选类型
     class func loadAccount()-> UserInfo? {
         //1.判断是否授权过
@@ -89,19 +108,28 @@ class UserInfo: NSObject,NSCoding {
     
     //判断用户是否登陆过
     class func userLogin()->Bool {
-       let isLogin = UserInfo.loadAccount()
-        if isLogin == nil{
-          NotificationCenter.default.post(name: NSNotification.Name(rawValue: LoginNotificationName), object: nil)
+       let account  = NSKeyedUnarchiver.unarchiveObject(withFile: KuserLoginPath) as? UserInfo
+        if account != nil{
+            if account?.isLoginSeccuss != nil && (account?.isLoginSeccuss)! == 1{
+                return true
+            }else{
+                logout()//登录到一半的时候退出app
+            }
         }
-        return UserInfo.loadAccount() != nil
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: LoginNotificationName), object: nil)
+        return false
     }
 
     //退出登录
     class func logout(){
-        if UserInfo.userLogin(){
+        let userAccount  = NSKeyedUnarchiver.unarchiveObject(withFile: KuserLoginPath) as? UserInfo
+
+        if userAccount != nil{
             try! FileManager.default.removeItem(atPath: KuserLoginPath)
-            account = nil
-        }        
+            
+        }
+        account = nil
+        
     }
     
     

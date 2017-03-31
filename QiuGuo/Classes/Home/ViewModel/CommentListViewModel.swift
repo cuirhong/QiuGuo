@@ -7,7 +7,7 @@
 //
 
 import UIKit
-
+import SwiftyJSON
 
 class CommentListViewModel: BaseViewModel {
 
@@ -20,7 +20,7 @@ class CommentListViewModel: BaseViewModel {
     //MARK:- 参数
     var paramters:[String:Any]?{
         get{
-            self.rows = 20
+        
             let dict = ["ID":self.ID,"type":self.type,"page":self.page,"rows":self.rows] as [String : Any]
             return dict
         }
@@ -37,20 +37,84 @@ class CommentListViewModel: BaseViewModel {
     }
     
     
+    //MARK:- 模型数组
+    var commentDataArray:[CommentModel] = []
+    
+    
+    
+    
+    //MARK:- 设置评论数据
+    func setupData(result:JSON){
+    
+        var dataModelArray:[CommentModel] = []
+        if let dataArray = result["data"]["data"].arrayObject as? [[String:Any]] {
+            for dataDict in dataArray {
+                let commentModel = CommentModel(dict: dataDict)
+                
+                commentModel.commentLayout = CommentModel.getCommentLayout(commentViewType: .BasicComment)
+                commentModel.displyType = 0
+                dataModelArray.append(commentModel)
+                
+                if let frontCommentArray = dataDict["front"] as? [[String:Any]]{
+                    var floorCount = 1
+                    commentModel.displyType = 1
+                    for dict in frontCommentArray{
+                        let model = CommentModel(dict: dict)
+                        model.commentLayout = CommentModel.getCommentLayout(commentViewType: .replyComment)
+                        model.displyType = 2
+                        
+                        model.floorCount = floorCount
+                        floorCount += 1
+                        commentModel.frontArray.append(model)
+                    }
+                }
+            }
+        }
+        
+        
+        self.commentDataArray = self.setupRefresh(preArray: self.commentDataArray, newArray: dataModelArray) as! [CommentModel]
+        
+        
+        
+        if self.commentDataArray.count == 0{
+            self.dataAbnormalType = .noData
+            
+        }
+
+    }
+    
+    
 }
 
 
 extension CommentListViewModel{
     //MARK:- 加载评论
-    func loadCommentList(successCallBack:@escaping SucceedBlock,failureCallBack:@escaping FailureBlock){
-        NetworkTool.request(type: .POST, urlString: self.urlString, isQiuUrl: true, paramters: self.paramters, finishedCallback: {[weak self] (result) in
-            self?.dataAbnormalType = .noData
+    func loadCommentList(commentListType:CommentListType, successCallBack:@escaping SucceedBlock,failureCallBack:@escaping FailureBlock){
+        var urlString = ""
+        var paramters = [String:Any]()
+        
+        
+        switch commentListType {
+        case .MeComment:
+            urlString = AppRootUrl + "/user/UserCenter/myContent"
+            paramters = ["rows":self.rows,"page":self.page,"UserID":UserInfo.loadAccount()?.UserID ?? "","UserToken":UserInfo.loadAccount()?.UserToken ?? ""] as [String : Any]
+        case .NormalCommentList:
+            urlString = self.urlString
+            paramters = self.paramters!
+        default:
+            return
+        }
+
+        NetworkTool.request(type: .POST, urlString: urlString, isQiuUrl: true, paramters: paramters, finishedCallback: {[weak self] (result) in
+            self?.setupData(result: result)
             successCallBack(result)
         }) { (error) in
             failureCallBack(error)
         }
     }
+   
 }
+
 
 
 

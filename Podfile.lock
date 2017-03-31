@@ -4,6 +4,7 @@ PODS:
   - SnapKit (3.2.0)
   - SVProgressHUD (2.1.2)
   - SwiftyJSON (3.1.4)
+  - YYText (1.0.7)
 
 DEPENDENCIES:
   - Alamofire
@@ -11,6 +12,7 @@ DEPENDENCIES:
   - SnapKit
   - SVProgressHUD
   - SwiftyJSON
+  - YYText
 
 SPEC CHECKSUMS:
   Alamofire: 856a113053a7bc9cbe5d6367a555d773fc5cfef7
@@ -18,7 +20,8 @@ SPEC CHECKSUMS:
   SnapKit: 1ca44df72cfa543218d177cb8aab029d10d86ea7
   SVProgressHUD: c404a55d78acbeb7ebb78b76d3faf986475a6994
   SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
+  YYText: 5c461d709e24d55a182d1441c41dc639a18a4849
 
-PODFILE CHECKSUM: 5258a34756f33655ce2b4b35f3dee59a250d0967
+PODFILE CHECKSUM: bfd1d8de45f548528d36e956845b7fd7376ec9dd
 
 COCOAPODS: 1.2.0

@@ -11,15 +11,27 @@ import UIKit
 class PersonalInfoCell: BaseTableViewCell {
     
     
-    var array:[String]?{
+    
+    var meModel:MeModel?{
+    
         didSet{
-            if array?.count == 3{
-                 iconImageView.image = UIImage.getImage((array?[0])!)
-                userInfoLineLabel.text = array?[1]
-                countLabel.text = array?[2]
+            iconImageView.image = UIImage.getImage((meModel?.imageName)!)
+
+            userInfoLineLabel.text = meModel?.title
+            
+            if meModel?.ID == MeTypeID.MeTicket.rawValue || meModel?.ID == MeTypeID.MeScore.rawValue {
+                countLabel.isHidden = false
+               countLabel.text = String.getString(intData: meModel?.count)
+            }else{
+            
+                countLabel.isHidden = true
+            
             }
         }
     }
+    
+    
+
     
     
     fileprivate lazy var iconImageView:UIImageView = UIImageView()

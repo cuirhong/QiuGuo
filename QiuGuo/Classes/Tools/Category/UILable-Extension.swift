@@ -7,7 +7,7 @@
 //
 
 import UIKit
-
+import YYText
 extension UILabel
 {
     convenience init(text: String?,font: UIFont?, textColor: UIColor?,textAlignment:NSTextAlignment?=nil ) {
@@ -72,7 +72,33 @@ extension UILabel
     
     
     
+    //MARK:- 获取评论textView
     
-    
+    class func getCommentLabel()->YYLabel{
+        let label = YYLabel()
+
+        let modeifier = YYTextLinePositionSimpleModifier()
+        
+        modeifier.fixedLineHeight = 75*LayoutHeightScale
+        
+        label.linePositionModifier = modeifier
+        
+        
+        let container = YYTextContainer()
+        container.maximumNumberOfRows = 0
+        
+        let layout = YYTextLayout(container: container, text: NSAttributedString())
+        
+        
+        label.font = UIFont.font(psFontSize: 45)
+        label.textColor = DEFAUlTFONTCOLOR
+        label.textLayout = layout
+        //显示不下时候显示省略号
+        label.lineBreakMode = .byTruncatingTail
+        
+
+        return label
+    }
+
     
 }

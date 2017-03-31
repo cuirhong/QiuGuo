@@ -18,7 +18,7 @@ class MatchDetailViewController: BaseViewController {
     fileprivate lazy var detailHeadView:MatchDetailHeadView = MatchDetailHeadView()
     
     //MARK:- pageMenu
-    fileprivate lazy  var pageMenuView:MenuToolView = MenuToolView.init(titles: ["资讯","对战","聊个球"])
+    fileprivate lazy  var pageMenuView:MenuToolView = MenuToolView(titles: ["资讯","对战","聊个球"], isSelMaxFont: true )
     
     //MARK:- pageContent
     fileprivate var pageContentView:PageContentView?

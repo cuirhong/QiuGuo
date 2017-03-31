@@ -32,12 +32,20 @@ struct AlertViewStyle {
     
 }
 
+
+protocol AlertBottomViewDelegate:NSObjectProtocol {
+    //MARK:- 已经消失
+     func alertBottomView(_ alertBottomView:AlertBottomView,didDissmiss:Bool)
+}
+
 class AlertBottomView: BaseView {
     
     //MARK:- alert的自定义界面
     private var alertView:UIView?
     //MARK:- alertView的frame
     private var alertViewStyle:AlertViewStyle?
+    //MARK:- 代理
+    weak var delegate:AlertBottomViewDelegate?
     //MARK:- maskView
     private var bottomMaskView:UIView = {
         let view = UIView()
@@ -51,14 +59,14 @@ class AlertBottomView: BaseView {
     //MARK:- 初始化
     init(alertView:UIView,alertViewStyle:AlertViewStyle) {
         super.init(frame:CGRect.zero)
-        
+
 
         self.alertView = alertView
         self.alertViewStyle = alertViewStyle
         
         setupUI()
         if alertViewStyle.isTapDissmiss {
-            self.addGestureRecognizer(UITapGestureRecognizer.init(target: self, action: #selector(dismiss)))
+            self.addGestureRecognizer(UITapGestureRecognizer.init(target: self, action: #selector(AlertBottomView.dismiss)))
         }
         
         if alertViewStyle.bottomBackColor != nil  {
@@ -84,7 +92,8 @@ class AlertBottomView: BaseView {
     }
     
     //MARK:- 点击mask移除alertView
-    @objc private func dismiss(){
+     @objc private func dismiss(){
+        delegate?.alertBottomView(self, didDissmiss: true)
         self.alertView = nil
         self.alertViewStyle = nil
         self.removeFromSuperview()

@@ -10,6 +10,7 @@ import UIKit
 
 protocol EditCommentViewDelegate:NSObjectProtocol{
     func editCommentView(_ editCommentView:EditCommentView,sendCommentText:String)
+    
 }
 
 
@@ -97,7 +98,7 @@ class EditCommentView: BaseView {
     
     
     //MARK:- 创建发送评论按钮
-    fileprivate lazy var sendCommentBtn:UIButton = UIButton(title: "评论", backgroundColor: THEMECOLOR, target: self, selector: #selector(sendComment), font: UIFont.font(psFontSize: 40), titleColor: UIColor.init(hexString: "#ffffff"))
+     lazy var sendCommentBtn:UIButton = UIButton(title: "评论", backgroundColor: THEMECOLOR, target: self, selector: #selector(sendComment), font: UIFont.font(psFontSize: 40), titleColor: UIColor.init(hexString: "#ffffff"))
     
     
     //MARK:- 初始化失败

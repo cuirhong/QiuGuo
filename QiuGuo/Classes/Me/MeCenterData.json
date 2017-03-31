@@ -1,0 +1,21 @@
+[
+ [
+  {
+  "ID":206,
+  "imageName": "comment",
+  "title": "我的评论",
+  "controller":"CommentListViewController",
+  "isNeedLogin":1
+  },
+ ],
+ 
+ [
+  {
+  "ID":301,
+  "imageName": "setting",
+  "title": "设置",
+  "controller":"SettingViewController",
+  "isNeedLogin":0
+  },
+ ]
+]

@@ -27,7 +27,7 @@ class MeHeadView:BaseView{
     //MARK:- 个人签名
     fileprivate lazy var personalSginLabel:UILabel = UILabel(text: "这个家伙很懒,什么都懒得留", font: UIFont.font(psFontSize: 36), textColor: UIColor.init(hexString: "#ffffff"), textAlignment: .left)
     //MARK:- 右边可以点击进入指示符号
-    fileprivate lazy var arrowImageView:UIImageView = UIImageView(image: UIImage.getImage("arrow_r"))
+    fileprivate lazy var arrowImageView:UIImageView = UIImageView(image: UIImage.getImage("arrow_r_w"))
     
     
     //MARK:- 初始化
@@ -55,10 +55,7 @@ class MeHeadView:BaseView{
                  make.width.height.equalTo(88*LayoutWidthScale)
                 make.right.equalTo(-44*LayoutWidthScale)
             })
-            //崔
-            arrowImageView.isHidden = true
-            
-            
+   
             if let headUrl = UserInfo.loadAccount()?.Headimgurl,headUrl != ""{
                 var sexUserImageName = "avatar_female.png"
                 if UserInfo.loadAccount()?.Sex == 1{
